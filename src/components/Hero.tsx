@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Github, Mail, ArrowDown } from 'lucide-react';
+import { Award, BadgeCheck, Github, Mail, ArrowDown, Medal, ShieldCheck } from 'lucide-react';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -19,6 +19,42 @@ const fadeUpVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
 };
+
+const certifications = [
+    {
+        title: 'ITQ 아래한글',
+        status: 'B등급',
+        kind: '문서 작성',
+    },
+    {
+        title: 'ITQ PowerPoint',
+        status: 'B등급',
+        kind: '발표 자료',
+    },
+    {
+        title: 'ITQ Excel',
+        status: 'A등급',
+        kind: '데이터 처리',
+    },
+    {
+        title: '운전면허',
+        status: '1종 보통',
+        kind: '자격 보유',
+    },
+    {
+        title: '정보처리기사',
+        status: '필기 합격',
+        kind: '실기 예정',
+    },
+] as const;
+
+const awards = [
+    {
+        title: 'SK hynix SPARK 창업 아이디어 챌린지',
+        result: '4등',
+        date: '2025.04',
+    },
+] as const;
 
 /**
  * 프로필 중심 Hero 섹션
@@ -180,6 +216,58 @@ export default function Hero() {
                         <span>중요하게 생각하는 것</span>
                         <strong>구조 · 흐름 · 실제 동작</strong>
                     </div>
+                </motion.div>
+
+                <motion.div
+                    className="profile-credentials"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.5 }}
+                >
+                    <section className="credential-panel certificate-panel">
+                        <div className="credential-head">
+                            <div className="credential-title">
+                                <BadgeCheck size={18} />
+                                <span>자격증</span>
+                            </div>
+                            <span className="credential-count">{certifications.length} Items</span>
+                        </div>
+                        <div className="certificate-list">
+                            {certifications.map((item) => (
+                                <article className="certificate-card" key={`${item.title}-${item.status}`}>
+                                    <div className="certificate-card-top">
+                                        <span className="certificate-chip">{item.kind}</span>
+                                        <ShieldCheck size={16} />
+                                    </div>
+                                    <strong>{item.title}</strong>
+                                    <p>{item.status}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="credential-panel award-panel">
+                        <div className="credential-head">
+                            <div className="credential-title">
+                                <Award size={18} />
+                                <span>수상 경력</span>
+                            </div>
+                            <span className="credential-count">{awards.length} Highlight</span>
+                        </div>
+                        <div className="award-list">
+                            {awards.map((item) => (
+                                <article className="award-card" key={`${item.title}-${item.date}`}>
+                                    <div className="award-medal">
+                                        <Medal size={18} />
+                                        <span>{item.result}</span>
+                                    </div>
+                                    <div className="award-copy">
+                                        <strong>{item.title}</strong>
+                                        <p>{item.date}</p>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
                 </motion.div>
             </motion.div>
         </section>
