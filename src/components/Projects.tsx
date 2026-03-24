@@ -17,6 +17,12 @@ import scheduleGroup from '../assets/projects/schedule/schedule-group.png';
 import scheduleErd from '../assets/projects/schedule/schedule-erd.png';
 import scheduleArchitecture from '../assets/projects/schedule/schedule-architecture.png';
 import scheduleOutputFlow from '../assets/projects/schedule/schedule-output-flow.svg';
+import controlDockDashboard from '../assets/projects/controldock/controldock-dashboard.png';
+import controlDockAgentUi from '../assets/projects/controldock/controldock-agent-ui.png';
+import controlDockDeploymentUi from '../assets/projects/controldock/controldock-deployment-ui.png';
+import controlDockArchitecture from '../assets/projects/controldock/controldock-architecture.png';
+import controlDockDbDesign from '../assets/projects/controldock/controldock-db-design.png';
+import controlDockSequence from '../assets/projects/controldock/controldock-sequence.png';
 import weddingTitle from '../assets/projects/wedding/wedding-title.jpg';
 import weddingBride from '../assets/projects/wedding/wedding-bride.jpg';
 import weddingPhotobooth from '../assets/projects/wedding/wedding-photobooth.jpg';
@@ -107,6 +113,31 @@ const projects: Project[] = [
             { href: `${import.meta.env.BASE_URL}projects/schedule/ai-schedule-web-presentation.pptx`, label: 'Presentation', icon: 'external' },
         ],
         isTeam: false,
+    },
+    {
+        id: 'control-dock',
+        title: 'ControlDock',
+        period: '2025.12',
+        summary:
+            '중앙 서버가 여러 Windows 에이전트 PC와 통신하며 상태를 확인하고, 원격 배포 작업과 사내 공지 전송을 통합 관리하는 원격 모니터링 및 배포 시스템',
+        stack: ['Python', 'PostgreSQL', 'Docker', 'HTML/CSS/JS', 'TCP/UDP', 'REST API'],
+        role: '팀 프로젝트에서 HTTP·TCP·UDP 서버와 백엔드 서비스 로직을 맡아 PC 등록 승인 흐름, 상태 체크, 원격 배포 요청 처리, 공지 전송 프로토콜을 구현',
+        highlights: ['에이전트 등록 및 상태 모니터링', '원격 배포 실행·재시도 설계', '브로드캐스트 공지 및 수신 추적'],
+        visuals: [
+            { src: controlDockDashboard, alt: '메인 대시보드' },
+            { src: controlDockAgentUi, alt: '에이전트 관리 UI' },
+            { src: controlDockDeploymentUi, alt: '배포 관리 UI' },
+        ],
+        artifacts: [
+            { name: 'C/S 아키텍처', src: controlDockArchitecture },
+            { name: 'DB 설계', src: controlDockDbDesign },
+            { name: 'PC 등록 시퀀스', src: controlDockSequence },
+        ],
+        links: [
+            { href: 'https://github.com/shinyeonjun/ControlDock', label: 'GitHub', icon: 'github' },
+            { href: `${import.meta.env.BASE_URL}projects/controldock/controldock-presentation.pdf`, label: 'Presentation', icon: 'external' },
+        ],
+        isTeam: true,
     },
     {
         id: 'wedding-album',

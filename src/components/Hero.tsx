@@ -202,7 +202,7 @@ export default function Hero() {
                 >
                     <div className="stat-card">
                         <span>핵심 프로젝트</span>
-                        <strong>4 Projects</strong>
+                        <strong>5 Projects</strong>
                     </div>
                     <div className="stat-card">
                         <span>주요 스택</span>

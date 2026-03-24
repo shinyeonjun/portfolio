@@ -9,6 +9,7 @@ const projectItems = [
     { id: 'de-pipeline', label: 'DE-pipeline' },
     { id: 'caps', label: 'Meeting AI' },
     { id: 'ai-schedule', label: 'AI Schedule' },
+    { id: 'control-dock', label: 'ControlDock' },
     { id: 'wedding-album', label: 'Wedding Album' },
 ] as const;
 
