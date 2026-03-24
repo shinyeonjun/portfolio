@@ -71,7 +71,7 @@ export default function ProjectsTimeline() {
             }
         };
 
-        syncFromHash(false);
+        syncFromHash(true);
 
         const handleHashChange = () => {
             syncFromHash(true);
@@ -177,72 +177,7 @@ export default function ProjectsTimeline() {
                 </motion.div>
 
                 <div className="growth-shell">
-                    <aside className="growth-rail" aria-label="시간순 프로젝트 목록">
-                        <div className="growth-rail-head">
-                            <span className="growth-rail-label">Time Order</span>
-                            <strong>
-                                {String(activeIndex + 1).padStart(2, '0')} /{' '}
-                                {String(projects.length).padStart(2, '0')}
-                            </strong>
-                        </div>
-
-                        <div className="growth-progress">
-                            {projects.map((project, index) => {
-                                const isActive = activeIndex === index;
-
-                                return (
-                                    <button
-                                        key={project.id}
-                                        id={project.id}
-                                        type="button"
-                                        className={`growth-progress-item hover-trigger${isActive ? ' is-active' : ''}`}
-                                        onClick={() => goToProject(index)}
-                                        aria-current={isActive ? 'step' : undefined}
-                                        aria-controls="project-detail-panel"
-                                    >
-                                        <span className="growth-progress-dot" />
-                                        <span className="growth-progress-copy">
-                                            <small>
-                                                Phase {String(index + 1).padStart(2, '0')}
-                                            </small>
-                                            <strong>{project.title}</strong>
-                                            <em>{project.period}</em>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </aside>
-
                     <div className="growth-stage">
-                        <div className="growth-stage-toolbar">
-                            <div className="growth-control-status">
-                                <span>Current Project</span>
-                                <strong>{activeProject.title}</strong>
-                            </div>
-
-                            <div className="growth-controls">
-                                <button
-                                    type="button"
-                                    className="growth-control hover-trigger"
-                                    onClick={() => goToProject(activeIndex - 1)}
-                                    disabled={activeIndex === 0}
-                                    aria-label="이전 프로젝트"
-                                >
-                                    <ChevronLeft size={18} />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="growth-control hover-trigger"
-                                    onClick={() => goToProject(activeIndex + 1)}
-                                    disabled={activeIndex === projects.length - 1}
-                                    aria-label="다음 프로젝트"
-                                >
-                                    <ChevronRight size={18} />
-                                </button>
-                            </div>
-                        </div>
-
                         <AnimatePresence mode="wait">
                             <motion.article
                                 key={activeProject.id}
@@ -421,6 +356,63 @@ export default function ProjectsTimeline() {
                                 </div>
                             </motion.article>
                         </AnimatePresence>
+                    </div>
+
+                    <div className="growth-timeline-nav">
+                        <div className="growth-timeline-head">
+                            <div className="growth-control-status">
+                                <span>Timeline Focus</span>
+                                <strong>{activeProject.title}</strong>
+                            </div>
+
+                            <div className="growth-controls">
+                                <button
+                                    type="button"
+                                    className="growth-control hover-trigger"
+                                    onClick={() => goToProject(activeIndex - 1)}
+                                    disabled={activeIndex === 0}
+                                    aria-label="이전 프로젝트"
+                                >
+                                    <ChevronLeft size={18} />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="growth-control hover-trigger"
+                                    onClick={() => goToProject(activeIndex + 1)}
+                                    disabled={activeIndex === projects.length - 1}
+                                    aria-label="다음 프로젝트"
+                                >
+                                    <ChevronRight size={18} />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="growth-progress" aria-label="시간순 프로젝트 목록">
+                            {projects.map((project, index) => {
+                                const isActive = activeIndex === index;
+
+                                return (
+                                    <button
+                                        key={project.id}
+                                        id={project.id}
+                                        type="button"
+                                        className={`growth-progress-item hover-trigger${isActive ? ' is-active' : ''}`}
+                                        onClick={() => goToProject(index)}
+                                        aria-current={isActive ? 'step' : undefined}
+                                        aria-controls="project-detail-panel"
+                                    >
+                                        <span className="growth-progress-dot" />
+                                        <span className="growth-progress-copy">
+                                            <small>
+                                                Phase {String(index + 1).padStart(2, '0')}
+                                            </small>
+                                            <strong>{project.title}</strong>
+                                            <em>{project.period}</em>
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>
