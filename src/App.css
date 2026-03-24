@@ -15,6 +15,41 @@
   border-radius: 0 999px 999px 0;
 }
 
+.cursor-accent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  pointer-events: none;
+  padding: 0.2rem 0.34rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(191, 219, 254, 0.9);
+  box-shadow:
+    0 10px 24px -18px rgba(37, 99, 235, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+}
+
+.cursor-accent-bracket {
+  color: #2563eb;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.cursor-accent-core {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+  box-shadow: 0 0 0 4px rgba(219, 234, 254, 0.78);
+}
+
 /* ------------------------------------- */
 /* Typography Styles & Utilities         */
 /* ------------------------------------- */

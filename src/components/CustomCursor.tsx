@@ -1,110 +1,121 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-/**
- * 커스텀 커서 컴포넌트
- * - 중심 점(dot): 12px, 진한 색, 즉각 반응
- * - 바깥 링(ring): 40px, 부드럽게 추적
- * - 호버 시 링이 64px로 커지고 색상 강조
- */
+type PointerState = {
+    x: number;
+    y: number;
+    active: boolean;
+};
+
+function isInteractiveTarget(target: EventTarget | null) {
+    if (!(target instanceof HTMLElement)) {
+        return false;
+    }
+
+    const interactive = target.closest(
+        [
+            'a',
+            'button',
+            '[role="button"]',
+            '.hover-trigger',
+            '.growth-progress-item',
+            '.growth-control',
+            '.growth-primary-visual',
+            '.growth-support-card',
+            '.growth-artifact-card',
+            '.project-link',
+            '.contact-inline-copy',
+        ].join(','),
+    );
+
+    if (!interactive) {
+        return false;
+    }
+
+    if (interactive instanceof HTMLButtonElement && interactive.disabled) {
+        return false;
+    }
+
+    return true;
+}
+
 export default function CustomCursor() {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [isHovering, setIsHovering] = useState(false);
+    const [enabled, setEnabled] = useState(false);
+    const [pointer, setPointer] = useState<PointerState>({
+        x: 0,
+        y: 0,
+        active: false,
+    });
 
     useEffect(() => {
-        const updateMousePosition = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+        const finePointerMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        const updateAvailability = () => {
+            setEnabled(finePointerMedia.matches && !reducedMotionMedia.matches);
         };
 
-        const handleMouseOver = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            // 링크, 버튼, hover-trigger 클래스가 있는 요소에서 호버 상태 활성화
-            if (
-                target.tagName.toLowerCase() === 'a' ||
-                target.tagName.toLowerCase() === 'button' ||
-                target.closest('a') ||
-                target.closest('button') ||
-                target.classList.contains('hover-trigger') ||
-                target.closest('.hover-trigger') ||
-                target.closest('.stat-card') ||
-                target.closest('.stack-chip') ||
-                target.closest('.highlight-chip') ||
-                target.closest('.visual-card') ||
-                target.closest('.panel') ||
-                target.closest('.project-link')
-            ) {
-                setIsHovering(true);
-            } else {
-                setIsHovering(false);
-            }
-        };
+        updateAvailability();
 
-        window.addEventListener('mousemove', updateMousePosition);
-        window.addEventListener('mouseover', handleMouseOver);
+        finePointerMedia.addEventListener('change', updateAvailability);
+        reducedMotionMedia.addEventListener('change', updateAvailability);
 
         return () => {
-            window.removeEventListener('mousemove', updateMousePosition);
-            window.removeEventListener('mouseover', handleMouseOver);
+            finePointerMedia.removeEventListener('change', updateAvailability);
+            reducedMotionMedia.removeEventListener('change', updateAvailability);
         };
     }, []);
 
-    const dotStyle: React.CSSProperties = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: 12,
-        height: 12,
-        borderRadius: '50%',
-        backgroundColor: isHovering ? '#2563eb' : '#0f172a',
-        pointerEvents: 'none',
-        zIndex: 9999,
-        mixBlendMode: 'difference' as const,
-    };
+    useEffect(() => {
+        if (!enabled) {
+            return undefined;
+        }
 
-    const ringSize = isHovering ? 64 : 40;
-    const ringStyle: React.CSSProperties = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: ringSize,
-        height: ringSize,
-        borderRadius: '50%',
-        border: isHovering
-            ? '2px solid rgba(37, 99, 235, 0.6)'
-            : '1.5px solid rgba(15, 23, 42, 0.25)',
-        backgroundColor: isHovering
-            ? 'rgba(37, 99, 235, 0.08)'
-            : 'transparent',
-        pointerEvents: 'none',
-        zIndex: 9998,
-    };
+        const handlePointerMove = (event: PointerEvent) => {
+            setPointer({
+                x: event.clientX,
+                y: event.clientY,
+                active: isInteractiveTarget(event.target),
+            });
+        };
+
+        const handlePointerLeave = () => {
+            setPointer((current) => ({ ...current, active: false }));
+        };
+
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        window.addEventListener('pointerleave', handlePointerLeave);
+
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerleave', handlePointerLeave);
+        };
+    }, [enabled]);
+
+    if (!enabled) {
+        return null;
+    }
 
     return (
-        <>
-            {/* 중심 점 - 즉각 반응 */}
-            <motion.div
-                style={dotStyle}
-                animate={{
-                    x: mousePosition.x - 6,
-                    y: mousePosition.y - 6,
-                    scale: isHovering ? 1.5 : 1,
-                }}
-                transition={{ type: 'tween', ease: 'backOut', duration: 0.08 }}
-            />
-            {/* 바깥 링 - 부드럽게 추적 */}
-            <motion.div
-                style={ringStyle}
-                animate={{
-                    x: mousePosition.x - ringSize / 2,
-                    y: mousePosition.y - ringSize / 2,
-                }}
-                transition={{
-                    type: 'spring',
-                    stiffness: 120,
-                    damping: 18,
-                    mass: 0.4,
-                }}
-            />
-        </>
+        <motion.div
+            className={`cursor-accent${pointer.active ? ' is-active' : ''}`}
+            animate={{
+                x: pointer.x + 12,
+                y: pointer.y - 14,
+                opacity: pointer.active ? 1 : 0,
+                scale: pointer.active ? 1 : 0.92,
+            }}
+            transition={{
+                x: { type: 'spring', stiffness: 520, damping: 34, mass: 0.24 },
+                y: { type: 'spring', stiffness: 520, damping: 34, mass: 0.24 },
+                opacity: { duration: 0.16, ease: 'easeOut' },
+                scale: { duration: 0.18, ease: 'easeOut' },
+            }}
+            aria-hidden="true"
+        >
+            <span className="cursor-accent-bracket">[</span>
+            <span className="cursor-accent-core" />
+            <span className="cursor-accent-bracket">]</span>
+        </motion.div>
     );
 }

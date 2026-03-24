@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import './App.css';
+import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import ProjectsTimelineSkeleton from './components/ProjectsTimelineSkeleton';
 
@@ -16,6 +17,7 @@ export default function App() {
 
     return (
         <div className="app-shell is-timeline-view">
+            <CustomCursor />
             <motion.div className="scroll-progress" style={{ scaleX }} />
 
             <header className="topbar">
