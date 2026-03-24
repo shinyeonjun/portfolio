@@ -50,7 +50,7 @@ function App() {
         <Projects />
       </main>
 
-      <footer className="footer" id="contact">
+      <footer className="footer">
         <div className="footer-links">
           <a
             href="https://github.com/shinyeonjun"

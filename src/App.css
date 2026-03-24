@@ -107,7 +107,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  width: 11.5rem;
+  width: 13rem;
+  max-height: calc(100vh - 8rem);
   padding: 1rem 0.85rem;
   border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 1.5rem;
@@ -117,6 +118,7 @@
     0 18px 40px -26px rgba(15, 23, 42, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-50%);
+  overflow-y: auto;
 }
 
 .quick-nav-title {
@@ -131,6 +133,13 @@
 .quick-nav-links {
   display: grid;
   gap: 0.45rem;
+}
+
+.quick-nav-group {
+  display: grid;
+  gap: 0.5rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
 }
 
 .quick-nav-link {
@@ -149,6 +158,10 @@
     box-shadow 0.25s ease;
 }
 
+.quick-nav-group-link {
+  font-weight: 700;
+}
+
 .quick-nav-link:hover {
   color: #0f172a;
   background: rgba(241, 245, 249, 0.92);
@@ -163,6 +176,47 @@
     0 10px 24px -18px rgba(37, 99, 235, 0.55);
 }
 
+.quick-nav-subitems {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.quick-nav-sublink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.56rem 0.8rem 0.56rem 1.05rem;
+  border-radius: 0.9rem;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.quick-nav-sublink:hover {
+  color: #0f172a;
+  background: rgba(241, 245, 249, 0.86);
+  transform: translateX(-2px);
+}
+
+.quick-nav-sublink.is-active {
+  color: #1d4ed8;
+  background: rgba(219, 234, 254, 0.72);
+}
+
+.quick-nav-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
 @media (max-width: 1100px) {
   .quick-nav {
     display: none;
@@ -174,8 +228,7 @@
 /* ------------------------------------- */
 #home,
 #credentials,
-#projects,
-#contact {
+#projects {
   scroll-margin-top: 7rem;
 }
 
@@ -740,6 +793,7 @@
   position: relative;
   padding: 5rem 0;
   border-top: 1px solid rgba(203, 213, 225, 0.5);
+  scroll-margin-top: 7rem;
 }
 
 .project-head {

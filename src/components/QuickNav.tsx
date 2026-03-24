@@ -1,51 +1,72 @@
-import { BadgeCheck, FolderKanban, House, Mail } from 'lucide-react';
+import { BadgeCheck, FolderKanban, House } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const navItems = [
+const primaryItems = [
     { id: 'home', label: 'Home', icon: House },
     { id: 'credentials', label: 'Profile', icon: BadgeCheck },
-    { id: 'projects', label: 'Projects', icon: FolderKanban },
-    { id: 'contact', label: 'Contact', icon: Mail },
+] as const;
+
+const projectItems = [
+    { id: 'de-pipeline', label: 'DE-pipeline' },
+    { id: 'caps', label: 'Meeting AI' },
+    { id: 'ai-schedule', label: 'AI Schedule' },
+    { id: 'wedding-album', label: 'Wedding Album' },
+] as const;
+
+const observedIds = [
+    ...primaryItems.map((item) => item.id),
+    'projects',
+    ...projectItems.map((item) => item.id),
 ] as const;
 
 export default function QuickNav() {
-    const [activeId, setActiveId] = useState<(typeof navItems)[number]['id']>('home');
+    const [activeId, setActiveId] = useState<(typeof observedIds)[number]>('home');
 
     useEffect(() => {
-        const sections = navItems
-            .map((item) => document.getElementById(item.id))
+        const sections = observedIds
+            .map((id) => document.getElementById(id))
             .filter((section): section is HTMLElement => section !== null);
 
         if (!sections.length) {
             return undefined;
         }
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleEntries = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const updateActiveSection = () => {
+            const activationLine = window.innerHeight * 0.24;
+            const candidates = sections
+                .map((section) => ({
+                    id: section.id,
+                    top: section.getBoundingClientRect().top,
+                }))
+                .filter((section) => section.top <= activationLine)
+                .sort((a, b) => b.top - a.top);
 
-                if (visibleEntries[0]) {
-                    setActiveId(visibleEntries[0].target.id as (typeof navItems)[number]['id']);
-                }
-            },
-            {
-                rootMargin: '-32% 0px -42% 0px',
-                threshold: [0.15, 0.3, 0.5, 0.7],
+            if (candidates[0]) {
+                setActiveId(candidates[0].id as (typeof observedIds)[number]);
+                return;
             }
-        );
 
-        sections.forEach((section) => observer.observe(section));
+            setActiveId(sections[0].id as (typeof observedIds)[number]);
+        };
 
-        return () => observer.disconnect();
+        updateActiveSection();
+        window.addEventListener('scroll', updateActiveSection, { passive: true });
+        window.addEventListener('resize', updateActiveSection);
+
+        return () => {
+            window.removeEventListener('scroll', updateActiveSection);
+            window.removeEventListener('resize', updateActiveSection);
+        };
     }, []);
+
+    const isProjectGroupActive =
+        activeId === 'projects' || projectItems.some((item) => item.id === activeId);
 
     return (
         <nav className="quick-nav" aria-label="페이지 바로가기">
             <span className="quick-nav-title">Quick Jump</span>
             <div className="quick-nav-links">
-                {navItems.map((item) => {
+                {primaryItems.map((item) => {
                     const Icon = item.icon;
 
                     return (
@@ -61,6 +82,32 @@ export default function QuickNav() {
                         </a>
                     );
                 })}
+            </div>
+
+            <div className="quick-nav-group">
+                <a
+                    href="#projects"
+                    className={`quick-nav-link quick-nav-group-link hover-trigger${isProjectGroupActive ? ' is-active' : ''}`}
+                    aria-current={activeId === 'projects' ? 'page' : undefined}
+                    onClick={() => setActiveId('projects')}
+                >
+                    <FolderKanban size={16} />
+                    <span>Projects</span>
+                </a>
+                <div className="quick-nav-subitems">
+                    {projectItems.map((item) => (
+                        <a
+                            key={item.id}
+                            href={`#${item.id}`}
+                            className={`quick-nav-sublink hover-trigger${activeId === item.id ? ' is-active' : ''}`}
+                            aria-current={activeId === item.id ? 'page' : undefined}
+                            onClick={() => setActiveId(item.id)}
+                        >
+                            <span className="quick-nav-dot" />
+                            <span>{item.label}</span>
+                        </a>
+                    ))}
+                </div>
             </div>
         </nav>
     );
