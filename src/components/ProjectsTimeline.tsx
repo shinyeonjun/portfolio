@@ -1,14 +1,43 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { timelineProjects } from './projectData';
+import type { Project } from './projectData';
+import ProjectsTimelineSkeleton from './ProjectsTimelineSkeleton';
+
+type LightboxState = {
+    src: string;
+    alt: string;
+} | null;
 
 export default function ProjectsTimeline() {
-    const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+    const [projects, setProjects] = useState<Project[] | null>(null);
+    const [lightbox, setLightbox] = useState<LightboxState>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const lightboxRef = useRef<HTMLDivElement | null>(null);
     const sliderRef = useRef<HTMLDivElement | null>(null);
     const slideRefs = useRef<Array<HTMLElement | null>>([]);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        import('./projectData')
+            .then((module) => {
+                if (cancelled) {
+                    return;
+                }
+
+                setProjects(module.timelineProjects);
+            })
+            .catch(() => {
+                if (!cancelled) {
+                    setProjects([]);
+                }
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     useEffect(() => {
         if (lightbox) {
@@ -17,10 +46,14 @@ export default function ProjectsTimeline() {
     }, [lightbox]);
 
     useEffect(() => {
+        if (!projects?.length) {
+            return;
+        }
+
         const slider = sliderRef.current;
 
         if (!slider) {
-            return undefined;
+            return;
         }
 
         const handleScroll = () => {
@@ -34,16 +67,20 @@ export default function ProjectsTimeline() {
         slider.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => slider.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [projects]);
 
     useEffect(() => {
+        if (!projects?.length) {
+            return;
+        }
+
         const hashId = window.location.hash.replace('#', '');
 
         if (!hashId) {
             return;
         }
 
-        const targetIndex = timelineProjects.findIndex((project) => project.id === hashId);
+        const targetIndex = projects.findIndex((project) => project.id === hashId);
 
         if (targetIndex >= 0) {
             requestAnimationFrame(() => {
@@ -55,10 +92,14 @@ export default function ProjectsTimeline() {
                 setActiveIndex(targetIndex);
             });
         }
-    }, []);
+    }, [projects]);
 
     const goToSlide = (index: number) => {
-        const clampedIndex = Math.max(0, Math.min(index, timelineProjects.length - 1));
+        if (!projects?.length) {
+            return;
+        }
+
+        const clampedIndex = Math.max(0, Math.min(index, projects.length - 1));
         slideRefs.current[clampedIndex]?.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
@@ -67,7 +108,23 @@ export default function ProjectsTimeline() {
         setActiveIndex(clampedIndex);
     };
 
-    const activeProject = timelineProjects[activeIndex];
+    if (!projects) {
+        return <ProjectsTimelineSkeleton />;
+    }
+
+    if (!projects.length) {
+        return (
+            <section className="section growth-section" id="projects">
+                <div className="section-header growth-section-header">
+                    <p className="eyebrow">Growth Flow</p>
+                    <h2>프로젝트 데이터를 불러오지 못했습니다.</h2>
+                    <p className="growth-intro">잠시 후 다시 새로고침해 주세요.</p>
+                </div>
+            </section>
+        );
+    }
+
+    const activeProject = projects[activeIndex] ?? projects[0];
 
     return (
         <>
@@ -120,15 +177,16 @@ export default function ProjectsTimeline() {
                     <p className="eyebrow">Growth Flow</p>
                     <h2>시간순 성장 흐름</h2>
                     <p className="growth-intro">
-                        세로로 길게 펼치기보다, 2025에서 2026까지 어떤 프로젝트를 거치며 지금의
-                        방향으로 왔는지 좌우 슬라이드로 훑어보는 비교용 실험 페이지
+                        세로로 길게 펼치기보다, 2025에서 2026까지 어떤 프로젝트를 거치며
+                        지금의 방향으로 왔는지 좌우 슬라이드로 훑어보는 메인 프로젝트
+                        페이지입니다.
                     </p>
                 </motion.div>
 
                 <div className="growth-shell">
                     <div className="growth-header-row">
                         <div className="growth-progress" aria-label="프로젝트 성장 순서">
-                            {timelineProjects.map((project, index) => {
+                            {projects.map((project, index) => {
                                 const isActive = activeIndex === index;
 
                                 return (
@@ -163,14 +221,14 @@ export default function ProjectsTimeline() {
                                 <span>Current Flow</span>
                                 <strong>
                                     {String(activeIndex + 1).padStart(2, '0')} /{' '}
-                                    {String(timelineProjects.length).padStart(2, '0')}
+                                    {String(projects.length).padStart(2, '0')}
                                 </strong>
                             </div>
                             <button
                                 type="button"
                                 className="growth-control hover-trigger"
                                 onClick={() => goToSlide(activeIndex + 1)}
-                                disabled={activeIndex === timelineProjects.length - 1}
+                                disabled={activeIndex === projects.length - 1}
                                 aria-label="다음 프로젝트"
                             >
                                 <ChevronRight size={18} />
@@ -180,7 +238,7 @@ export default function ProjectsTimeline() {
 
                     <div className="growth-stage">
                         <div className="growth-slider" ref={sliderRef}>
-                            {timelineProjects.map((project, index) => {
+                            {projects.map((project, index) => {
                                 const primaryVisual = project.visuals[0];
                                 const supportingVisuals = project.visuals.slice(1);
                                 const isActive = activeIndex === index;
@@ -295,6 +353,8 @@ export default function ProjectsTimeline() {
                                                         src={primaryVisual.src}
                                                         alt={primaryVisual.alt}
                                                         className="growth-primary-image"
+                                                        loading={index === 0 ? 'eager' : 'lazy'}
+                                                        decoding="async"
                                                     />
                                                 </button>
 
@@ -307,7 +367,12 @@ export default function ProjectsTimeline() {
                                                                 key={visual.alt}
                                                                 onClick={() => setLightbox(visual)}
                                                             >
-                                                                <img src={visual.src} alt={visual.alt} />
+                                                                <img
+                                                                    src={visual.src}
+                                                                    alt={visual.alt}
+                                                                    loading="lazy"
+                                                                    decoding="async"
+                                                                />
                                                                 <span>{visual.alt}</span>
                                                             </button>
                                                         ))}
@@ -334,7 +399,12 @@ export default function ProjectsTimeline() {
                                                                 <span>Reference</span>
                                                             </div>
                                                             {artifact.src ? (
-                                                                <img src={artifact.src} alt={artifact.name} />
+                                                                <img
+                                                                    src={artifact.src}
+                                                                    alt={artifact.name}
+                                                                    loading="lazy"
+                                                                    decoding="async"
+                                                                />
                                                             ) : (
                                                                 <div className="artifact-placeholder">
                                                                     다이어그램 영역
@@ -354,8 +424,8 @@ export default function ProjectsTimeline() {
 
                 <div className="growth-caption">
                     <span className="growth-caption-label">Current Focus</span>
-                    <strong>{activeProject?.title}</strong>
-                    <p>{activeProject?.period}</p>
+                    <strong>{activeProject.title}</strong>
+                    <p>{activeProject.period}</p>
                 </div>
             </section>
         </>

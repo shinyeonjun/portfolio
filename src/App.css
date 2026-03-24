@@ -80,6 +80,25 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.view-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #0f172a;
+  box-shadow:
+    0 10px 28px -24px rgba(15, 23, 42, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .view-switch-button {
   display: inline-flex;
   align-items: center;
@@ -394,16 +413,27 @@
 .profile-hero-core {
   display: grid;
   justify-items: center;
+  width: 100%;
 }
 
 .app-shell.is-timeline-view .profile-hero-stage.is-growth {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.2fr) minmax(0, 0.9fr);
-  align-items: center;
-  gap: 1.25rem;
+  gap: 1.05rem;
   width: 100%;
   max-width: 1120px;
   margin-bottom: 1.8rem;
+}
+
+.app-shell.is-timeline-view .profile-hero-core {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.growth-hero-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
 }
 
 .growth-hero-panel {
@@ -1238,21 +1268,8 @@
 
 @media (max-width: 1180px) {
   .app-shell.is-timeline-view .profile-hero-stage.is-growth {
-    grid-template-columns: 1fr;
     max-width: 48rem;
     gap: 1rem;
-  }
-
-  .app-shell.is-timeline-view .profile-hero-core {
-    order: 1;
-  }
-
-  .app-shell.is-timeline-view .growth-hero-panel-note {
-    order: 2;
-  }
-
-  .app-shell.is-timeline-view .growth-hero-panel-facts {
-    order: 3;
   }
 }
 
@@ -1290,6 +1307,10 @@
   .app-shell.is-timeline-view .hero-wrap::before,
   .app-shell.is-timeline-view .hero-wrap::after {
     display: none;
+  }
+
+  .growth-hero-strip {
+    grid-template-columns: 1fr;
   }
 
   .growth-hero-panel {
@@ -1349,6 +1370,141 @@
   font-size: 1rem;
   line-height: 1.86;
   word-break: keep-all;
+}
+
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(226, 232, 240, 0.92) 0%, rgba(241, 245, 249, 0.96) 100%);
+}
+
+.skeleton-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.7) 45%, transparent 100%);
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.timeline-skeleton-header .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.skeleton-title {
+  width: min(24rem, 78%);
+  height: clamp(2.7rem, 4vw, 3.5rem);
+  margin: 0 auto;
+  border-radius: 1rem;
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 0.95rem;
+  border-radius: 999px;
+}
+
+.skeleton-line-wide {
+  width: min(36rem, 84%);
+  margin: 1rem auto 0;
+}
+
+.skeleton-line-short {
+  width: 58%;
+}
+
+.skeleton-line-shorter {
+  width: 42%;
+}
+
+.timeline-skeleton-progress-item {
+  pointer-events: none;
+}
+
+.timeline-skeleton-copy {
+  display: grid;
+  gap: 0.42rem;
+  width: 100%;
+}
+
+.timeline-skeleton-controls .growth-control {
+  border-color: rgba(226, 232, 240, 0.92);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.timeline-skeleton-circle {
+  pointer-events: none;
+}
+
+.timeline-skeleton-card {
+  pointer-events: none;
+}
+
+.timeline-skeleton-copy-panel {
+  gap: 1rem;
+}
+
+.skeleton-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.skeleton-chip {
+  width: 6.4rem;
+  height: 1.9rem;
+}
+
+.skeleton-chip-wide {
+  width: 8.2rem;
+}
+
+.timeline-skeleton-heading {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.skeleton-heading {
+  width: min(19rem, 90%);
+  height: 3rem;
+  border-radius: 1rem;
+}
+
+.timeline-skeleton-block {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.timeline-skeleton-stack {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.timeline-skeleton-visual {
+  display: block;
+}
+
+.timeline-skeleton-image {
+  width: 100%;
+  height: 24rem;
+  border-radius: 0;
+}
+
+.timeline-skeleton-support {
+  pointer-events: none;
+}
+
+.timeline-skeleton-thumb {
+  width: 100%;
+  height: 7.25rem;
+  border-radius: 0.85rem;
 }
 
 .growth-shell {
