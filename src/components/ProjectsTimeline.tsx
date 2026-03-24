@@ -178,6 +178,27 @@ export default function ProjectsTimeline() {
 
                 <div className="growth-shell">
                     <div className="growth-stage">
+                        <div className="growth-stage-arrows" aria-label="프로젝트 이동">
+                            <button
+                                type="button"
+                                className="growth-control growth-control-floating hover-trigger"
+                                onClick={() => goToProject(activeIndex - 1)}
+                                disabled={activeIndex === 0}
+                                aria-label="이전 프로젝트"
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+                            <button
+                                type="button"
+                                className="growth-control growth-control-floating hover-trigger"
+                                onClick={() => goToProject(activeIndex + 1)}
+                                disabled={activeIndex === projects.length - 1}
+                                aria-label="다음 프로젝트"
+                            >
+                                <ChevronRight size={18} />
+                            </button>
+                        </div>
+
                         <AnimatePresence mode="wait">
                             <motion.article
                                 key={activeProject.id}
@@ -361,29 +382,11 @@ export default function ProjectsTimeline() {
                     <div className="growth-timeline-nav">
                         <div className="growth-timeline-head">
                             <div className="growth-control-status">
-                                <span>Timeline Focus</span>
-                                <strong>{activeProject.title}</strong>
-                            </div>
-
-                            <div className="growth-controls">
-                                <button
-                                    type="button"
-                                    className="growth-control hover-trigger"
-                                    onClick={() => goToProject(activeIndex - 1)}
-                                    disabled={activeIndex === 0}
-                                    aria-label="이전 프로젝트"
-                                >
-                                    <ChevronLeft size={18} />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="growth-control hover-trigger"
-                                    onClick={() => goToProject(activeIndex + 1)}
-                                    disabled={activeIndex === projects.length - 1}
-                                    aria-label="다음 프로젝트"
-                                >
-                                    <ChevronRight size={18} />
-                                </button>
+                                <span>Timeline Order</span>
+                                <strong>
+                                    {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                                    {String(projects.length).padStart(2, '0')}
+                                </strong>
                             </div>
                         </div>
 

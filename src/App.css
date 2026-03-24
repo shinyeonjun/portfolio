@@ -1696,6 +1696,21 @@
 .growth-stage {
   position: relative;
   min-width: 0;
+  padding-inline: 3.4rem;
+}
+
+.growth-stage-arrows {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.growth-control-floating {
+  pointer-events: auto;
 }
 
 .growth-timeline-nav {
@@ -1713,7 +1728,7 @@
 .growth-timeline-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
 }
 
@@ -2235,6 +2250,10 @@
     grid-template-columns: 1fr;
   }
 
+  .growth-stage {
+    padding-inline: 2.6rem;
+  }
+
   .growth-progress-item {
     min-width: 14rem;
   }
@@ -2529,6 +2548,15 @@ button,
 
   .growth-controls {
     justify-content: flex-start;
+  }
+
+  .growth-stage {
+    padding-inline: 2rem;
+  }
+
+  .growth-control-floating {
+    width: 2.45rem;
+    height: 2.45rem;
   }
 
   .growth-slide-card {
