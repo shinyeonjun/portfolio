@@ -112,7 +112,7 @@ export const projects: Project[] = [
         links: [
             { href: 'https://github.com/shinyeonjun/ai-schedule-web', label: 'GitHub', icon: 'github' },
             {
-                href: `${import.meta.env.BASE_URL}projects/schedule/ai-schedule-web-presentation.pptx`,
+                href: `${import.meta.env.BASE_URL}projects/schedule/ai-schedule-web-presentation.pdf`,
                 label: 'Presentation',
                 icon: 'external',
             },

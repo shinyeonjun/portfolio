@@ -7,7 +7,7 @@ export default function ProjectsTimelineSkeleton() {
     return (
         <section className="section growth-section timeline-skeleton" id="projects" aria-busy="true">
             <div className="section-header growth-section-header timeline-skeleton-header">
-                <p className="eyebrow">Growth Flow</p>
+                <p className="eyebrow">Projects</p>
                 <div className="skeleton-block skeleton-title" />
                 <div className="skeleton-block skeleton-line skeleton-line-wide" />
             </div>

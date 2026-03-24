@@ -246,54 +246,38 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                     </div>
 
                     {isGrowthVariant && (
-                        <div className="growth-hero-strip">
-                            <motion.aside
-                                className="growth-hero-panel growth-hero-panel-note"
-                                variants={fadeUpVariants}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <span className="growth-hero-panel-label">Growth Angle</span>
-                                <strong className="growth-hero-panel-title">
-                                    구조와 흐름을 먼저 설계하는 방향으로 확장해왔습니다.
-                                </strong>
-                                <p className="growth-hero-panel-copy">
-                                    기능을 만들 때도 화면보다 데이터가 어디서 들어오고, 어떻게
-                                    쌓이고, 어떤 동작으로 이어지는지부터 정리하는 쪽에 더
-                                    가깝습니다.
-                                </p>
-                                <div className="growth-hero-pillars">
-                                    {growthHeroPillars.map((item) => (
-                                        <span className="growth-hero-pill" key={item}>
-                                            {item}
-                                        </span>
-                                    ))}
-                                </div>
-                            </motion.aside>
+                        <motion.div
+                            className="growth-hero-summary"
+                            variants={fadeUpVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <span className="growth-hero-panel-label">Growth Angle</span>
+                            <strong className="growth-hero-summary-title">
+                                구조를 먼저 잡고, 데이터와 동작이 실제로 이어지게 만드는 쪽에
+                                강점이 있습니다.
+                            </strong>
+                            <p className="growth-hero-summary-copy">
+                                일정 관리와 프로토타입 작업에서 출발해 데이터 파이프라인, 운영
+                                흐름, AI 보조 시스템까지 범위를 넓혀왔습니다.
+                            </p>
 
-                            <motion.aside
-                                className="growth-hero-panel growth-hero-panel-facts"
-                                variants={fadeUpVariants}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <div className="growth-hero-panel-topline">
-                                    <span className="growth-hero-panel-label">Current Track</span>
-                                    <span className="growth-hero-panel-period">2025 → 2026</span>
-                                </div>
-                                <div className="growth-hero-facts">
-                                    {growthHeroFacts.map((item) => (
-                                        <div className="growth-hero-fact" key={item.label}>
-                                            <span>{item.label}</span>
-                                            <strong>{item.value}</strong>
-                                        </div>
-                                    ))}
-                                </div>
-                                <p className="growth-hero-panel-copy">
-                                    일정 관리나 프로토타입 성격의 작업에서 시작해서, 지금은
-                                    팀/개인 프로젝트를 오가며 운영 흐름과 AI 보조 시스템까지
-                                    범위를 넓히는 중입니다.
-                                </p>
-                            </motion.aside>
-                        </div>
+                            <div className="growth-hero-pillars">
+                                {growthHeroPillars.map((item) => (
+                                    <span className="growth-hero-pill" key={item}>
+                                        {item}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className="growth-hero-facts growth-hero-facts-inline">
+                                {growthHeroFacts.map((item) => (
+                                    <div className="growth-hero-fact" key={item.label}>
+                                        <span>{item.label}</span>
+                                        <strong>{item.value}</strong>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
                     )}
                 </div>
 

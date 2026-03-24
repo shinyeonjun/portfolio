@@ -28,8 +28,6 @@
 html {
   /* Lenis handles smooth scrolling, but keep this for fallback */
   scroll-behavior: smooth;
-  cursor: none;
-  /* Hide default cursor for custom cursor */
 }
 
 /* Lenis recommended base styles */
@@ -58,8 +56,6 @@ body {
   margin: 0;
   min-width: 320px;
   background: var(--color-bg);
-  cursor: none;
-  /* Hide default for custom cursor */
 }
 
 body,
