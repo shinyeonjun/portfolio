@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import deDashboard from '../assets/projects/de/de-dashboard.png';
 import deChart from '../assets/projects/de/de-chart.png';
@@ -134,7 +134,7 @@ const projects: Project[] = [
     },
 ];
 
-const staggerVariants: any = {
+const staggerVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     show: {
         opacity: 1,
@@ -147,7 +147,7 @@ const staggerVariants: any = {
     },
 };
 
-const childVariants: any = {
+const childVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     show: {
         opacity: 1,
@@ -158,6 +158,13 @@ const childVariants: any = {
 
 export default function Projects() {
     const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+    const lightboxRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (lightbox) {
+            lightboxRef.current?.focus();
+        }
+    }, [lightbox]);
 
     return (
         <>
@@ -165,6 +172,7 @@ export default function Projects() {
             <AnimatePresence>
                 {lightbox && (
                     <motion.div
+                        ref={lightboxRef}
                         className="lightbox-overlay"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -174,6 +182,7 @@ export default function Projects() {
                         onKeyDown={(e) => e.key === 'Escape' && setLightbox(null)}
                         tabIndex={0}
                         role="dialog"
+                        aria-modal="true"
                     >
                         <motion.img
                             src={lightbox.src}
@@ -183,9 +192,17 @@ export default function Projects() {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+                            onClick={(event) => event.stopPropagation()}
                         />
                         <span className="lightbox-caption">{lightbox.alt}</span>
-                        <span className="lightbox-close">×</span>
+                        <button
+                            aria-label="이미지 닫기"
+                            className="lightbox-close"
+                            onClick={() => setLightbox(null)}
+                            type="button"
+                        >
+                            ×
+                        </button>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -213,24 +230,21 @@ export default function Projects() {
                     >
                         <motion.div className="project-head" variants={childVariants}>
                             <div>
-                                <div className="flex items-center gap-3 mb-2">
+                                <div className="project-meta">
                                     <span className="project-period">{project.period}</span>
                                     <span
-                                        className={`px-2 py-0.5 text-[0.7rem] font-bold rounded uppercase tracking-wider ${project.isTeam
-                                            ? 'bg-purple-100 text-purple-700'
-                                            : 'bg-emerald-100 text-emerald-700'
-                                            }`}
+                                        className={`project-badge ${project.isTeam ? 'team' : 'personal'}`}
                                     >
                                         {project.isTeam ? 'Team Project' : 'Personal'}
                                     </span>
                                 </div>
-                                <h3 className="font-serif">{project.title}</h3>
+                                <h3>{project.title}</h3>
                                 <p className="project-summary">{project.summary}</p>
                             </div>
                             <div className="project-links">
                                 {project.links.map((link) => (
                                     <a
-                                        className="project-link hover-trigger group"
+                                        className="project-link hover-trigger"
                                         href={link.href}
                                         key={`${project.id}-${link.label}`}
                                         target="_blank"

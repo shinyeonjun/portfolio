@@ -1,6 +1,24 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Github, Mail, ArrowDown } from 'lucide-react';
+
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+    },
+};
+
+const avatarVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    show: { opacity: 1, scale: 1 },
+};
+
+const fadeUpVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+};
 
 /**
  * 프로필 중심 Hero 섹션
@@ -54,21 +72,12 @@ export default function Hero() {
                 className="profile-container"
                 initial="hidden"
                 animate={revealed ? 'show' : 'hidden'}
-                variants={{
-                    hidden: { opacity: 0 },
-                    show: {
-                        opacity: 1,
-                        transition: { staggerChildren: 0.12, delayChildren: 0.3 },
-                    },
-                } as any}
+                variants={containerVariants}
             >
                 {/* 프로필 아바타 */}
                 <motion.div
                     className="profile-avatar-wrap"
-                    variants={{
-                        hidden: { opacity: 0, scale: 0.8 },
-                        show: { opacity: 1, scale: 1 },
-                    } as any}
+                    variants={avatarVariants}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                 >
                     <div className="profile-avatar">
@@ -84,10 +93,7 @@ export default function Hero() {
                 {/* 이름 & 역할 */}
                 <motion.div
                     className="profile-info"
-                    variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        show: { opacity: 1, y: 0 },
-                    } as any}
+                    variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
                     <h1 className="profile-name">신연준</h1>
@@ -98,10 +104,7 @@ export default function Hero() {
                 {/* 스택 아이콘 태그 */}
                 <motion.div
                     className="profile-tags"
-                    variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        show: { opacity: 1, y: 0 },
-                    } as any}
+                    variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
                     {[
@@ -137,10 +140,7 @@ export default function Hero() {
                 {/* 버튼 & 액션 */}
                 <motion.div
                     className="profile-actions"
-                    variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        show: { opacity: 1, y: 0 },
-                    } as any}
+                    variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
                     <a className="button primary hover-trigger" href="#projects">
@@ -165,10 +165,7 @@ export default function Hero() {
                 {/* 하단 통계 카드 */}
                 <motion.div
                     className="profile-stats"
-                    variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        show: { opacity: 1, y: 0 },
-                    } as any}
+                    variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
                     <div className="stat-card">

@@ -13,12 +13,12 @@ function App() {
   });
 
   return (
-    <div className="app-shell relative">
+    <div className="app-shell">
       <CustomCursor />
 
-      {/* Scroll Progress Bar for high-end feel */}
+      {/* 스크롤 진행률 표시 */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 origin-left z-50 rounded-r-full"
+        className="scroll-progress"
         style={{ scaleX }}
       />
 
@@ -27,18 +27,18 @@ function App() {
           신연준 Portfolio
         </a>
         <nav className="nav">
-          <a href="#projects" className="hover-trigger relative group">
+          <a href="#projects" className="hover-trigger nav-link">
             Projects
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+            <span className="nav-link-line" />
           </a>
           <a
             href="https://github.com/shinyeonjun"
             target="_blank"
             rel="noreferrer"
-            className="hover-trigger relative group"
+            className="hover-trigger nav-link"
           >
             GitHub
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-600 transition-all duration-300 group-hover:w-full"></span>
+            <span className="nav-link-line nav-link-line-muted" />
           </a>
         </nav>
       </header>
