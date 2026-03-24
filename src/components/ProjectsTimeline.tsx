@@ -170,13 +170,52 @@ export default function ProjectsTimeline() {
                     <p className="eyebrow">Projects</p>
                     <h2>시간순 프로젝트</h2>
                     <p className="growth-intro">
-                        프로젝트를 시간순으로 정리했습니다. 좌측 목록에서 작업 단계를 선택하면,
-                        그 시기의 문제 정의와 역할, 결과물을 데스크톱 기준으로 한 화면에서 읽을 수
-                        있게 구성했습니다.
+                        프로젝트를 시간순으로 정리했습니다. 위쪽 타임라인에서 단계를 고르면,
+                        아래 상세 카드가 바뀌는 구조입니다. 흐름은 유지하고, 읽는 경험은 데스크톱
+                        기준으로 안정적으로 가져가도록 정리했습니다.
                     </p>
                 </motion.div>
 
                 <div className="growth-shell">
+                    <div className="growth-timeline-nav">
+                        <div className="growth-timeline-head">
+                            <div className="growth-control-status">
+                                <span>Timeline Order</span>
+                                <strong>
+                                    {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                                    {String(projects.length).padStart(2, '0')}
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div className="growth-progress" aria-label="시간순 프로젝트 목록">
+                            {projects.map((project, index) => {
+                                const isActive = activeIndex === index;
+
+                                return (
+                                    <button
+                                        key={project.id}
+                                        id={project.id}
+                                        type="button"
+                                        className={`growth-progress-item hover-trigger${isActive ? ' is-active' : ''}`}
+                                        onClick={() => goToProject(index)}
+                                        aria-current={isActive ? 'step' : undefined}
+                                        aria-controls="project-detail-panel"
+                                    >
+                                        <span className="growth-progress-dot" />
+                                        <span className="growth-progress-copy">
+                                            <small>
+                                                Phase {String(index + 1).padStart(2, '0')}
+                                            </small>
+                                            <strong>{project.title}</strong>
+                                            <em>{project.period}</em>
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
                     <div className="growth-stage">
                         <div className="growth-stage-arrows" aria-label="프로젝트 이동">
                             <button
@@ -377,45 +416,6 @@ export default function ProjectsTimeline() {
                                 </div>
                             </motion.article>
                         </AnimatePresence>
-                    </div>
-
-                    <div className="growth-timeline-nav">
-                        <div className="growth-timeline-head">
-                            <div className="growth-control-status">
-                                <span>Timeline Order</span>
-                                <strong>
-                                    {String(activeIndex + 1).padStart(2, '0')} /{' '}
-                                    {String(projects.length).padStart(2, '0')}
-                                </strong>
-                            </div>
-                        </div>
-
-                        <div className="growth-progress" aria-label="시간순 프로젝트 목록">
-                            {projects.map((project, index) => {
-                                const isActive = activeIndex === index;
-
-                                return (
-                                    <button
-                                        key={project.id}
-                                        id={project.id}
-                                        type="button"
-                                        className={`growth-progress-item hover-trigger${isActive ? ' is-active' : ''}`}
-                                        onClick={() => goToProject(index)}
-                                        aria-current={isActive ? 'step' : undefined}
-                                        aria-controls="project-detail-panel"
-                                    >
-                                        <span className="growth-progress-dot" />
-                                        <span className="growth-progress-copy">
-                                            <small>
-                                                Phase {String(index + 1).padStart(2, '0')}
-                                            </small>
-                                            <strong>{project.title}</strong>
-                                            <em>{project.period}</em>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
                     </div>
                 </div>
             </section>
