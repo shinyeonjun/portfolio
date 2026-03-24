@@ -114,6 +114,22 @@ const skillGroups = [
     },
 ] as const;
 
+const growthHeroPillars = [
+    '문제 정의부터 구조화',
+    '데이터 흐름 우선 설계',
+    '자동화와 실제 동작 연결',
+] as const;
+
+const growthHeroFacts = [
+    { label: 'Now', value: 'Meeting Overlay Assistant' },
+    { label: 'Focus', value: 'Data · API · LLM' },
+    { label: 'Track', value: 'Personal + Team Projects' },
+] as const;
+
+type HeroProps = {
+    variant?: 'classic' | 'growth';
+};
+
 function fallbackCopy(text: string) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -126,7 +142,8 @@ function fallbackCopy(text: string) {
     document.body.removeChild(textarea);
 }
 
-export default function Hero() {
+export default function Hero({ variant = 'classic' }: HeroProps) {
+    const isGrowthVariant = variant === 'growth';
     const [revealed, setRevealed] = useState(false);
     const [contactOpen, setContactOpen] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -200,30 +217,85 @@ export default function Hero() {
             </AnimatePresence>
 
             <motion.div
-                className="profile-container"
+                className={`profile-container${isGrowthVariant ? ' is-growth-variant' : ''}`}
                 initial="hidden"
                 animate={revealed ? 'show' : 'hidden'}
                 variants={containerVariants}
             >
-                <motion.div
-                    className="profile-avatar-wrap"
-                    variants={avatarVariants}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                >
-                    <div className="profile-status">
-                        <div className="profile-status-dot" />
-                        <span>구직 중</span>
-                    </div>
-                </motion.div>
+                <div className={`profile-hero-stage${isGrowthVariant ? ' is-growth' : ''}`}>
+                    {isGrowthVariant && (
+                        <motion.aside
+                            className="growth-hero-panel growth-hero-panel-note"
+                            variants={fadeUpVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <span className="growth-hero-panel-label">Growth Angle</span>
+                            <strong className="growth-hero-panel-title">
+                                구조와 흐름을 먼저 설계하는 방향으로 확장해왔습니다.
+                            </strong>
+                            <p className="growth-hero-panel-copy">
+                                기능을 만들 때도 화면보다 데이터가 어디서 들어오고, 어떻게
+                                쌓이고, 어떤 동작으로 이어지는지부터 정리하는 쪽에 더
+                                가깝습니다.
+                            </p>
+                            <div className="growth-hero-pillars">
+                                {growthHeroPillars.map((item) => (
+                                    <span className="growth-hero-pill" key={item}>
+                                        {item}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.aside>
+                    )}
 
-                <motion.div
-                    className="profile-info"
-                    variants={fadeUpVariants}
-                    transition={{ duration: 0.5 }}
-                >
-                    <h1 className="profile-name">신연준</h1>
-                    <p className="profile-role">Backend & Data Pipeline Developer</p>
-                </motion.div>
+                    <div className="profile-hero-core">
+                        <motion.div
+                            className="profile-avatar-wrap"
+                            variants={avatarVariants}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                        >
+                            <div className="profile-status">
+                                <div className="profile-status-dot" />
+                                <span>구직 중</span>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            className="profile-info"
+                            variants={fadeUpVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <h1 className="profile-name">신연준</h1>
+                            <p className="profile-role">Backend & Data Pipeline Developer</p>
+                        </motion.div>
+                    </div>
+
+                    {isGrowthVariant && (
+                        <motion.aside
+                            className="growth-hero-panel growth-hero-panel-facts"
+                            variants={fadeUpVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <div className="growth-hero-panel-topline">
+                                <span className="growth-hero-panel-label">Current Track</span>
+                                <span className="growth-hero-panel-period">2025 → 2026</span>
+                            </div>
+                            <div className="growth-hero-facts">
+                                {growthHeroFacts.map((item) => (
+                                    <div className="growth-hero-fact" key={item.label}>
+                                        <span>{item.label}</span>
+                                        <strong>{item.value}</strong>
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="growth-hero-panel-copy">
+                                일정 관리나 프로토타입 성격의 작업에서 시작해서, 지금은
+                                팀/개인 프로젝트를 오가며 운영 흐름과 AI 보조 시스템까지
+                                범위를 넓히는 중입니다.
+                            </p>
+                        </motion.aside>
+                    )}
+                </div>
 
                 <motion.div
                     className="profile-skill-groups"
@@ -349,7 +421,7 @@ export default function Hero() {
                     transition={{ duration: 0.5 }}
                 >
                     <div className="stat-card">
-                        <span>핵심 프로젝트</span>
+                        <span>진행 프로젝트</span>
                         <strong>5 Projects</strong>
                     </div>
                     <div className="stat-card">

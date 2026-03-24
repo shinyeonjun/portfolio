@@ -102,7 +102,7 @@ export default function App() {
             </header>
 
             <main>
-                <Hero />
+                <Hero variant={isTimelineView ? 'growth' : 'classic'} />
                 {isTimelineView ? <ProjectsTimeline /> : <Projects />}
             </main>
 
