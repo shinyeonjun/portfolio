@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import {
     Award,
     BadgeCheck,
@@ -8,7 +8,6 @@ import {
     Github,
     Mail,
     ArrowDown,
-    Medal,
     ShieldCheck,
 } from 'lucide-react';
 
@@ -62,22 +61,54 @@ const certifications = [
 
 const awards = [
     {
-        title: 'SK hynix SPARK 창업 아이디어 챌린지',
+        title: 'SK hynix SPARK',
+        detail: '창업 아이디어 챌린지',
+        host: 'SK hynix',
         result: '4등',
         date: '2025.04',
     },
 ] as const;
 
-const skills = [
-    { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
-    { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
-    { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
-    { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
-    { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
-    { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
-    { name: 'RAG', icon: '', color: '#7c3aed' },
-    { name: 'LLM', icon: '', color: '#e11d48' },
-    { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
+const skillGroups = [
+    {
+        label: 'Language',
+        accent: '#dbeafe',
+        items: [
+            { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
+            { name: 'SQL', icon: '', color: '#0f766e' },
+            { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6', color: '#3178C6' },
+        ],
+    },
+    {
+        label: 'Frontend',
+        accent: '#ede9fe',
+        items: [
+            { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB', color: '#61DAFB' },
+            { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite/646CFF', color: '#646CFF' },
+            { name: 'Framer Motion', icon: 'https://cdn.simpleicons.org/framer/0055FF', color: '#0055FF' },
+        ],
+    },
+    {
+        label: 'Backend',
+        accent: '#dcfce7',
+        items: [
+            { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
+            { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
+            { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
+            { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
+        ],
+    },
+    {
+        label: 'Data · DevOps',
+        accent: '#fef3c7',
+        items: [
+            { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
+            { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED', color: '#2496ED' },
+            { name: 'RAG', icon: '', color: '#7c3aed' },
+            { name: 'LLM', icon: '', color: '#e11d48' },
+            { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
+        ],
+    },
 ] as const;
 
 function fallbackCopy(text: string) {
@@ -192,22 +223,40 @@ export default function Hero() {
                 </motion.div>
 
                 <motion.div
-                    className="profile-tags"
+                    className="profile-skill-groups"
                     variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
-                    {skills.map((skill) => (
-                        <span className="profile-tag" key={skill.name}>
-                            {skill.icon ? (
-                                <img src={skill.icon} alt={skill.name} className="profile-tag-icon" />
-                            ) : (
-                                <span
-                                    className="profile-tag-dot"
-                                    style={{ backgroundColor: skill.color }}
-                                />
-                            )}
-                            {skill.name}
-                        </span>
+                    {skillGroups.map((group) => (
+                        <article
+                            className="skill-group"
+                            key={group.label}
+                            style={{ '--skill-accent': group.accent } as CSSProperties}
+                        >
+                            <div className="skill-group-head">
+                                <span className="skill-group-label">{group.label}</span>
+                                <span className="skill-group-count">{group.items.length} Stack</span>
+                            </div>
+                            <div className="skill-group-items">
+                                {group.items.map((skill) => (
+                                    <span className="profile-tag" key={skill.name}>
+                                        {skill.icon ? (
+                                            <img
+                                                src={skill.icon}
+                                                alt={skill.name}
+                                                className="profile-tag-icon"
+                                            />
+                                        ) : (
+                                            <span
+                                                className="profile-tag-dot"
+                                                style={{ backgroundColor: skill.color }}
+                                            />
+                                        )}
+                                        {skill.name}
+                                    </span>
+                                ))}
+                            </div>
+                        </article>
                     ))}
                 </motion.div>
 
@@ -349,13 +398,17 @@ export default function Hero() {
                         <div className="award-list">
                             {awards.map((item) => (
                                 <article className="award-card" key={`${item.title}-${item.date}`}>
-                                    <div className="award-medal">
-                                        <Medal size={18} />
-                                        <span>{item.result}</span>
+                                    <div className="award-ribbon">
+                                        <span className="award-ribbon-label">Result</span>
+                                        <strong>{item.result}</strong>
                                     </div>
                                     <div className="award-copy">
+                                        <div className="award-meta">
+                                            <span className="award-host">{item.host}</span>
+                                            <span className="award-date">{item.date}</span>
+                                        </div>
                                         <strong>{item.title}</strong>
-                                        <p>{item.date}</p>
+                                        <p>{item.detail}</p>
                                     </div>
                                 </article>
                             ))}
