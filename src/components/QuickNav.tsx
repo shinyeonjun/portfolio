@@ -1,9 +1,8 @@
-import { BadgeCheck, FolderKanban, House } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const primaryItems = [
-    { id: 'home', label: 'Home', icon: House },
-    { id: 'credentials', label: 'Profile', icon: BadgeCheck },
+    { id: 'home', label: 'Home' },
+    { id: 'credentials', label: 'Profile' },
 ] as const;
 
 const projectItems = [
@@ -64,24 +63,19 @@ export default function QuickNav() {
 
     return (
         <nav className="quick-nav" aria-label="페이지 바로가기">
-            <span className="quick-nav-title">Quick Jump</span>
+            <span className="quick-nav-title">Contents</span>
             <div className="quick-nav-links">
-                {primaryItems.map((item) => {
-                    const Icon = item.icon;
-
-                    return (
-                        <a
-                            key={item.id}
-                            href={`#${item.id}`}
-                            className={`quick-nav-link hover-trigger${activeId === item.id ? ' is-active' : ''}`}
-                            aria-current={activeId === item.id ? 'page' : undefined}
-                            onClick={() => setActiveId(item.id)}
-                        >
-                            <Icon size={16} />
-                            <span>{item.label}</span>
-                        </a>
-                    );
-                })}
+                {primaryItems.map((item) => (
+                    <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        className={`quick-nav-link hover-trigger${activeId === item.id ? ' is-active' : ''}`}
+                        aria-current={activeId === item.id ? 'page' : undefined}
+                        onClick={() => setActiveId(item.id)}
+                    >
+                        <span>{item.label}</span>
+                    </a>
+                ))}
             </div>
 
             <div className="quick-nav-group">
@@ -91,7 +85,6 @@ export default function QuickNav() {
                     aria-current={activeId === 'projects' ? 'page' : undefined}
                     onClick={() => setActiveId('projects')}
                 >
-                    <FolderKanban size={16} />
                     <span>Projects</span>
                 </a>
                 <div className="quick-nav-subitems">

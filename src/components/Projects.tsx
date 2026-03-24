@@ -106,7 +106,7 @@ const projects: Project[] = [
             { href: 'https://github.com/shinyeonjun/ai-schedule-web', label: 'GitHub', icon: 'github' },
             { href: `${import.meta.env.BASE_URL}projects/schedule/ai-schedule-web-presentation.pptx`, label: 'Presentation', icon: 'external' },
         ],
-        isTeam: true,
+        isTeam: false,
     },
     {
         id: 'wedding-album',
