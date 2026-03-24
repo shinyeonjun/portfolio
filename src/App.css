@@ -436,6 +436,11 @@
   margin-bottom: 3rem;
 }
 
+.contact-popover-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -477,6 +482,135 @@
   background: #f8fafc;
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.contact-trigger.is-open {
+  border-color: rgba(59, 130, 246, 0.28);
+  color: #0f172a;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.92));
+  box-shadow:
+    0 14px 34px -22px rgba(37, 99, 235, 0.45),
+    inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+}
+
+.contact-popover {
+  position: absolute;
+  top: calc(100% + 0.85rem);
+  left: 50%;
+  z-index: 20;
+  width: min(22rem, calc(100vw - 2rem));
+  padding: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 1.3rem;
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+  color: #f8fafc;
+  text-align: left;
+  transform: translateX(-50%);
+  backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    0 28px 70px -28px rgba(15, 23, 42, 0.78),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.contact-popover::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0));
+  opacity: 0.9;
+}
+
+.contact-popover-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.contact-popover-label {
+  color: rgba(226, 232, 240, 0.72);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contact-popover-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.14);
+  color: rgba(226, 232, 240, 0.8);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.contact-popover-status.is-copied {
+  background: rgba(34, 197, 94, 0.16);
+  color: #bbf7d0;
+}
+
+.contact-popover-address {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.contact-popover-caption {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.74);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.contact-popover-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.95rem;
+}
+
+.contact-popover-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  padding: 0.72rem 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  font-size: 0.83rem;
+  font-weight: 600;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.contact-popover-action:hover {
+  transform: translateY(-2px);
+  border-color: rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-popover-action.is-primary {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(59, 130, 246, 0.84));
+  border-color: rgba(96, 165, 250, 0.38);
+}
+
+.contact-popover-action.is-primary:hover {
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.94), rgba(37, 99, 235, 0.9));
 }
 
 .profile-stats {
@@ -766,6 +900,16 @@
   .award-medal {
     margin: 0 auto;
   }
+
+  .contact-popover {
+    left: 0;
+    width: min(22rem, calc(100vw - 2.5rem));
+    transform: none;
+  }
+
+  .contact-popover-actions {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 공용 eyebrow (프로젝트 섹션) */
@@ -821,11 +965,18 @@
   margin-bottom: 3rem;
 }
 
+.project-copy {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 54rem;
+}
+
 @media (min-width: 768px) {
   .project-head {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 2rem;
   }
 }
 
@@ -875,11 +1026,15 @@
 }
 
 .project-summary {
-  max-width: 42rem;
+  max-width: none;
   margin: 0;
   color: #475569;
   font-size: 1.1rem;
-  line-height: 1.8;
+  line-height: 1.92;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 .project-link {
@@ -904,6 +1059,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 /* Meta Data (Role & Tech Stack) */
@@ -942,7 +1099,10 @@
   margin: 0;
   color: #334155;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.78;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 .stack-row {

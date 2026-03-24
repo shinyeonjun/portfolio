@@ -260,7 +260,7 @@ export default function Projects() {
                         viewport={{ once: true, margin: '-150px' }}
                     >
                         <motion.div className="project-head" variants={childVariants}>
-                            <div>
+                            <div className="project-copy">
                                 <div className="project-meta">
                                     <span className="project-period">{project.period}</span>
                                     <span

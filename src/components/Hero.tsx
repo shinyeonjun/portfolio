@@ -1,6 +1,19 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { Award, BadgeCheck, Github, Mail, ArrowDown, Medal, ShieldCheck } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import {
+    Award,
+    BadgeCheck,
+    Check,
+    Copy,
+    Github,
+    Mail,
+    ArrowDown,
+    Medal,
+    Send,
+    ShieldCheck,
+} from 'lucide-react';
+
+const CONTACT_EMAIL = 'sinyeonjun@gmail.com';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -56,41 +69,90 @@ const awards = [
     },
 ] as const;
 
-/**
- * 프로필 중심 Hero 섹션
- * - 커튼(오버레이)이 갈라지며 프로필이 드러나는 오프닝 애니메이션
- * - 프로필 아바타 + 이름/역할 + 스택 태그 + 버튼 링크
- */
+const skills = [
+    { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
+    { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
+    { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
+    { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
+    { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
+    { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
+    { name: 'RAG', icon: '', color: '#7c3aed' },
+    { name: 'LLM', icon: '', color: '#e11d48' },
+    { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
+] as const;
+
 export default function Hero() {
     const [revealed, setRevealed] = useState(false);
+    const [contactOpen, setContactOpen] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const contactRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        // 페이지 로드 후 0.6초 뒤에 커튼 오픈
         const timer = setTimeout(() => setRevealed(true), 600);
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        if (!contactOpen) {
+            return undefined;
+        }
+
+        const handlePointerDown = (event: MouseEvent) => {
+            if (!contactRef.current?.contains(event.target as Node)) {
+                setContactOpen(false);
+            }
+        };
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setContactOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handlePointerDown);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('mousedown', handlePointerDown);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [contactOpen]);
+
+    useEffect(() => {
+        if (!copied) {
+            return undefined;
+        }
+
+        const timer = setTimeout(() => setCopied(false), 1600);
+        return () => clearTimeout(timer);
+    }, [copied]);
+
+    const handleCopyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(CONTACT_EMAIL);
+            setCopied(true);
+        } catch {
+            window.location.href = `mailto:${CONTACT_EMAIL}`;
+        }
+    };
+
     return (
         <section className="hero-wrap" id="home">
-            {/* 검은 커튼 오버레이: 좌/우로 갈라지며 사라지는 연출 */}
             <AnimatePresence>
                 {!revealed && (
                     <>
-                        {/* 왼쪽 커튼 */}
                         <motion.div
                             className="curtain curtain-left"
                             initial={{ x: 0 }}
                             exit={{ x: '-100%' }}
                             transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
                         />
-                        {/* 오른쪽 커튼 */}
                         <motion.div
                             className="curtain curtain-right"
                             initial={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
                         />
-                        {/* 커튼 중앙 텍스트 */}
                         <motion.div
                             className="curtain-text"
                             initial={{ opacity: 1 }}
@@ -103,27 +165,23 @@ export default function Hero() {
                 )}
             </AnimatePresence>
 
-            {/* 메인 프로필 콘텐츠 */}
             <motion.div
                 className="profile-container"
                 initial="hidden"
                 animate={revealed ? 'show' : 'hidden'}
                 variants={containerVariants}
             >
-                {/* 프로필 아바타 */}
                 <motion.div
                     className="profile-avatar-wrap"
                     variants={avatarVariants}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                 >
-                    {/* 상태 배지 */}
                     <div className="profile-status">
                         <div className="profile-status-dot" />
                         <span>구직 중</span>
                     </div>
                 </motion.div>
 
-                {/* 이름 & 역할 */}
                 <motion.div
                     className="profile-info"
                     variants={fadeUpVariants}
@@ -133,32 +191,16 @@ export default function Hero() {
                     <p className="profile-role">Backend & Data Pipeline Developer</p>
                 </motion.div>
 
-                {/* 스택 아이콘 태그 */}
                 <motion.div
                     className="profile-tags"
                     variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
-                    {[
-                        { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
-                        { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
-                        { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
-                        { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
-                        { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
-                        { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
-                        { name: 'RAG', icon: '', color: '#7c3aed' },
-                        { name: 'LLM', icon: '', color: '#e11d48' },
-                        { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
-                    ].map((skill) => (
+                    {skills.map((skill) => (
                         <span className="profile-tag" key={skill.name}>
-                            {skill.icon && (
-                                <img
-                                    src={skill.icon}
-                                    alt={skill.name}
-                                    className="profile-tag-icon"
-                                />
-                            )}
-                            {!skill.icon && (
+                            {skill.icon ? (
+                                <img src={skill.icon} alt={skill.name} className="profile-tag-icon" />
+                            ) : (
                                 <span
                                     className="profile-tag-dot"
                                     style={{ backgroundColor: skill.color }}
@@ -169,7 +211,6 @@ export default function Hero() {
                     ))}
                 </motion.div>
 
-                {/* 버튼 & 액션 */}
                 <motion.div
                     className="profile-actions"
                     variants={fadeUpVariants}
@@ -186,15 +227,63 @@ export default function Hero() {
                     >
                         <Github size={16} style={{ marginRight: 6 }} /> GitHub
                     </a>
-                    <a
-                        className="button secondary hover-trigger"
-                        href="mailto:sinyeonjun@gmail.com"
-                    >
-                        <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
-                    </a>
+
+                    <div className="contact-popover-wrap" ref={contactRef}>
+                        <button
+                            type="button"
+                            className={`button secondary contact-trigger hover-trigger${contactOpen ? ' is-open' : ''}`}
+                            onClick={() => setContactOpen((open) => !open)}
+                            aria-expanded={contactOpen}
+                            aria-haspopup="dialog"
+                        >
+                            <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
+                        </button>
+
+                        <AnimatePresence>
+                            {contactOpen && (
+                                <motion.div
+                                    className="contact-popover"
+                                    initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: 10, scale: 0.97 }}
+                                    transition={{ duration: 0.22, ease: 'easeOut' }}
+                                    role="dialog"
+                                    aria-label="연락처"
+                                >
+                                    <div className="contact-popover-head">
+                                        <span className="contact-popover-label">Email</span>
+                                        <span
+                                            className={`contact-popover-status${copied ? ' is-copied' : ''}`}
+                                        >
+                                            {copied ? 'Copied' : 'Open to connect'}
+                                        </span>
+                                    </div>
+                                    <strong className="contact-popover-address">{CONTACT_EMAIL}</strong>
+                                    <p className="contact-popover-caption">
+                                        메일 앱으로 바로 열거나 주소를 복사해 연락할 수 있습니다.
+                                    </p>
+                                    <div className="contact-popover-actions">
+                                        <a
+                                            className="contact-popover-action is-primary hover-trigger"
+                                            href={`mailto:${CONTACT_EMAIL}`}
+                                        >
+                                            <Send size={15} /> 메일 보내기
+                                        </a>
+                                        <button
+                                            type="button"
+                                            className="contact-popover-action hover-trigger"
+                                            onClick={handleCopyEmail}
+                                        >
+                                            {copied ? <Check size={15} /> : <Copy size={15} />}
+                                            {copied ? '복사됨' : '주소 복사'}
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </motion.div>
 
-                {/* 하단 통계 카드 */}
                 <motion.div
                     className="profile-stats"
                     variants={fadeUpVariants}
