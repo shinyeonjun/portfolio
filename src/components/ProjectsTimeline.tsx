@@ -256,16 +256,18 @@ export default function ProjectsTimeline() {
                                             <div className="growth-slide-copy">
                                                 <div className="growth-slide-top">
                                                     <div className="growth-slide-meta">
-                                                        <span className="growth-slide-order">
-                                                            Phase {String(index + 1).padStart(2, '0')}
-                                                        </span>
+                                                        <div className="growth-slide-meta-top">
+                                                            <span className="growth-slide-order">
+                                                                Phase {String(index + 1).padStart(2, '0')}
+                                                            </span>
+                                                            <span
+                                                                className={`project-badge ${project.isTeam ? 'team' : 'personal'}`}
+                                                            >
+                                                                {project.isTeam ? 'Team' : 'Personal'}
+                                                            </span>
+                                                        </div>
                                                         <span className="project-period growth-slide-period">
                                                             {project.period}
-                                                        </span>
-                                                        <span
-                                                            className={`project-badge ${project.isTeam ? 'team' : 'personal'}`}
-                                                        >
-                                                            {project.isTeam ? 'Team Project' : 'Personal'}
                                                         </span>
                                                     </div>
                                                     <div className="project-links growth-slide-links">

@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
     base: process.env.GITHUB_ACTIONS ? '/portfolio/' : '/',
+    cacheDir: '.vite-cache',
     plugins: [react()],
     build: {
         rollupOptions: {
