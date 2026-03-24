@@ -75,17 +75,19 @@ const skillGroups = [
         accent: '#dbeafe',
         items: [
             { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
-            { name: 'SQL', icon: '', color: '#0f766e' },
+            { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E', color: '#F7DF1E' },
             { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6', color: '#3178C6' },
+            { name: 'SQL', icon: '', color: '#0f766e' },
         ],
     },
     {
         label: 'Frontend',
         accent: '#ede9fe',
         items: [
+            { name: 'HTML5', icon: 'https://cdn.simpleicons.org/html5/E34F26', color: '#E34F26' },
+            { name: 'CSS3', icon: 'https://cdn.simpleicons.org/css/1572B6', color: '#1572B6' },
             { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB', color: '#61DAFB' },
             { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite/646CFF', color: '#646CFF' },
-            { name: 'Framer Motion', icon: 'https://cdn.simpleicons.org/framer/0055FF', color: '#0055FF' },
         ],
     },
     {
@@ -93,6 +95,7 @@ const skillGroups = [
         accent: '#dcfce7',
         items: [
             { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
+            { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/5FA04E', color: '#5FA04E' },
             { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
             { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
             { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
