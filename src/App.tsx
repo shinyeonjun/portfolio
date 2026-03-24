@@ -79,7 +79,7 @@ export default function App() {
                             aria-selected={isTimelineView}
                             onClick={() => handleChangeView('timeline')}
                         >
-                            Timeline Lab
+                            Growth Flow
                         </button>
                     </div>
 
