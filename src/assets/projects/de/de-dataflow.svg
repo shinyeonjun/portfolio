@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">DE-pipeline 데이터 흐름</title>
+  <desc id="desc">videos, comments, categories, channels 작업이 GCS Raw를 거쳐 Clean과 Mart로 적재되는 흐름</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fbff" />
+      <stop offset="100%" stop-color="#f3f8ff" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b6b8c" />
+    </marker>
+    <style>
+      .title { font: 700 28px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #162033; }
+      .subtitle { font: 400 14px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #55637d; }
+      .lane { fill: #ffffff; stroke: #d7e0f0; stroke-width: 2; rx: 22; }
+      .lane-title { font: 700 18px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #22304a; }
+      .card { fill: #f7faff; stroke: #b9c9ea; stroke-width: 1.5; rx: 16; }
+      .warm { fill: #fff6ea; stroke: #e8c78d; }
+      .green { fill: #edf8f2; stroke: #aad7bc; }
+      .blue { fill: #eaf1ff; stroke: #b9c9ea; }
+      .label { font: 700 16px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #1f2b42; }
+      .small { font: 400 13px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #52627e; }
+      .bullet { font: 400 14px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #4d5c76; }
+      .arrow { stroke: #5b6b8c; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <text x="56" y="56" class="title">데이터 흐름</text>
+  <text x="56" y="84" class="subtitle">수집 작업별 데이터가 Raw → Clean → Mart로 정리되는 구조</text>
+
+  <rect x="48" y="126" width="1104" height="132" class="lane" />
+  <text x="72" y="162" class="lane-title">1. 수집 작업</text>
+  <rect x="72" y="188" width="210" height="46" class="card blue" />
+  <rect x="314" y="188" width="210" height="46" class="card blue" />
+  <rect x="556" y="188" width="210" height="46" class="card blue" />
+  <rect x="798" y="188" width="210" height="46" class="card blue" />
+  <text x="129" y="217" class="label">videos</text>
+  <text x="361" y="217" class="label">comments</text>
+  <text x="607" y="217" class="label">categories</text>
+  <text x="857" y="217" class="label">channels</text>
+  <text x="86" y="248" class="small">트렌딩 50개 영상 · 매시간</text>
+  <text x="329" y="248" class="small">상위 영상 댓글 100개 · 매시간</text>
+  <text x="585" y="248" class="small">카테고리 매핑 · 주간 동기화</text>
+  <text x="839" y="248" class="small">채널 정보 · 일간 동기화</text>
+
+  <rect x="48" y="294" width="1104" height="142" class="lane" />
+  <text x="72" y="330" class="lane-title">2. Raw 레이어</text>
+  <rect x="96" y="354" width="1008" height="56" class="card warm" />
+  <text x="511" y="389" class="label">GCS Raw (JSON.gz)</text>
+  <text x="120" y="425" class="bullet">• Hive 스타일 파티셔닝: region / date / hour</text>
+  <text x="454" y="425" class="bullet">• append-only 원본 보관</text>
+  <text x="707" y="425" class="bullet">• _metadata.json 포함</text>
+
+  <rect x="48" y="472" width="1104" height="188" class="lane" />
+  <text x="72" y="508" class="lane-title">3. 변환·적재</text>
+  <rect x="92" y="542" width="220" height="84" class="card blue" />
+  <text x="170" y="576" class="label">Raw 파일</text>
+  <text x="120" y="603" class="small">JSON.gz · 원본 보존</text>
+
+  <rect x="364" y="530" width="222" height="108" class="card green" />
+  <text x="434" y="564" class="label">Clean 테이블</text>
+  <text x="389" y="591" class="small">videos · comments · categories</text>
+  <text x="446" y="614" class="small">중복 제거 · 타입 변환</text>
+
+  <rect x="638" y="530" width="222" height="108" class="card warm" />
+  <text x="718" y="564" class="label">Mart 뷰</text>
+  <text x="673" y="591" class="small">trending_analysis · channel_stats</text>
+  <text x="681" y="614" class="small">집계 메트릭 · AI용 뷰</text>
+
+  <rect x="912" y="542" width="192" height="84" class="card blue" />
+  <text x="957" y="576" class="label">활용 지점</text>
+  <text x="941" y="603" class="small">대시보드 · 챗봇 · 분석 리포트</text>
+
+  <path d="M 202 234 L 202 354" class="arrow" />
+  <path d="M 444 234 L 444 354" class="arrow" />
+  <path d="M 686 234 L 686 354" class="arrow" />
+  <path d="M 928 234 L 928 354" class="arrow" />
+  <path d="M 312 584 L 364 584" class="arrow" />
+  <path d="M 586 584 L 638 584" class="arrow" />
+  <path d="M 860 584 L 912 584" class="arrow" />
+</svg>

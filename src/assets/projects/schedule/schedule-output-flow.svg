@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AI Schedule Web 출력 구조 흐름</title>
+  <desc id="desc">통화나 메모 입력이 GPT 분석, 현재 시간 보정, 구조화 JSON, Supabase 저장, 캘린더와 공유 단계로 이어지는 흐름</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fbff" />
+      <stop offset="100%" stop-color="#eef5ff" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b6b8c" />
+    </marker>
+    <style>
+      .title { font: 700 28px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #162033; }
+      .subtitle { font: 400 14px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #55637d; }
+      .panel { fill: #ffffff; stroke: #d7e0f0; stroke-width: 2; rx: 22; }
+      .box { fill: #eaf1ff; stroke: #b9c9ea; stroke-width: 1.5; rx: 18; }
+      .box-warm { fill: #fff6ea; stroke: #e8c78d; }
+      .box-green { fill: #edf8f2; stroke: #aad7bc; }
+      .label { font: 700 16px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #1f2b42; }
+      .small { font: 400 13px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #52627e; }
+      .bullet { font: 400 14px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #4d5c76; }
+      .arrow { stroke: #5b6b8c; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .line { stroke: #8ea0bf; stroke-width: 2; fill: none; stroke-dasharray: 7 7; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <text x="56" y="56" class="title">출력 구조 흐름</text>
+  <text x="56" y="84" class="subtitle">자연어 입력을 구조화 JSON으로 고정하고, 일정 등록과 공유까지 이어지는 서비스 흐름</text>
+
+  <rect x="48" y="120" width="1104" height="336" class="panel" />
+  <text x="72" y="156" class="label">서비스 흐름</text>
+
+  <rect x="86" y="220" width="170" height="88" class="box" />
+  <text x="138" y="255" class="label">Input</text>
+  <text x="108" y="281" class="small">통화 내용 · 메모 업로드</text>
+
+  <rect x="318" y="220" width="208" height="88" class="box-warm" />
+  <text x="354" y="255" class="label">GPT Analysis</text>
+  <text x="348" y="281" class="small">일정 후보 추출 · 필드 분리</text>
+
+  <rect x="586" y="220" width="208" height="88" class="box-green" />
+  <text x="630" y="255" class="label">구조화 출력</text>
+  <text x="618" y="281" class="small">JSON 템플릿 고정 · 현재 시간 보정</text>
+
+  <rect x="854" y="220" width="224" height="88" class="box" />
+  <text x="916" y="255" class="label">Calendar / Share</text>
+  <text x="896" y="281" class="small">Google Calendar · Gmail · ICS</text>
+
+  <rect x="460" y="360" width="188" height="64" class="box-green" />
+  <text x="519" y="398" class="label">Supabase</text>
+  <text x="485" y="419" class="small">사용자 · 일정 · 그룹 관리</text>
+
+  <path d="M 256 264 L 318 264" class="arrow" />
+  <path d="M 526 264 L 586 264" class="arrow" />
+  <path d="M 794 264 L 854 264" class="arrow" />
+  <path d="M 690 308 L 690 392 L 648 392" class="arrow" />
+  <path d="M 554 392 L 554 308" class="line" />
+
+  <rect x="48" y="496" width="530" height="168" class="panel" />
+  <text x="72" y="532" class="label">문제</text>
+  <text x="72" y="572" class="bullet">• 일반 프롬프트만으로는 실제 일정 등록에 필요한 필드를 안정적으로 채우기 어렵다.</text>
+  <text x="72" y="602" class="bullet">• 상대 날짜 표현이 많아 현재 시간 기준 보정이 없으면 해석 오류가 생긴다.</text>
+  <text x="72" y="632" class="bullet">• 등록과 공유가 분리되면 사용자 입장에서 작업 흐름이 끊긴다.</text>
+
+  <rect x="622" y="496" width="530" height="168" class="panel" />
+  <text x="646" y="532" class="label">해결</text>
+  <text x="646" y="572" class="bullet">• JSON 스키마를 기준 출력 형식으로 고정해 필드 누락을 줄인다.</text>
+  <text x="646" y="602" class="bullet">• 현재 시간 컨텍스트를 함께 전달해 상대 날짜를 절대 시간으로 보정한다.</text>
+  <text x="646" y="632" class="bullet">• Calendar, Gmail, ICS까지 한 흐름으로 연결해 등록과 공유를 한 번에 처리한다.</text>
+</svg>

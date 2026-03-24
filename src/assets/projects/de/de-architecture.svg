@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">DE-pipeline 전체 아키텍처</title>
+  <desc id="desc">GitHub 푸시부터 Cloud Build, Cloud Run Job, YouTube API, GCS Raw, Transform, Supabase, Streamlit, Ollama로 이어지는 데이터 파이프라인 구조</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fbff" />
+      <stop offset="100%" stop-color="#eef4ff" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b6b8c" />
+    </marker>
+    <style>
+      .title { font: 700 28px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #162033; }
+      .subtitle { font: 400 14px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #55637d; }
+      .section { fill: #ffffff; stroke: #d7e0f0; stroke-width: 2; rx: 24; }
+      .section-label { font: 700 18px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #22304a; }
+      .box { fill: #f7faff; stroke: #b9c9ea; stroke-width: 1.5; rx: 16; }
+      .box-fill { fill: #eaf1ff; }
+      .box-accent { fill: #edf8f2; stroke: #a8d8b8; }
+      .box-warm { fill: #fff6ea; stroke: #edc88e; }
+      .label { font: 700 17px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #1f2b42; }
+      .small { font: 400 13px 'Malgun Gothic', 'Segoe UI', sans-serif; fill: #52627e; }
+      .arrow { stroke: #5b6b8c; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)" />
+  <text x="56" y="56" class="title">DE-pipeline</text>
+  <text x="56" y="84" class="subtitle">GitHub → GCP 수집 자동화 → Raw/Transform → Supabase → Dashboard/AI 분석</text>
+
+  <rect x="48" y="120" width="250" height="250" class="section" />
+  <text x="72" y="156" class="section-label">1. 배포·스케줄링</text>
+  <rect x="72" y="184" width="92" height="64" class="box box-fill" />
+  <text x="95" y="222" class="label">GitHub</text>
+  <rect x="184" y="184" width="92" height="64" class="box box-fill" />
+  <text x="194" y="222" class="label">Cloud Build</text>
+  <rect x="72" y="280" width="204" height="68" class="box box-warm" />
+  <text x="109" y="320" class="label">Cloud Scheduler</text>
+  <path d="M 164 216 L 184 216" class="arrow" />
+
+  <rect x="328" y="120" width="260" height="250" class="section" />
+  <text x="352" y="156" class="section-label">2. 데이터 수집</text>
+  <rect x="352" y="184" width="212" height="76" class="box box-fill" />
+  <text x="416" y="214" class="label">YouTube Data API v3</text>
+  <text x="377" y="238" class="small">videos · comments · categories · channels</text>
+  <rect x="352" y="284" width="98" height="58" class="box" />
+  <rect x="466" y="284" width="98" height="58" class="box" />
+  <text x="379" y="318" class="small">매시간 수집</text>
+  <text x="496" y="318" class="small">주기 실행</text>
+
+  <rect x="618" y="120" width="260" height="250" class="section" />
+  <text x="642" y="156" class="section-label">3. 저장·변환</text>
+  <rect x="642" y="184" width="212" height="70" class="box box-warm" />
+  <text x="717" y="214" class="label">GCS Raw</text>
+  <text x="672" y="238" class="small">JSON.gz · region/date/hour 파티셔닝</text>
+  <rect x="642" y="274" width="212" height="74" class="box box-accent" />
+  <text x="690" y="304" class="label">Transform Layer</text>
+  <text x="688" y="328" class="small">Python / DBT · Clean → Mart</text>
+
+  <rect x="908" y="120" width="244" height="250" class="section" />
+  <text x="932" y="156" class="section-label">4. 분석·서빙</text>
+  <rect x="932" y="184" width="196" height="70" class="box box-fill" />
+  <text x="968" y="214" class="label">Supabase (PostgreSQL)</text>
+  <text x="991" y="238" class="small">Clean 테이블 · Mart 뷰</text>
+  <rect x="932" y="274" width="88" height="58" class="box" />
+  <rect x="1040" y="274" width="88" height="58" class="box" />
+  <text x="953" y="308" class="small">Streamlit</text>
+  <text x="1060" y="308" class="small">Ollama</text>
+
+  <rect x="48" y="408" width="1104" height="240" class="section" />
+  <text x="72" y="444" class="section-label">핵심 포인트</text>
+  <rect x="72" y="474" width="320" height="126" class="box box-fill" />
+  <text x="100" y="512" class="label">자동 수집 파이프라인</text>
+  <text x="100" y="542" class="small">GitHub 푸시 후 Cloud Build로 이미지 빌드</text>
+  <text x="100" y="566" class="small">Cloud Scheduler가 작업별로 수집 주기를 분리</text>
+
+  <rect x="440" y="474" width="320" height="126" class="box box-accent" />
+  <text x="468" y="512" class="label">레이어 분리</text>
+  <text x="468" y="542" class="small">GCS Raw는 append-only 원본 보관</text>
+  <text x="468" y="566" class="small">Supabase에는 Clean/Mart 계층만 적재</text>
+
+  <rect x="808" y="474" width="320" height="126" class="box box-warm" />
+  <text x="836" y="512" class="label">분석 경험 연결</text>
+  <text x="836" y="542" class="small">Streamlit 대시보드와 Ollama 기반 분석 챗봇 연결</text>
+  <text x="836" y="566" class="small">데이터 수집 결과가 바로 조회/분석 UI로 이어짐</text>
+
+  <path d="M 298 250 C 320 250, 320 222, 352 222" class="arrow" />
+  <path d="M 588 222 C 610 222, 610 220, 642 220" class="arrow" />
+  <path d="M 878 220 C 900 220, 900 220, 932 220" class="arrow" />
+  <path d="M 1020 254 L 1020 274" class="arrow" />
+  <path d="M 1078 254 L 1078 274" class="arrow" />
+</svg>
