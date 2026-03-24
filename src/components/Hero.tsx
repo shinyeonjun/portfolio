@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Award,
     BadgeCheck,
@@ -9,7 +9,6 @@ import {
     Mail,
     ArrowDown,
     Medal,
-    Send,
     ShieldCheck,
 } from 'lucide-react';
 
@@ -81,11 +80,22 @@ const skills = [
     { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
 ] as const;
 
+function fallbackCopy(text: string) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', 'true');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+}
+
 export default function Hero() {
     const [revealed, setRevealed] = useState(false);
     const [contactOpen, setContactOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-    const contactRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => setRevealed(true), 600);
@@ -97,25 +107,14 @@ export default function Hero() {
             return undefined;
         }
 
-        const handlePointerDown = (event: MouseEvent) => {
-            if (!contactRef.current?.contains(event.target as Node)) {
-                setContactOpen(false);
-            }
-        };
-
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setContactOpen(false);
             }
         };
 
-        document.addEventListener('mousedown', handlePointerDown);
         document.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.removeEventListener('mousedown', handlePointerDown);
-            document.removeEventListener('keydown', handleKeyDown);
-        };
+        return () => document.removeEventListener('keydown', handleKeyDown);
     }, [contactOpen]);
 
     useEffect(() => {
@@ -130,10 +129,11 @@ export default function Hero() {
     const handleCopyEmail = async () => {
         try {
             await navigator.clipboard.writeText(CONTACT_EMAIL);
-            setCopied(true);
         } catch {
-            window.location.href = `mailto:${CONTACT_EMAIL}`;
+            fallbackCopy(CONTACT_EMAIL);
         }
+
+        setCopied(true);
     };
 
     return (
@@ -227,62 +227,72 @@ export default function Hero() {
                     >
                         <Github size={16} style={{ marginRight: 6 }} /> GitHub
                     </a>
-
-                    <div className="contact-popover-wrap" ref={contactRef}>
-                        <button
-                            type="button"
-                            className={`button secondary contact-trigger hover-trigger${contactOpen ? ' is-open' : ''}`}
-                            onClick={() => setContactOpen((open) => !open)}
-                            aria-expanded={contactOpen}
-                            aria-haspopup="dialog"
-                        >
-                            <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
-                        </button>
-
-                        <AnimatePresence>
-                            {contactOpen && (
-                                <motion.div
-                                    className="contact-popover"
-                                    initial={{ opacity: 0, y: 12, scale: 0.96 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: 10, scale: 0.97 }}
-                                    transition={{ duration: 0.22, ease: 'easeOut' }}
-                                    role="dialog"
-                                    aria-label="연락처"
-                                >
-                                    <div className="contact-popover-head">
-                                        <span className="contact-popover-label">Email</span>
-                                        <span
-                                            className={`contact-popover-status${copied ? ' is-copied' : ''}`}
-                                        >
-                                            {copied ? 'Copied' : 'Open to connect'}
-                                        </span>
-                                    </div>
-                                    <strong className="contact-popover-address">{CONTACT_EMAIL}</strong>
-                                    <p className="contact-popover-caption">
-                                        메일 앱으로 바로 열거나 주소를 복사해 연락할 수 있습니다.
-                                    </p>
-                                    <div className="contact-popover-actions">
-                                        <a
-                                            className="contact-popover-action is-primary hover-trigger"
-                                            href={`mailto:${CONTACT_EMAIL}`}
-                                        >
-                                            <Send size={15} /> 메일 보내기
-                                        </a>
-                                        <button
-                                            type="button"
-                                            className="contact-popover-action hover-trigger"
-                                            onClick={handleCopyEmail}
-                                        >
-                                            {copied ? <Check size={15} /> : <Copy size={15} />}
-                                            {copied ? '복사됨' : '주소 복사'}
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                    <button
+                        type="button"
+                        className={`button secondary contact-trigger hover-trigger${contactOpen ? ' is-open' : ''}`}
+                        onClick={() => setContactOpen((open) => !open)}
+                        aria-expanded={contactOpen}
+                        aria-controls="contact-signal"
+                    >
+                        <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
+                    </button>
                 </motion.div>
+
+                <AnimatePresence>
+                    {contactOpen && (
+                        <motion.div
+                            id="contact-signal"
+                            className="contact-signal-wrap"
+                            initial={{ opacity: 0, y: -12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.24, ease: 'easeOut' }}
+                        >
+                            <motion.div
+                                className="contact-signal-panel"
+                                initial={{ scale: 0.98 }}
+                                animate={{ scale: 1 }}
+                                exit={{ scale: 0.985 }}
+                                transition={{ duration: 0.22, ease: 'easeOut' }}
+                            >
+                                <div className="contact-signal-head">
+                                    <span className="contact-signal-tag">CHANNEL 01</span>
+                                    <span
+                                        className={`contact-signal-status${copied ? ' is-copied' : ''}`}
+                                    >
+                                        {copied ? 'COPIED' : 'SIGNAL OPEN'}
+                                    </span>
+                                </div>
+
+                                <div className="contact-signal-bars" aria-hidden="true">
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                </div>
+
+                                <div className="contact-signal-body">
+                                    <span className="contact-signal-prefix">mail://</span>
+                                    <strong className="contact-signal-address">{CONTACT_EMAIL}</strong>
+                                </div>
+
+                                <div className="contact-signal-foot">
+                                    <p className="contact-signal-caption">
+                                        게임 HUD처럼 가볍게 열리고, 주소 복사만 바로 됩니다.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        className="contact-signal-copy hover-trigger"
+                                        onClick={handleCopyEmail}
+                                    >
+                                        {copied ? <Check size={15} /> : <Copy size={15} />}
+                                        {copied ? '복사 완료' : '주소 복사'}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 <motion.div
                     className="profile-stats"
