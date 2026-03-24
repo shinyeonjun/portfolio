@@ -2,6 +2,7 @@ import './App.css';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
+import QuickNav from './components/QuickNav';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="app-shell">
       <CustomCursor />
+      <QuickNav />
 
       {/* 스크롤 진행률 표시 */}
       <motion.div
@@ -48,7 +50,7 @@ function App() {
         <Projects />
       </main>
 
-      <footer className="footer">
+      <footer className="footer" id="contact">
         <div className="footer-links">
           <a
             href="https://github.com/shinyeonjun"
