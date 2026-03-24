@@ -27,8 +27,6 @@ export default function App() {
                 </a>
 
                 <div className="topbar-actions">
-                    <span className="view-chip">Growth Flow</span>
-
                     <nav className="nav">
                         <a href="#projects" className="hover-trigger nav-link">
                             Projects
