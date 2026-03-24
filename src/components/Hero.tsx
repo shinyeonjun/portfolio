@@ -242,47 +242,44 @@ export default function Hero() {
                     {contactOpen && (
                         <motion.div
                             id="contact-signal"
-                            className="contact-signal-wrap"
+                            className="contact-inline-wrap"
                             initial={{ opacity: 0, y: -12 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.24, ease: 'easeOut' }}
                         >
                             <motion.div
-                                className="contact-signal-panel"
+                                className="contact-inline-card"
                                 initial={{ scale: 0.98 }}
                                 animate={{ scale: 1 }}
                                 exit={{ scale: 0.985 }}
                                 transition={{ duration: 0.22, ease: 'easeOut' }}
                             >
-                                <div className="contact-signal-head">
-                                    <span className="contact-signal-tag">CHANNEL 01</span>
+                                <motion.span
+                                    className="contact-inline-accent"
+                                    initial={{ scaleX: 0, opacity: 0.6 }}
+                                    animate={{ scaleX: 1, opacity: 1 }}
+                                    exit={{ scaleX: 0.85, opacity: 0 }}
+                                    transition={{ duration: 0.32, ease: 'easeOut' }}
+                                />
+
+                                <div className="contact-inline-head">
+                                    <span className="contact-inline-label">Email Contact</span>
                                     <span
-                                        className={`contact-signal-status${copied ? ' is-copied' : ''}`}
+                                        className={`contact-inline-status${copied ? ' is-copied' : ''}`}
                                     >
-                                        {copied ? 'COPIED' : 'SIGNAL OPEN'}
+                                        {copied ? '복사됨' : '클릭해서 복사'}
                                     </span>
                                 </div>
 
-                                <div className="contact-signal-bars" aria-hidden="true">
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                </div>
-
-                                <div className="contact-signal-body">
-                                    <span className="contact-signal-prefix">mail://</span>
-                                    <strong className="contact-signal-address">{CONTACT_EMAIL}</strong>
-                                </div>
-
-                                <div className="contact-signal-foot">
-                                    <p className="contact-signal-caption">
-                                        게임 HUD처럼 가볍게 열리고, 주소 복사만 바로 됩니다.
-                                    </p>
+                                <div className="contact-inline-row">
+                                    <div className="contact-inline-address-wrap">
+                                        <span className="contact-inline-prefix">메일 주소</span>
+                                        <strong className="contact-inline-address">{CONTACT_EMAIL}</strong>
+                                    </div>
                                     <button
                                         type="button"
-                                        className="contact-signal-copy hover-trigger"
+                                        className="contact-inline-copy hover-trigger"
                                         onClick={handleCopyEmail}
                                     >
                                         {copied ? <Check size={15} /> : <Copy size={15} />}
