@@ -56,21 +56,6 @@ const awards = [
     },
 ] as const;
 
-const focusAreas = [
-    {
-        label: 'Data Pipeline',
-        value: '수집부터 적재까지 끊기지 않는 흐름 설계',
-    },
-    {
-        label: 'Backend',
-        value: 'FastAPI 기반 API와 실시간 통신 구조 구현',
-    },
-    {
-        label: 'LLM Workflow',
-        value: 'RAG와 자동화 출력을 실제 서비스 흐름에 연결',
-    },
-] as const;
-
 /**
  * 프로필 중심 Hero 섹션
  * - 커튼(오버레이)이 갈라지며 프로필이 드러나는 오프닝 애니메이션
@@ -86,7 +71,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="hero-wrap">
+        <section className="hero-wrap" id="home">
             {/* 검은 커튼 오버레이: 좌/우로 갈라지며 사라지는 연출 */}
             <AnimatePresence>
                 {!revealed && (
@@ -125,177 +110,120 @@ export default function Hero() {
                 animate={revealed ? 'show' : 'hidden'}
                 variants={containerVariants}
             >
-                <div className="profile-layout" id="home">
-                    <div className="profile-main-column">
-                        <div className="profile-identity-row">
-                            {/* 프로필 아바타 */}
-                            <motion.div
-                                className="profile-avatar-wrap"
-                                variants={avatarVariants}
-                                transition={{ duration: 0.6, ease: 'easeOut' }}
-                            >
-                                <div className="profile-avatar">
-                                    <span className="profile-avatar-initials">SYJ</span>
-                                </div>
-                                {/* 상태 배지 */}
-                                <div className="profile-status">
-                                    <div className="profile-status-dot" />
-                                    <span>구직 중</span>
-                                </div>
-                            </motion.div>
-
-                            <div className="profile-copy">
-                                <motion.p
-                                    className="profile-kicker"
-                                    variants={fadeUpVariants}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    Data Flow · Backend · Automation
-                                </motion.p>
-
-                                {/* 이름 & 역할 */}
-                                <motion.div
-                                    className="profile-info"
-                                    variants={fadeUpVariants}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    <h1 className="profile-name">신연준</h1>
-                                    <p className="profile-role">Backend & Data Pipeline Developer</p>
-                                </motion.div>
-
-                                <motion.p
-                                    className="profile-bio"
-                                    variants={fadeUpVariants}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    데이터가 들어오고 정제되고 다시 서비스 흐름으로 이어지는 전 과정을
-                                    직접 설계하고 구현하는 개발자입니다. API, 자동화, LLM 워크플로를
-                                    실제 동작까지 연결하는 데 집중합니다.
-                                </motion.p>
-                            </div>
-                        </div>
-
-                        {/* 스택 아이콘 태그 */}
-                        <motion.div
-                            className="profile-tags"
-                            variants={fadeUpVariants}
-                            transition={{ duration: 0.5 }}
-                        >
-                            {[
-                                { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
-                                { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
-                                { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
-                                { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
-                                { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
-                                { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
-                                { name: 'RAG', icon: '', color: '#7c3aed' },
-                                { name: 'LLM', icon: '', color: '#e11d48' },
-                                { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
-                            ].map((skill) => (
-                                <span className="profile-tag" key={skill.name}>
-                                    {skill.icon && (
-                                        <img
-                                            src={skill.icon}
-                                            alt={skill.name}
-                                            className="profile-tag-icon"
-                                        />
-                                    )}
-                                    {!skill.icon && (
-                                        <span
-                                            className="profile-tag-dot"
-                                            style={{ backgroundColor: skill.color }}
-                                        />
-                                    )}
-                                    {skill.name}
-                                </span>
-                            ))}
-                        </motion.div>
-
-                        {/* 버튼 & 액션 */}
-                        <motion.div
-                            className="profile-actions"
-                            variants={fadeUpVariants}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <a className="button primary hover-trigger" href="#projects">
-                                프로젝트 보기 <ArrowDown size={16} style={{ marginLeft: 6 }} />
-                            </a>
-                            <a
-                                className="button secondary hover-trigger"
-                                href="https://github.com/shinyeonjun"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <Github size={16} style={{ marginRight: 6 }} /> GitHub
-                            </a>
-                            <a
-                                className="button secondary hover-trigger"
-                                href="mailto:sinyeonjun@gmail.com"
-                            >
-                                <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
-                            </a>
-                        </motion.div>
+                {/* 프로필 아바타 */}
+                <motion.div
+                    className="profile-avatar-wrap"
+                    variants={avatarVariants}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                >
+                    <div className="profile-avatar">
+                        <span className="profile-avatar-initials">SYJ</span>
                     </div>
+                    {/* 상태 배지 */}
+                    <div className="profile-status">
+                        <div className="profile-status-dot" />
+                        <span>구직 중</span>
+                    </div>
+                </motion.div>
 
-                    <motion.aside
-                        className="profile-highlight-card"
-                        variants={fadeUpVariants}
-                        transition={{ duration: 0.5 }}
+                {/* 이름 & 역할 */}
+                <motion.div
+                    className="profile-info"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.5 }}
+                >
+                    <h1 className="profile-name">신연준</h1>
+                    <p className="profile-role">Backend & Data Pipeline Developer</p>
+                </motion.div>
+
+                {/* 스택 아이콘 태그 */}
+                <motion.div
+                    className="profile-tags"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.5 }}
+                >
+                    {[
+                        { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
+                        { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
+                        { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
+                        { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
+                        { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
+                        { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
+                        { name: 'RAG', icon: '', color: '#7c3aed' },
+                        { name: 'LLM', icon: '', color: '#e11d48' },
+                        { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
+                    ].map((skill) => (
+                        <span className="profile-tag" key={skill.name}>
+                            {skill.icon && (
+                                <img
+                                    src={skill.icon}
+                                    alt={skill.name}
+                                    className="profile-tag-icon"
+                                />
+                            )}
+                            {!skill.icon && (
+                                <span
+                                    className="profile-tag-dot"
+                                    style={{ backgroundColor: skill.color }}
+                                />
+                            )}
+                            {skill.name}
+                        </span>
+                    ))}
+                </motion.div>
+
+                {/* 버튼 & 액션 */}
+                <motion.div
+                    className="profile-actions"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.5 }}
+                >
+                    <a className="button primary hover-trigger" href="#projects">
+                        프로젝트 보기 <ArrowDown size={16} style={{ marginLeft: 6 }} />
+                    </a>
+                    <a
+                        className="button secondary hover-trigger"
+                        href="https://github.com/shinyeonjun"
+                        target="_blank"
+                        rel="noreferrer"
                     >
-                        <div className="profile-highlight-head">
-                            <span className="profile-highlight-kicker">Profile Snapshot</span>
-                            <span className="profile-highlight-badge">Structure First</span>
-                        </div>
-                        <strong className="profile-highlight-title">
-                            구조를 먼저 잡고, 실제 동작까지 연결합니다.
-                        </strong>
-                        <p className="profile-highlight-copy">
-                            데이터 파이프라인, 백엔드 API, LLM 자동화 흐름을 각각 따로 보지 않고
-                            하나의 제품 흐름으로 묶어서 구현하는 방식에 강점이 있습니다.
-                        </p>
-                        <div className="profile-highlight-list">
-                            {focusAreas.map((item) => (
-                                <div className="highlight-item" key={item.label}>
-                                    <span>{item.label}</span>
-                                    <strong>{item.value}</strong>
-                                </div>
-                            ))}
-                        </div>
+                        <Github size={16} style={{ marginRight: 6 }} /> GitHub
+                    </a>
+                    <a
+                        className="button secondary hover-trigger"
+                        href="mailto:sinyeonjun@gmail.com"
+                    >
+                        <Mail size={16} style={{ marginRight: 6 }} /> 연락하기
+                    </a>
+                </motion.div>
 
-                        {/* 하단 통계 카드 */}
-                        <div className="profile-stats">
-                            <div className="stat-card">
-                                <span>핵심 프로젝트</span>
-                                <strong>4 Projects</strong>
-                            </div>
-                            <div className="stat-card">
-                                <span>주요 스택</span>
-                                <strong>Data · API · LLM</strong>
-                            </div>
-                            <div className="stat-card">
-                                <span>중요하게 생각하는 것</span>
-                                <strong>구조 · 흐름 · 실제 동작</strong>
-                            </div>
-                        </div>
-                    </motion.aside>
-                </div>
+                {/* 하단 통계 카드 */}
+                <motion.div
+                    className="profile-stats"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.5 }}
+                >
+                    <div className="stat-card">
+                        <span>핵심 프로젝트</span>
+                        <strong>4 Projects</strong>
+                    </div>
+                    <div className="stat-card">
+                        <span>주요 스택</span>
+                        <strong>Data · API · LLM</strong>
+                    </div>
+                    <div className="stat-card">
+                        <span>중요하게 생각하는 것</span>
+                        <strong>구조 · 흐름 · 실제 동작</strong>
+                    </div>
+                </motion.div>
 
-                <motion.section
-                    className="profile-credentials-shell"
+                <motion.div
+                    className="profile-credentials"
                     id="credentials"
                     variants={fadeUpVariants}
                     transition={{ duration: 0.5 }}
                 >
-                    <div className="profile-section-head">
-                        <p className="profile-section-kicker">Credential Snapshot</p>
-                        <div>
-                            <h2>자격증과 수상 이력</h2>
-                            <p>실무 기본기와 결과물을 빠르게 확인할 수 있도록 정리했습니다.</p>
-                        </div>
-                    </div>
-
-                    <div className="profile-credentials">
-                        <section className="credential-panel certificate-panel">
+                    <section className="credential-panel certificate-panel">
                         <div className="credential-head">
                             <div className="credential-title">
                                 <BadgeCheck size={18} />
@@ -304,15 +232,10 @@ export default function Hero() {
                             <span className="credential-count">{certifications.length} Items</span>
                         </div>
                         <div className="certificate-list">
-                            {certifications.map((item, index) => (
+                            {certifications.map((item) => (
                                 <article className="certificate-card" key={`${item.title}-${item.status}`}>
                                     <div className="certificate-card-top">
                                         <span className="certificate-chip">{item.kind}</span>
-                                        <span className="certificate-code">
-                                            CERT {String(index + 1).padStart(2, '0')}
-                                        </span>
-                                    </div>
-                                    <div className="certificate-seal">
                                         <ShieldCheck size={16} />
                                     </div>
                                     <strong>{item.title}</strong>
@@ -320,36 +243,32 @@ export default function Hero() {
                                 </article>
                             ))}
                         </div>
-                        </section>
+                    </section>
 
-                        <section className="credential-panel award-panel">
-                            <div className="credential-head">
-                                <div className="credential-title">
-                                    <Award size={18} />
-                                    <span>수상 경력</span>
-                                </div>
-                                <span className="credential-count">{awards.length} Highlight</span>
+                    <section className="credential-panel award-panel">
+                        <div className="credential-head">
+                            <div className="credential-title">
+                                <Award size={18} />
+                                <span>수상 경력</span>
                             </div>
-                            <div className="award-list">
-                                {awards.map((item) => (
-                                    <article className="award-card" key={`${item.title}-${item.date}`}>
-                                        <span className="award-ribbon">Award Highlight</span>
-                                        <div className="award-card-body">
-                                            <div className="award-medal">
-                                                <Medal size={18} />
-                                                <span>{item.result}</span>
-                                            </div>
-                                            <div className="award-copy">
-                                                <p>{item.date}</p>
-                                                <strong>{item.title}</strong>
-                                            </div>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </section>
-                    </div>
-                </motion.section>
+                            <span className="credential-count">{awards.length} Highlight</span>
+                        </div>
+                        <div className="award-list">
+                            {awards.map((item) => (
+                                <article className="award-card" key={`${item.title}-${item.date}`}>
+                                    <div className="award-medal">
+                                        <Medal size={18} />
+                                        <span>{item.result}</span>
+                                    </div>
+                                    <div className="award-copy">
+                                        <strong>{item.title}</strong>
+                                        <p>{item.date}</p>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+                </motion.div>
             </motion.div>
         </section>
     );
