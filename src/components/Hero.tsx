@@ -116,7 +116,6 @@ export default function Hero() {
                     variants={avatarVariants}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                 >
-                    <div className="profile-avatar" aria-hidden="true" />
                     {/* 상태 배지 */}
                     <div className="profile-status">
                         <div className="profile-status-dot" />
