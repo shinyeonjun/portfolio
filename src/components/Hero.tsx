@@ -130,6 +130,17 @@ type HeroProps = {
     variant?: 'classic' | 'growth';
 };
 
+function shouldSkipIntro() {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+    return (
+        window.matchMedia('(max-width: 760px)').matches ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+}
+
 function fallbackCopy(text: string) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -144,14 +155,18 @@ function fallbackCopy(text: string) {
 
 export default function Hero({ variant = 'classic' }: HeroProps) {
     const isGrowthVariant = variant === 'growth';
-    const [revealed, setRevealed] = useState(false);
+    const [revealed, setRevealed] = useState(() => shouldSkipIntro());
     const [contactOpen, setContactOpen] = useState(false);
     const [copied, setCopied] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setRevealed(true), 600);
+        if (revealed) {
+            return undefined;
+        }
+
+        const timer = setTimeout(() => setRevealed(true), 180);
         return () => clearTimeout(timer);
-    }, []);
+    }, [revealed]);
 
     useEffect(() => {
         if (!contactOpen) {
@@ -196,13 +211,13 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                             className="curtain curtain-left"
                             initial={{ x: 0 }}
                             exit={{ x: '-100%' }}
-                            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+                            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
                         />
                         <motion.div
                             className="curtain curtain-right"
                             initial={{ x: 0 }}
                             exit={{ x: '100%' }}
-                            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+                            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
                         />
                         <motion.div
                             className="curtain-text"
