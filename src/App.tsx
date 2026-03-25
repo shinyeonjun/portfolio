@@ -1,11 +1,8 @@
-import { lazy, Suspense } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import './App.css';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
-import ProjectsTimelineSkeleton from './components/ProjectsTimelineSkeleton';
-
-const ProjectsTimeline = lazy(() => import('./components/ProjectsTimeline'));
+import ProjectsTimelineSection from './components/ProjectsTimelineSection';
 
 export default function App() {
     const { scrollYProgress } = useScroll();
@@ -46,9 +43,7 @@ export default function App() {
 
             <main>
                 <Hero variant="growth" />
-                <Suspense fallback={<ProjectsTimelineSkeleton />}>
-                    <ProjectsTimeline />
-                </Suspense>
+                <ProjectsTimelineSection />
             </main>
 
             <footer className="footer">

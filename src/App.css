@@ -383,45 +383,6 @@
   background: radial-gradient(circle, rgba(226, 232, 240, 0.68) 0%, rgba(226, 232, 240, 0) 74%);
 }
 
-.curtain {
-  position: fixed;
-  top: 0;
-  width: 50%;
-  height: 100vh;
-  background: #0f172a;
-  z-index: 100;
-}
-
-.curtain-left {
-  left: 0;
-}
-
-.curtain-right {
-  right: 0;
-}
-
-.curtain-text {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 101;
-  pointer-events: none;
-}
-
-.curtain-greeting {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-style: italic;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.1em;
-}
-
 /* ------------------------------------- */
 /* 프로필 메인 레이아웃                  */
 /* ------------------------------------- */
@@ -799,17 +760,20 @@
   transition: all 0.3s ease;
 }
 
-.profile-tag-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.profile-tag-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+.profile-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.55rem;
+  height: 1.55rem;
+  padding: 0 0.34rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tag-accent) 14%, #ffffff);
+  color: var(--tag-accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tag-accent) 22%, #ffffff);
   flex-shrink: 0;
 }
 
@@ -1417,6 +1381,12 @@
   padding: 6rem 5%;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.section,
+.footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 960px;
 }
 
 .section-header {

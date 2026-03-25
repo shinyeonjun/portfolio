@@ -352,7 +352,8 @@ export default function ProjectsTimeline() {
                                                 src={primaryVisual.src}
                                                 alt={primaryVisual.alt}
                                                 className="growth-primary-image"
-                                                loading={activeIndex === 0 ? 'eager' : 'lazy'}
+                                                loading="lazy"
+                                                fetchPriority="low"
                                                 decoding="async"
                                             />
                                         </button>
@@ -370,6 +371,7 @@ export default function ProjectsTimeline() {
                                                             src={visual.src}
                                                             alt={visual.alt}
                                                             loading="lazy"
+                                                            fetchPriority="low"
                                                             decoding="async"
                                                         />
                                                         <span>{visual.alt}</span>
@@ -402,6 +404,7 @@ export default function ProjectsTimeline() {
                                                             src={artifact.src}
                                                             alt={artifact.name}
                                                             loading="lazy"
+                                                            fetchPriority="low"
                                                             decoding="async"
                                                         />
                                                     ) : (

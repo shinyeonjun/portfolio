@@ -74,42 +74,42 @@ const skillGroups = [
         label: 'Language',
         accent: '#dbeafe',
         items: [
-            { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', color: '#3776AB' },
-            { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E', color: '#F7DF1E' },
-            { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6', color: '#3178C6' },
-            { name: 'SQL', icon: '', color: '#0f766e' },
+            { name: 'Python', mark: 'Py', color: '#3776AB' },
+            { name: 'JavaScript', mark: 'JS', color: '#F7DF1E' },
+            { name: 'TypeScript', mark: 'TS', color: '#3178C6' },
+            { name: 'SQL', mark: 'DB', color: '#0f766e' },
         ],
     },
     {
         label: 'Frontend',
         accent: '#ede9fe',
         items: [
-            { name: 'HTML5', icon: 'https://cdn.simpleicons.org/html5/E34F26', color: '#E34F26' },
-            { name: 'CSS3', icon: 'https://cdn.simpleicons.org/css/1572B6', color: '#1572B6' },
-            { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB', color: '#61DAFB' },
-            { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite/646CFF', color: '#646CFF' },
+            { name: 'HTML5', mark: 'H5', color: '#E34F26' },
+            { name: 'CSS3', mark: 'C3', color: '#1572B6' },
+            { name: 'React', mark: 'Rx', color: '#61DAFB' },
+            { name: 'Vite', mark: 'Vt', color: '#646CFF' },
         ],
     },
     {
         label: 'Backend',
         accent: '#dcfce7',
         items: [
-            { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688', color: '#009688' },
-            { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/5FA04E', color: '#5FA04E' },
-            { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1', color: '#4169E1' },
-            { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57', color: '#003B57' },
-            { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E', color: '#3FCF8E' },
+            { name: 'FastAPI', mark: 'FA', color: '#009688' },
+            { name: 'Node.js', mark: 'ND', color: '#5FA04E' },
+            { name: 'PostgreSQL', mark: 'PG', color: '#4169E1' },
+            { name: 'SQLite', mark: 'SQ', color: '#003B57' },
+            { name: 'Supabase', mark: 'SB', color: '#3FCF8E' },
         ],
     },
     {
         label: 'Data · DevOps',
         accent: '#fef3c7',
         items: [
-            { name: 'GCP', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4', color: '#4285F4' },
-            { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED', color: '#2496ED' },
-            { name: 'RAG', icon: '', color: '#7c3aed' },
-            { name: 'LLM', icon: '', color: '#e11d48' },
-            { name: 'Data Pipeline', icon: '', color: '#0ea5e9' },
+            { name: 'GCP', mark: 'GC', color: '#4285F4' },
+            { name: 'Docker', mark: 'DK', color: '#2496ED' },
+            { name: 'RAG', mark: 'RG', color: '#7c3aed' },
+            { name: 'LLM', mark: 'LM', color: '#e11d48' },
+            { name: 'Data Pipeline', mark: 'DP', color: '#0ea5e9' },
         ],
     },
 ] as const;
@@ -130,17 +130,6 @@ type HeroProps = {
     variant?: 'classic' | 'growth';
 };
 
-function shouldSkipIntro() {
-    if (typeof window === 'undefined') {
-        return false;
-    }
-
-    return (
-        window.matchMedia('(max-width: 760px)').matches ||
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    );
-}
-
 function fallbackCopy(text: string) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -155,18 +144,8 @@ function fallbackCopy(text: string) {
 
 export default function Hero({ variant = 'classic' }: HeroProps) {
     const isGrowthVariant = variant === 'growth';
-    const [revealed, setRevealed] = useState(() => shouldSkipIntro());
     const [contactOpen, setContactOpen] = useState(false);
     const [copied, setCopied] = useState(false);
-
-    useEffect(() => {
-        if (revealed) {
-            return undefined;
-        }
-
-        const timer = setTimeout(() => setRevealed(true), 180);
-        return () => clearTimeout(timer);
-    }, [revealed]);
 
     useEffect(() => {
         if (!contactOpen) {
@@ -204,37 +183,10 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
 
     return (
         <section className="hero-wrap" id="home">
-            <AnimatePresence>
-                {!revealed && (
-                    <>
-                        <motion.div
-                            className="curtain curtain-left"
-                            initial={{ x: 0 }}
-                            exit={{ x: '-100%' }}
-                            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
-                        />
-                        <motion.div
-                            className="curtain curtain-right"
-                            initial={{ x: 0 }}
-                            exit={{ x: '100%' }}
-                            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
-                        />
-                        <motion.div
-                            className="curtain-text"
-                            initial={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <span className="curtain-greeting">Welcome</span>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-
             <motion.div
                 className={`profile-container${isGrowthVariant ? ' is-growth-variant' : ''}`}
                 initial="hidden"
-                animate={revealed ? 'show' : 'hidden'}
+                animate="show"
                 variants={containerVariants}
             >
                 <div className={`profile-hero-stage${isGrowthVariant ? ' is-growth' : ''}`}>
@@ -314,18 +266,13 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                             <div className="skill-group-items">
                                 {group.items.map((skill) => (
                                     <span className="profile-tag" key={skill.name}>
-                                        {skill.icon ? (
-                                            <img
-                                                src={skill.icon}
-                                                alt={skill.name}
-                                                className="profile-tag-icon"
-                                            />
-                                        ) : (
-                                            <span
-                                                className="profile-tag-dot"
-                                                style={{ backgroundColor: skill.color }}
-                                            />
-                                        )}
+                                        <span
+                                            className="profile-tag-badge"
+                                            style={{ '--tag-accent': skill.color } as CSSProperties}
+                                            aria-hidden="true"
+                                        >
+                                            {skill.mark}
+                                        </span>
                                         {skill.name}
                                     </span>
                                 ))}
