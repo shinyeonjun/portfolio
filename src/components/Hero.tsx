@@ -126,6 +126,14 @@ const growthHeroFacts = [
     { label: 'Track', value: 'Personal + Team Projects' },
 ] as const;
 
+const focusLinks = [
+    { label: '#meeting-ai', href: '#caps' },
+    { label: '#data-pipeline', href: '#de-pipeline' },
+    { label: '#automation', href: '#ai-schedule' },
+    { label: '#deployment', href: '#control-dock' },
+    { label: '#prototype', href: '#wedding-album' },
+] as const;
+
 type HeroProps = {
     variant?: 'classic' | 'growth';
 };
@@ -263,6 +271,28 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                         >
                             <h1 className="profile-name">신연준</h1>
                             <p className="profile-role">Backend & Data Pipeline Developer</p>
+                        </motion.div>
+
+                        <motion.div
+                            className="hero-discovery"
+                            variants={fadeUpVariants}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <div className="hero-discovery-bar">
+                                <span className="hero-discovery-label">Focus Index</span>
+                                <strong>backend · data pipeline · automation · llm · workflow</strong>
+                            </div>
+                            <div className="hero-discovery-tags">
+                                {focusLinks.map((item) => (
+                                    <a
+                                        key={item.label}
+                                        href={item.href}
+                                        className="hero-discovery-tag hover-trigger"
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </div>
                         </motion.div>
                     </div>
 

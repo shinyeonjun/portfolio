@@ -700,6 +700,77 @@
   letter-spacing: 0.05em;
 }
 
+.hero-discovery {
+  display: grid;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto 1.4rem;
+}
+
+.hero-discovery-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.2rem;
+  padding: 0.85rem 1.05rem;
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow:
+    0 16px 36px -30px rgba(15, 23, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.hero-discovery-label {
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.hero-discovery-bar strong {
+  color: #0f172a;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero-discovery-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.hero-discovery-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.38rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(226, 232, 240, 0.96);
+  background: rgba(255, 255, 255, 0.72);
+  color: #475569;
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.hero-discovery-tag:hover {
+  transform: translateY(-2px);
+  border-color: rgba(147, 197, 253, 0.98);
+  color: #1d4ed8;
+  box-shadow: 0 16px 30px -28px rgba(37, 99, 235, 0.34);
+}
+
 .profile-bio {
   max-width: 32rem;
   margin: 0 0 2rem;
@@ -1468,6 +1539,50 @@
   font-size: 1rem;
   line-height: 1.86;
   word-break: keep-all;
+}
+
+.growth-archive-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 46rem;
+  margin: 1.4rem auto 0;
+}
+
+.growth-archive-stat {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.32);
+  text-align: left;
+}
+
+.growth-archive-stat span {
+  color: #94a3b8;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.growth-archive-stat strong {
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 760px) {
+  .hero-discovery-bar {
+    align-items: flex-start;
+    flex-direction: column;
+    border-radius: 1.3rem;
+  }
+
+  .growth-archive-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .skeleton-block {
