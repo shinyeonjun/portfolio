@@ -73,7 +73,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 5%;
+  padding: 1.35rem clamp(1.25rem, 3vw, 3rem);
   background: rgba(248, 250, 252, 0.7);
   backdrop-filter: blur(12px) saturate(180%);
   border-bottom: 1px solid rgba(229, 231, 235, 0.5);
@@ -392,14 +392,14 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 8rem 5% 4rem;
+  padding: 8rem clamp(1.25rem, 3.4vw, 3rem) 4rem;
   text-align: center;
-  max-width: 900px;
+  max-width: 980px;
   margin: 0 auto;
 }
 
 .profile-container.is-growth-variant {
-  max-width: 1180px;
+  max-width: 1280px;
 }
 
 .profile-hero-stage {
@@ -416,12 +416,12 @@
   display: grid;
   gap: 1.05rem;
   width: 100%;
-  max-width: 1120px;
+  max-width: 1220px;
   margin-bottom: 1.8rem;
 }
 
 .app-shell.is-timeline-view .profile-hero-core {
-  max-width: 42rem;
+  max-width: 46rem;
   margin: 0 auto;
 }
 
@@ -436,7 +436,7 @@
   display: grid;
   gap: 0.95rem;
   width: 100%;
-  max-width: 52rem;
+  max-width: 58rem;
   margin: 0 auto 0.25rem;
   padding: 1.25rem 1.35rem 1.4rem;
   border: 1px solid rgba(226, 232, 240, 0.92);
@@ -672,7 +672,7 @@
 }
 
 .app-shell.is-timeline-view .profile-skill-groups {
-  max-width: 1080px;
+  max-width: 1160px;
 }
 
 .skill-group {
@@ -993,7 +993,7 @@
 }
 
 .app-shell.is-timeline-view .profile-stats {
-  max-width: 980px;
+  max-width: 1080px;
 }
 
 @media (max-width: 640px) {
@@ -1050,7 +1050,7 @@
 }
 
 .app-shell.is-timeline-view .profile-credentials {
-  max-width: 1120px;
+  max-width: 1180px;
 }
 
 .credential-panel {
@@ -1378,8 +1378,8 @@
 /* Projects Section                      */
 /* ------------------------------------- */
 .section {
-  padding: 6rem 5%;
-  max-width: 1400px;
+  padding: 6rem clamp(1.25rem, 3.6vw, 3rem);
+  max-width: 1480px;
   margin: 0 auto;
 }
 
@@ -1409,14 +1409,14 @@
 }
 
 .growth-section-header {
-  max-width: 52rem;
+  max-width: 56rem;
   margin-left: auto;
   margin-right: auto;
 }
 
 .growth-intro {
   margin: 1rem auto 0;
-  max-width: 42rem;
+  max-width: 46rem;
   color: #64748b;
   font-size: 1rem;
   line-height: 1.86;
@@ -1750,7 +1750,7 @@
 .growth-stage {
   position: relative;
   min-width: 0;
-  padding-inline: 2.8rem;
+  padding-inline: 2.25rem;
 }
 
 .growth-stage-arrows {
@@ -1807,8 +1807,8 @@
 .growth-slide-card {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: 1.25rem;
-  padding: 1.4rem;
+  gap: 1.4rem;
+  padding: 1.55rem;
   border: 1px solid rgba(226, 232, 240, 0.92);
   border-radius: 1.8rem;
   background:
@@ -1924,7 +1924,7 @@
 .growth-primary-image {
   display: block;
   width: 100%;
-  height: 24rem;
+  height: 25rem;
   object-fit: cover;
   object-position: top;
 }
