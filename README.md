@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Shin Yeonjun Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Site](https://img.shields.io/badge/site-GitHub%20Pages-111827)](https://shinyeonjun.github.io/portfolio/)
+[![Focus](https://img.shields.io/badge/focus-Data%20%C2%B7%20API%20%C2%B7%20LLM-0f766e)](https://shinyeonjun.github.io/portfolio/)
+[![Projects](https://img.shields.io/badge/projects-5-7c3aed)](https://shinyeonjun.github.io/portfolio/#projects)
 
-Currently, two official plugins are available:
+백엔드, 데이터 파이프라인, AI 자동화 프로젝트를 채용용으로 정리한 포트폴리오 사이트입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![포트폴리오 미리보기](public/og-cover.png)
 
-## React Compiler
+## 한눈에 보기
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 라이브 사이트: <https://shinyeonjun.github.io/portfolio/>
+- GitHub 프로필: <https://github.com/shinyeonjun>
+- 중심 키워드: Data, API, LLM, Automation
 
-## Expanding the ESLint configuration
+## 수록 프로젝트
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Meeting Overlay Assistant
+- AI Schedule Web
+- DE-pipeline
+- ControlDock
+- Wedding Album Generator
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 이 포트폴리오에서 보여주는 것
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- AI 기능을 실제 서비스 흐름으로 연결한 경험
+- API, 데이터, UI를 하나의 시스템으로 묶어낸 방식
+- 역할, 결과 화면, 구조 자료, 발표 자료까지 확인 가능한 프로젝트 기록
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 실행
+
+```powershell
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 빌드
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```powershell
+npm run build
 ```
