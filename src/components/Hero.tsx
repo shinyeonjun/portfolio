@@ -3,13 +3,34 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import {
     Award,
     BadgeCheck,
+    Bot,
+    BrainCircuit,
     Check,
     Copy,
+    Database,
     Github,
     Mail,
     ArrowDown,
     ShieldCheck,
+    Waypoints,
 } from 'lucide-react';
+import {
+    SiCss,
+    SiDocker,
+    SiFastapi,
+    SiGooglecloud,
+    SiHtml5,
+    SiJavascript,
+    SiNodedotjs,
+    SiPostgresql,
+    SiPython,
+    SiReact,
+    SiSqlite,
+    SiSupabase,
+    SiTypescript,
+    SiVite,
+} from 'react-icons/si';
+import { type IconType } from 'react-icons';
 
 const CONTACT_EMAIL = 'sinyeonjun@gmail.com';
 
@@ -69,50 +90,60 @@ const awards = [
     },
 ] as const;
 
+type SkillIcon = IconType | typeof Database | typeof BrainCircuit | typeof Bot | typeof Waypoints;
+
 const skillGroups = [
     {
         label: 'Language',
         accent: '#dbeafe',
         items: [
-            { name: 'Python', mark: 'Py', color: '#3776AB' },
-            { name: 'JavaScript', mark: 'JS', color: '#F7DF1E' },
-            { name: 'TypeScript', mark: 'TS', color: '#3178C6' },
-            { name: 'SQL', mark: 'DB', color: '#0f766e' },
+            { name: 'Python', icon: SiPython, color: '#3776AB' },
+            { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+            { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+            { name: 'SQL', icon: Database, color: '#0f766e' },
         ],
     },
     {
         label: 'Frontend',
         accent: '#ede9fe',
         items: [
-            { name: 'HTML5', mark: 'H5', color: '#E34F26' },
-            { name: 'CSS3', mark: 'C3', color: '#1572B6' },
-            { name: 'React', mark: 'Rx', color: '#61DAFB' },
-            { name: 'Vite', mark: 'Vt', color: '#646CFF' },
+            { name: 'HTML5', icon: SiHtml5, color: '#E34F26' },
+            { name: 'CSS3', icon: SiCss, color: '#1572B6' },
+            { name: 'React', icon: SiReact, color: '#61DAFB' },
+            { name: 'Vite', icon: SiVite, color: '#646CFF' },
         ],
     },
     {
         label: 'Backend',
         accent: '#dcfce7',
         items: [
-            { name: 'FastAPI', mark: 'FA', color: '#009688' },
-            { name: 'Node.js', mark: 'ND', color: '#5FA04E' },
-            { name: 'PostgreSQL', mark: 'PG', color: '#4169E1' },
-            { name: 'SQLite', mark: 'SQ', color: '#003B57' },
-            { name: 'Supabase', mark: 'SB', color: '#3FCF8E' },
+            { name: 'FastAPI', icon: SiFastapi, color: '#009688' },
+            { name: 'Node.js', icon: SiNodedotjs, color: '#5FA04E' },
+            { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+            { name: 'SQLite', icon: SiSqlite, color: '#003B57' },
+            { name: 'Supabase', icon: SiSupabase, color: '#3FCF8E' },
         ],
     },
     {
         label: 'Data · DevOps',
         accent: '#fef3c7',
         items: [
-            { name: 'GCP', mark: 'GC', color: '#4285F4' },
-            { name: 'Docker', mark: 'DK', color: '#2496ED' },
-            { name: 'RAG', mark: 'RG', color: '#7c3aed' },
-            { name: 'LLM', mark: 'LM', color: '#e11d48' },
-            { name: 'Data Pipeline', mark: 'DP', color: '#0ea5e9' },
+            { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
+            { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+            { name: 'RAG', icon: BrainCircuit, color: '#7c3aed' },
+            { name: 'LLM', icon: Bot, color: '#e11d48' },
+            { name: 'Data Pipeline', icon: Waypoints, color: '#0ea5e9' },
         ],
     },
-] as const;
+] as const satisfies ReadonlyArray<{
+    label: string;
+    accent: string;
+    items: ReadonlyArray<{
+        name: string;
+        icon: SkillIcon;
+        color: string;
+    }>;
+}>;
 
 const growthHeroPillars = [
     '문제 정의부터 구조화',
@@ -271,7 +302,7 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                                             style={{ '--tag-accent': skill.color } as CSSProperties}
                                             aria-hidden="true"
                                         >
-                                            {skill.mark}
+                                            <skill.icon />
                                         </span>
                                         {skill.name}
                                     </span>
