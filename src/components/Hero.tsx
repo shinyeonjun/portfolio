@@ -130,6 +130,17 @@ type HeroProps = {
     variant?: 'classic' | 'growth';
 };
 
+function shouldShowCurtain() {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+    return (
+        window.matchMedia('(min-width: 1024px)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+}
+
 function fallbackCopy(text: string) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -144,8 +155,18 @@ function fallbackCopy(text: string) {
 
 export default function Hero({ variant = 'classic' }: HeroProps) {
     const isGrowthVariant = variant === 'growth';
+    const [showCurtain, setShowCurtain] = useState(() => shouldShowCurtain());
     const [contactOpen, setContactOpen] = useState(false);
     const [copied, setCopied] = useState(false);
+
+    useEffect(() => {
+        if (!showCurtain) {
+            return undefined;
+        }
+
+        const timer = window.setTimeout(() => setShowCurtain(false), 320);
+        return () => window.clearTimeout(timer);
+    }, [showCurtain]);
 
     useEffect(() => {
         if (!contactOpen) {
@@ -183,6 +204,39 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
 
     return (
         <section className="hero-wrap" id="home">
+            <AnimatePresence>
+                {showCurtain && (
+                    <motion.div
+                        className="curtain-shell"
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.18, delay: 0.34 }}
+                        aria-hidden="true"
+                    >
+                        <motion.div
+                            className="curtain-panel curtain-panel-left"
+                            initial={{ x: 0 }}
+                            exit={{ x: '-100%' }}
+                            transition={{ duration: 0.62, ease: [0.76, 0, 0.24, 1] }}
+                        />
+                        <motion.div
+                            className="curtain-panel curtain-panel-right"
+                            initial={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ duration: 0.62, ease: [0.76, 0, 0.24, 1] }}
+                        />
+                        <motion.div
+                            className="curtain-badge"
+                            initial={{ opacity: 0.9, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.28 }}
+                        >
+                            Portfolio Opening
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <motion.div
                 className={`profile-container${isGrowthVariant ? ' is-growth-variant' : ''}`}
                 initial="hidden"
