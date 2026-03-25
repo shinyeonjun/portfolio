@@ -118,22 +118,6 @@ export default function ProjectsTimeline() {
     const activeProject = projects[activeIndex] ?? projects[0];
     const primaryVisual = activeProject.visuals[0];
     const supportingVisuals = activeProject.visuals.slice(1);
-    const archiveStats = [
-        { label: 'Personal', value: projects.filter((project) => !project.isTeam).length },
-        { label: 'Team', value: projects.filter((project) => project.isTeam).length },
-        {
-            label: 'GitHub',
-            value: projects.filter((project) =>
-                project.links.some((link) => link.label === 'GitHub'),
-            ).length,
-        },
-        {
-            label: 'Deck',
-            value: projects.filter((project) =>
-                project.links.some((link) => link.label === 'Presentation'),
-            ).length,
-        },
-    ];
 
     return (
         <>
@@ -190,14 +174,6 @@ export default function ProjectsTimeline() {
                         아래 상세 카드가 바뀌는 구조입니다. 흐름은 유지하고, 읽는 경험은 데스크톱
                         기준으로 안정적으로 가져가도록 정리했습니다.
                     </p>
-                    <div className="growth-archive-bar">
-                        {archiveStats.map((item) => (
-                            <div className="growth-archive-stat" key={item.label}>
-                                <span>{item.label}</span>
-                                <strong>{String(item.value).padStart(2, '0')}</strong>
-                            </div>
-                        ))}
-                    </div>
                 </motion.div>
 
                 <div className="growth-shell">
