@@ -2,7 +2,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import './App.css';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
-import ProjectsTimelineSection from './components/ProjectsTimelineSection';
+import ProjectsShowcase from './components/ProjectsShowcase';
 
 export default function App() {
     const { scrollYProgress } = useScroll();
@@ -43,7 +43,7 @@ export default function App() {
 
             <main>
                 <Hero variant="growth" />
-                <ProjectsTimelineSection />
+                <ProjectsShowcase />
             </main>
 
             <footer className="footer">
