@@ -339,6 +339,14 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                     </button>
                 </motion.div>
 
+                <motion.p
+                    className="profile-availability-note"
+                    variants={fadeUpVariants}
+                    transition={{ duration: 0.45 }}
+                >
+                    포지션 제안 및 협업 문의 가능합니다
+                </motion.p>
+
                 <AnimatePresence>
                     {contactOpen && (
                         <motion.div
@@ -377,6 +385,9 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                                     <div className="contact-inline-address-wrap">
                                         <span className="contact-inline-prefix">메일 주소</span>
                                         <strong className="contact-inline-address">{CONTACT_EMAIL}</strong>
+                                        <span className="contact-inline-availability">
+                                            포지션 제안 및 협업 문의 가능합니다
+                                        </span>
                                     </div>
                                     <button
                                         type="button"
