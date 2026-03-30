@@ -4,26 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DE-pipeline | 신연준 포트폴리오</title>
-    <meta name="description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집·정제·적재와 대시보드·챗봇 응답 구조를 연결한 데이터 파이프라인 프로젝트입니다." />
-    <meta name="keywords" content="데이터 파이프라인 포트폴리오, DE-pipeline, ELT, FastAPI, RAG, YouTube API, GCP, Supabase" />
+    <meta name="description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집부터 정제, 적재, 대시보드, RAG 기반 챗봇 응답 구조까지 연결한 데이터 파이프라인 프로젝트입니다." />
+    <meta name="keywords" content="신연준 포트폴리오, 데이터 파이프라인 포트폴리오, DE-pipeline, ELT, FastAPI, RAG, YouTube API, GCP, Supabase" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://shinyeonjun.github.io/portfolio/projects/de-pipeline/" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:title" content="DE-pipeline | 신연준 포트폴리오" />
-    <meta property="og:description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집·정제·적재와 대시보드·챗봇 응답 구조를 연결한 데이터 파이프라인 프로젝트입니다." />
+    <meta property="og:description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집부터 정제, 적재, 대시보드, RAG 기반 챗봇 응답 구조까지 연결한 데이터 파이프라인 프로젝트입니다." />
     <meta property="og:url" content="https://shinyeonjun.github.io/portfolio/projects/de-pipeline/" />
     <meta property="og:image" content="https://shinyeonjun.github.io/portfolio/og-cover.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="DE-pipeline | 신연준 포트폴리오" />
-    <meta name="twitter:description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집·정제·적재와 대시보드·챗봇 응답 구조를 연결한 데이터 파이프라인 프로젝트입니다." />
+    <meta name="twitter:description" content="DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집부터 정제, 적재, 대시보드, RAG 기반 챗봇 응답 구조까지 연결한 데이터 파이프라인 프로젝트입니다." />
     <meta name="twitter:image" content="https://shinyeonjun.github.io/portfolio/og-cover.png" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "DE-pipeline | 신연준 포트폴리오",
-        "description": "DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집·정제·적재와 대시보드·챗봇 응답 구조를 연결한 데이터 파이프라인 프로젝트입니다.",
+        "description": "DE-pipeline 프로젝트 소개입니다. YouTube 데이터 수집부터 정제, 적재, 대시보드, RAG 기반 챗봇 응답 구조까지 연결한 데이터 파이프라인 프로젝트입니다.",
         "author": {
           "@type": "Person",
           "name": "신연준",
@@ -39,70 +39,79 @@
         color-scheme: light;
         --bg: #f8fafc;
         --panel: rgba(255, 255, 255, 0.94);
-        --line: rgba(203, 213, 225, 0.78);
+        --line: rgba(203, 213, 225, 0.82);
         --text: #0f172a;
         --muted: #475569;
         --accent: #2563eb;
-        --accent-soft: #eff6ff;
+        --accent-soft: rgba(239, 246, 255, 0.92);
       }
 
       * { box-sizing: border-box; }
+
       body {
         margin: 0;
         font-family: "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
         background:
-          radial-gradient(circle at top, rgba(191, 219, 254, 0.35), transparent 34%),
+          radial-gradient(circle at top, rgba(191, 219, 254, 0.36), transparent 32%),
           var(--bg);
         color: var(--text);
-        line-height: 1.7;
+        line-height: 1.68;
+        word-break: keep-all;
       }
 
       main {
-        width: min(960px, calc(100% - 2rem));
+        width: min(1040px, calc(100% - 2rem));
         margin: 0 auto;
-        padding: 3.5rem 0 5rem;
+        padding: 3.25rem 0 4.5rem;
+      }
+
+      .crumb,
+      .home-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
       }
 
       .crumb {
-        color: var(--muted);
         font-size: 0.92rem;
-        text-decoration: none;
       }
 
       .hero {
-        margin-top: 1.25rem;
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.1rem;
         padding: 2rem;
         border: 1px solid var(--line);
         border-radius: 1.75rem;
         background: var(--panel);
-        box-shadow: 0 28px 60px -50px rgba(15, 23, 42, 0.32);
+        box-shadow: 0 30px 60px -50px rgba(15, 23, 42, 0.3);
       }
 
       .eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 0.45rem;
-        padding: 0.25rem 0.7rem;
+        width: fit-content;
+        padding: 0.28rem 0.72rem;
         border-radius: 999px;
         background: var(--accent-soft);
         color: var(--accent);
         font-size: 0.74rem;
-        font-weight: 700;
-        text-transform: uppercase;
+        font-weight: 800;
         letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       h1 {
-        margin: 1rem 0 0.75rem;
-        font-size: clamp(2rem, 5vw, 3.25rem);
-        line-height: 1.08;
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1.06;
+        letter-spacing: -0.04em;
       }
 
       .meta {
         display: flex;
         flex-wrap: wrap;
         gap: 0.65rem;
-        margin-bottom: 1rem;
         color: var(--muted);
         font-size: 0.95rem;
       }
@@ -110,117 +119,158 @@
       .meta span {
         display: inline-flex;
         align-items: center;
-        padding: 0.18rem 0.7rem;
-        border-radius: 999px;
+        padding: 0.22rem 0.72rem;
         border: 1px solid var(--line);
-        background: #ffffff;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
       }
 
       .summary {
         margin: 0;
         color: var(--muted);
-        font-size: 1.02rem;
+        font-size: 1.04rem;
       }
 
-      .grid {
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.15rem;
+      }
+
+      .panel {
+        display: grid;
+        gap: 0.6rem;
+        padding: 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #94a3b8;
+      }
+
+      .panel p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .focus-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
         margin-top: 1rem;
       }
 
-      .panel {
-        padding: 1.35rem;
-        border: 1px solid var(--line);
-        border-radius: 1.35rem;
-        background: rgba(255, 255, 255, 0.9);
+      .stack-panel {
+        grid-column: 1 / -1;
       }
 
-      h2 {
-        margin: 0 0 0.7rem;
-        font-size: 1.05rem;
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 1.15rem;
-        color: var(--muted);
-      }
-
-      .stack-list {
+      .chip-list,
+      .link-list {
         display: flex;
         flex-wrap: wrap;
         gap: 0.6rem;
-        padding: 0;
-        list-style: none;
       }
 
-      .stack-list li,
-      .link-chip {
+      .chip-list__item,
+      .chip-link {
         display: inline-flex;
         align-items: center;
-        padding: 0.3rem 0.75rem;
+        padding: 0.34rem 0.76rem;
         border-radius: 999px;
+        border: 1px solid rgba(191, 219, 254, 0.95);
         background: var(--accent-soft);
-        border: 1px solid rgba(191, 219, 254, 0.88);
         color: var(--accent);
         font-size: 0.82rem;
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
-      }
-
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.65rem;
       }
 
       .home-link {
         display: inline-flex;
         margin-top: 1.5rem;
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: 700;
       }
 
       @media (max-width: 780px) {
-        main { width: min(100% - 1.2rem, 960px); padding-top: 2rem; }
-        .hero { padding: 1.35rem; border-radius: 1.25rem; }
-        .grid { grid-template-columns: 1fr; }
+        main {
+          width: min(100% - 1.2rem, 1040px);
+          padding-top: 2rem;
+        }
+
+        .hero {
+          padding: 1.35rem;
+          border-radius: 1.25rem;
+        }
+
+        .proof-grid,
+        .focus-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stack-panel {
+          grid-column: auto;
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <a class="crumb" href="https://shinyeonjun.github.io/portfolio/">← 신연준 포트폴리오</a>
+      <a class="crumb" href="https://shinyeonjun.github.io/portfolio/">신연준 포트폴리오</a>
+
       <section class="hero">
         <span class="eyebrow">개인 프로젝트</span>
         <h1>DE-pipeline</h1>
         <div class="meta">
           <span>2026.01 - 2026.02</span>
-          <span>신연준 포트폴리오 프로젝트 상세</span>
+          <span>백엔드 · 데이터 파이프라인 · FastAPI 프로젝트</span>
         </div>
-        <p class="summary">YouTube 데이터 수집·정제·적재와 대시보드·챗봇 응답 구조를 연결한 데이터 파이프라인 프로젝트입니다.</p>
+        <p class="summary">YouTube 데이터 수집부터 정제, 적재, 대시보드, RAG 기반 챗봇 응답 구조까지 연결한 데이터 파이프라인 프로젝트입니다.</p>
       </section>
 
-      <div class="grid">
-        <section class="panel">
+      <section class="proof-grid" aria-label="프로젝트 요약">
+        <article class="panel">
+          <h2>문제</h2>
+          <p>수집 데이터, 시각화, 질의응답이 따로 놀면 데이터 활용 흐름이 끊기고 분석 결과를 바로 확인하기 어려웠습니다.</p>
+        </article>
+        <article class="panel">
+          <h2>해결</h2>
+          <p>YouTube 수집 파이프라인, ELT 흐름, 대시보드, RAG 기반 챗봇 응답 구조를 하나의 데이터 활용 흐름으로 설계했습니다.</p>
+        </article>
+        <article class="panel">
           <h2>내 역할</h2>
           <p>데이터 수집부터 ELT 흐름, 대시보드, 챗봇 연결까지 전체 구조를 직접 설계하고 구현했습니다.</p>
-        </section>
-        <section class="panel">
+        </article>
+        <article class="panel">
+          <h2>결과</h2>
+          <p>수집한 데이터를 차트 시각화와 챗봇 응답까지 연결하는 end-to-end 데이터 파이프라인 프로토타입을 구현했습니다.</p>
+        </article>
+      </section>
+
+      <section class="focus-grid" aria-label="프로젝트 포인트">
+        <article class="panel">
           <h2>핵심 포인트</h2>
-          <ul><li>ELT 흐름 설계</li><li>데이터 기반 챗봇</li><li>차트 시각화</li></ul>
-        </section>
-        <section class="panel">
+          <div class="chip-list"><span class="chip-list__item">ELT 흐름 설계</span><span class="chip-list__item">데이터 기반 챗봇</span><span class="chip-list__item">차트 시각화</span></div>
+        </article>
+        <article class="panel">
+          <h2>백엔드 포인트</h2>
+          <div class="chip-list"><span class="chip-list__item">ELT 파이프라인</span><span class="chip-list__item">Supabase 스키마</span><span class="chip-list__item">FastAPI 응답 구조</span><span class="chip-list__item">RAG 질의 흐름</span></div>
+        </article>
+        <article class="panel stack-panel">
           <h2>기술 스택</h2>
-          <ul class="stack-list"><li>Python</li><li>YouTube API</li><li>GCP</li><li>Supabase</li><li>FastAPI</li><li>RAG</li></ul>
-        </section>
-        <section class="panel">
+          <div class="chip-list"><span class="chip-list__item">Python</span><span class="chip-list__item">YouTube API</span><span class="chip-list__item">GCP</span><span class="chip-list__item">Supabase</span><span class="chip-list__item">FastAPI</span><span class="chip-list__item">RAG</span></div>
+        </article>
+        <article class="panel stack-panel">
           <h2>관련 링크</h2>
-          <div class="links"><a class="link-chip" href="https://github.com/shinyeonjun/DE-pipeline" target="_blank" rel="noreferrer">GitHub</a></div>
-        </section>
-      </div>
+          <div class="link-list"><a class="chip-link" href="https://github.com/shinyeonjun/DE-pipeline" target="_blank" rel="noreferrer">GitHub</a></div>
+        </article>
+      </section>
 
       <a class="home-link" href="https://shinyeonjun.github.io/portfolio/#projects">메인 포트폴리오에서 프로젝트 보기</a>
     </main>

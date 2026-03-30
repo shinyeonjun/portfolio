@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meeting Overlay Assistant | 신연준 포트폴리오</title>
     <meta name="description" content="Meeting Overlay Assistant 프로젝트 소개입니다. 회의 플랫폼에 종속되지 않는 오버레이에서 partial/final 자막과 핵심 이벤트를 실시간으로 보조하고, 회의 종료 후에는 사내 DB 기반 워크스페이스에서 기록 검색과 후속 업무까지 이어가는 로컬 AI 회의 시스템입니다." />
-    <meta name="keywords" content="Meeting Overlay Assistant, 백엔드 프로젝트, FastAPI 프로젝트, STT, 회의 보조 AI, 로컬 AI, PostgreSQL, pgvector" />
+    <meta name="keywords" content="신연준 포트폴리오, 백엔드 개발자 포트폴리오, Meeting Overlay Assistant, FastAPI 프로젝트, WebSocket, STT, PostgreSQL, pgvector, AI 회의 보조 시스템" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://shinyeonjun.github.io/portfolio/projects/meeting/" />
     <meta property="og:type" content="article" />
@@ -39,70 +39,79 @@
         color-scheme: light;
         --bg: #f8fafc;
         --panel: rgba(255, 255, 255, 0.94);
-        --line: rgba(203, 213, 225, 0.78);
+        --line: rgba(203, 213, 225, 0.82);
         --text: #0f172a;
         --muted: #475569;
         --accent: #2563eb;
-        --accent-soft: #eff6ff;
+        --accent-soft: rgba(239, 246, 255, 0.92);
       }
 
       * { box-sizing: border-box; }
+
       body {
         margin: 0;
         font-family: "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
         background:
-          radial-gradient(circle at top, rgba(191, 219, 254, 0.35), transparent 34%),
+          radial-gradient(circle at top, rgba(191, 219, 254, 0.36), transparent 32%),
           var(--bg);
         color: var(--text);
-        line-height: 1.7;
+        line-height: 1.68;
+        word-break: keep-all;
       }
 
       main {
-        width: min(960px, calc(100% - 2rem));
+        width: min(1040px, calc(100% - 2rem));
         margin: 0 auto;
-        padding: 3.5rem 0 5rem;
+        padding: 3.25rem 0 4.5rem;
+      }
+
+      .crumb,
+      .home-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
       }
 
       .crumb {
-        color: var(--muted);
         font-size: 0.92rem;
-        text-decoration: none;
       }
 
       .hero {
-        margin-top: 1.25rem;
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.1rem;
         padding: 2rem;
         border: 1px solid var(--line);
         border-radius: 1.75rem;
         background: var(--panel);
-        box-shadow: 0 28px 60px -50px rgba(15, 23, 42, 0.32);
+        box-shadow: 0 30px 60px -50px rgba(15, 23, 42, 0.3);
       }
 
       .eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 0.45rem;
-        padding: 0.25rem 0.7rem;
+        width: fit-content;
+        padding: 0.28rem 0.72rem;
         border-radius: 999px;
         background: var(--accent-soft);
         color: var(--accent);
         font-size: 0.74rem;
-        font-weight: 700;
-        text-transform: uppercase;
+        font-weight: 800;
         letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       h1 {
-        margin: 1rem 0 0.75rem;
-        font-size: clamp(2rem, 5vw, 3.25rem);
-        line-height: 1.08;
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1.06;
+        letter-spacing: -0.04em;
       }
 
       .meta {
         display: flex;
         flex-wrap: wrap;
         gap: 0.65rem;
-        margin-bottom: 1rem;
         color: var(--muted);
         font-size: 0.95rem;
       }
@@ -110,117 +119,158 @@
       .meta span {
         display: inline-flex;
         align-items: center;
-        padding: 0.18rem 0.7rem;
-        border-radius: 999px;
+        padding: 0.22rem 0.72rem;
         border: 1px solid var(--line);
-        background: #ffffff;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
       }
 
       .summary {
         margin: 0;
         color: var(--muted);
-        font-size: 1.02rem;
+        font-size: 1.04rem;
       }
 
-      .grid {
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.15rem;
+      }
+
+      .panel {
+        display: grid;
+        gap: 0.6rem;
+        padding: 1.25rem;
+        border: 1px solid var(--line);
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #94a3b8;
+      }
+
+      .panel p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .focus-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
         margin-top: 1rem;
       }
 
-      .panel {
-        padding: 1.35rem;
-        border: 1px solid var(--line);
-        border-radius: 1.35rem;
-        background: rgba(255, 255, 255, 0.9);
+      .stack-panel {
+        grid-column: 1 / -1;
       }
 
-      h2 {
-        margin: 0 0 0.7rem;
-        font-size: 1.05rem;
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 1.15rem;
-        color: var(--muted);
-      }
-
-      .stack-list {
+      .chip-list,
+      .link-list {
         display: flex;
         flex-wrap: wrap;
         gap: 0.6rem;
-        padding: 0;
-        list-style: none;
       }
 
-      .stack-list li,
-      .link-chip {
+      .chip-list__item,
+      .chip-link {
         display: inline-flex;
         align-items: center;
-        padding: 0.3rem 0.75rem;
+        padding: 0.34rem 0.76rem;
         border-radius: 999px;
+        border: 1px solid rgba(191, 219, 254, 0.95);
         background: var(--accent-soft);
-        border: 1px solid rgba(191, 219, 254, 0.88);
         color: var(--accent);
         font-size: 0.82rem;
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
-      }
-
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.65rem;
       }
 
       .home-link {
         display: inline-flex;
         margin-top: 1.5rem;
-        color: var(--accent);
-        text-decoration: none;
-        font-weight: 700;
       }
 
       @media (max-width: 780px) {
-        main { width: min(100% - 1.2rem, 960px); padding-top: 2rem; }
-        .hero { padding: 1.35rem; border-radius: 1.25rem; }
-        .grid { grid-template-columns: 1fr; }
+        main {
+          width: min(100% - 1.2rem, 1040px);
+          padding-top: 2rem;
+        }
+
+        .hero {
+          padding: 1.35rem;
+          border-radius: 1.25rem;
+        }
+
+        .proof-grid,
+        .focus-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stack-panel {
+          grid-column: auto;
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <a class="crumb" href="https://shinyeonjun.github.io/portfolio/">← 신연준 포트폴리오</a>
+      <a class="crumb" href="https://shinyeonjun.github.io/portfolio/">신연준 포트폴리오</a>
+
       <section class="hero">
         <span class="eyebrow">개인 프로젝트</span>
         <h1>Meeting Overlay Assistant</h1>
         <div class="meta">
           <span>2026.03 - 진행 중</span>
-          <span>신연준 포트폴리오 프로젝트 상세</span>
+          <span>백엔드 · 데이터 파이프라인 · FastAPI 프로젝트</span>
         </div>
         <p class="summary">회의 플랫폼에 종속되지 않는 오버레이에서 partial/final 자막과 핵심 이벤트를 실시간으로 보조하고, 회의 종료 후에는 사내 DB 기반 워크스페이스에서 기록 검색과 후속 업무까지 이어가는 로컬 AI 회의 시스템입니다.</p>
       </section>
 
-      <div class="grid">
-        <section class="panel">
+      <section class="proof-grid" aria-label="프로젝트 요약">
+        <article class="panel">
+          <h2>문제</h2>
+          <p>회의 플랫폼마다 기능과 UI가 달라 실시간 기록과 회의 후속 업무 흐름이 끊기는 문제가 있었습니다.</p>
+        </article>
+        <article class="panel">
+          <h2>해결</h2>
+          <p>플랫폼 독립 오버레이, 하이브리드 STT 전략, 사내 DB 기반 워크스페이스를 하나의 흐름으로 묶어 회의 중 보조와 회의 후 기록 활용을 연결했습니다.</p>
+        </article>
+        <article class="panel">
           <h2>내 역할</h2>
-          <p>오버레이 클라이언트, 실시간 통신 서버, 워크스페이스 흐름을 설계하고 STT 모델 배치, 이벤트 추출 구조, 회의 기록 저장 방식을 정리했습니다.</p>
-        </section>
-        <section class="panel">
+          <p>오버레이 클라이언트, 실시간 통신 서버, 워크스페이스 구조를 설계하고 STT 모듈 배치, 이벤트 추출 구조, 회의 기록 저장 방식을 직접 정리했습니다.</p>
+        </article>
+        <article class="panel">
+          <h2>결과</h2>
+          <p>실시간 자막, 핵심 이벤트 추출, 회의 종료 후 기록 검색까지 이어지는 로컬 AI 회의 시스템 구조를 구현했습니다.</p>
+        </article>
+      </section>
+
+      <section class="focus-grid" aria-label="프로젝트 포인트">
+        <article class="panel">
           <h2>핵심 포인트</h2>
-          <ul><li>플랫폼 독립 오버레이</li><li>하이브리드 STT 전략</li><li>사내 DB 중심 기록 축적</li></ul>
-        </section>
-        <section class="panel">
+          <div class="chip-list"><span class="chip-list__item">플랫폼 독립 오버레이</span><span class="chip-list__item">하이브리드 STT 전략</span><span class="chip-list__item">사내 DB 중심 기록 축적</span></div>
+        </article>
+        <article class="panel">
+          <h2>백엔드 포인트</h2>
+          <div class="chip-list"><span class="chip-list__item">WebSocket 실시간 통신</span><span class="chip-list__item">pgvector 기록 검색</span><span class="chip-list__item">PostgreSQL 워크스페이스</span><span class="chip-list__item">STT 이벤트 파이프라인</span></div>
+        </article>
+        <article class="panel stack-panel">
           <h2>기술 스택</h2>
-          <ul class="stack-list"><li>Python</li><li>FastAPI</li><li>WebSocket</li><li>Tauri 2</li><li>React</li><li>PostgreSQL</li><li>pgvector</li><li>Redis</li></ul>
-        </section>
-        <section class="panel">
+          <div class="chip-list"><span class="chip-list__item">Python</span><span class="chip-list__item">FastAPI</span><span class="chip-list__item">WebSocket</span><span class="chip-list__item">Tauri 2</span><span class="chip-list__item">React</span><span class="chip-list__item">PostgreSQL</span><span class="chip-list__item">pgvector</span><span class="chip-list__item">Redis</span></div>
+        </article>
+        <article class="panel stack-panel">
           <h2>관련 링크</h2>
-          <div class="links"><a class="link-chip" href="https://github.com/shinyeonjun/meeting-overlay-assistant" target="_blank" rel="noreferrer">GitHub</a><a class="link-chip" href="https://shinyeonjun.github.io/portfolio/projects/meeting/meeting-overlay-assistant-presentation.pdf" target="_blank" rel="noreferrer">Presentation</a></div>
-        </section>
-      </div>
+          <div class="link-list"><a class="chip-link" href="https://github.com/shinyeonjun/meeting-overlay-assistant" target="_blank" rel="noreferrer">GitHub</a><a class="chip-link" href="https://shinyeonjun.github.io/portfolio/projects/meeting/meeting-overlay-assistant-presentation.pdf" target="_blank" rel="noreferrer">Presentation</a></div>
+        </article>
+      </section>
 
       <a class="home-link" href="https://shinyeonjun.github.io/portfolio/#projects">메인 포트폴리오에서 프로젝트 보기</a>
     </main>
