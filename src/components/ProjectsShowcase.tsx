@@ -39,7 +39,8 @@ function ProjectHighlights({ project }: { project: Project }) {
         <div className="lab-highlight-row">
             {project.highlights.map((item) => (
                 <span className="lab-highlight-chip" key={item}>
-                    {item}
+                    <span className="lab-highlight-dot" aria-hidden="true" />
+                    <span className="lab-highlight-text">{item}</span>
                 </span>
             ))}
         </div>
