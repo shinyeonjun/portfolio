@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Album Generator | 신연준 포트폴리오</title>
+    <meta name="description" content="Wedding Album Generator 프로젝트 소개입니다. 결혼식 사진을 분석하고 앨범 페이지를 자동 생성하는 실험형 프로젝트입니다." />
+    <meta name="keywords" content="Wedding Album Generator, 개인 프로젝트 포트폴리오, GPT-4o-mini, Supabase, 사진 분석, 앨범 생성" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://shinyeonjun.github.io/portfolio/projects/wedding/" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="Wedding Album Generator | 신연준 포트폴리오" />
+    <meta property="og:description" content="Wedding Album Generator 프로젝트 소개입니다. 결혼식 사진을 분석하고 앨범 페이지를 자동 생성하는 실험형 프로젝트입니다." />
+    <meta property="og:url" content="https://shinyeonjun.github.io/portfolio/projects/wedding/" />
+    <meta property="og:image" content="https://shinyeonjun.github.io/portfolio/og-cover.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wedding Album Generator | 신연준 포트폴리오" />
+    <meta name="twitter:description" content="Wedding Album Generator 프로젝트 소개입니다. 결혼식 사진을 분석하고 앨범 페이지를 자동 생성하는 실험형 프로젝트입니다." />
+    <meta name="twitter:image" content="https://shinyeonjun.github.io/portfolio/og-cover.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Wedding Album Generator | 신연준 포트폴리오",
+        "description": "Wedding Album Generator 프로젝트 소개입니다. 결혼식 사진을 분석하고 앨범 페이지를 자동 생성하는 실험형 프로젝트입니다.",
+        "author": {
+          "@type": "Person",
+          "name": "신연준",
+          "url": "https://shinyeonjun.github.io/portfolio/"
+        },
+        "dateModified": "2026-03-31",
+        "mainEntityOfPage": "https://shinyeonjun.github.io/portfolio/projects/wedding/",
+        "about": ["Python", "GPT-4o-mini", "Supabase", "PostgreSQL", "HTML"]
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f8fafc;
+        --panel: rgba(255, 255, 255, 0.94);
+        --line: rgba(203, 213, 225, 0.78);
+        --text: #0f172a;
+        --muted: #475569;
+        --accent: #2563eb;
+        --accent-soft: #eff6ff;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(191, 219, 254, 0.35), transparent 34%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      main {
+        width: min(960px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 3.5rem 0 5rem;
+      }
+
+      .crumb {
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-decoration: none;
+      }
+
+      .hero {
+        margin-top: 1.25rem;
+        padding: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 1.75rem;
+        background: var(--panel);
+        box-shadow: 0 28px 60px -50px rgba(15, 23, 42, 0.32);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1 {
+        margin: 1rem 0 0.75rem;
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        line-height: 1.08;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .meta span {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.18rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .summary {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .panel {
+        padding: 1.35rem;
+        border: 1px solid var(--line);
+        border-radius: 1.35rem;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      h2 {
+        margin: 0 0 0.7rem;
+        font-size: 1.05rem;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        color: var(--muted);
+      }
+
+      .stack-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .stack-list li,
+      .link-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        border: 1px solid rgba(191, 219, 254, 0.88);
+        color: var(--accent);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+      }
+
+      .home-link {
+        display: inline-flex;
+        margin-top: 1.5rem;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 780px) {
+        main { width: min(100% - 1.2rem, 960px); padding-top: 2rem; }
+        .hero { padding: 1.35rem; border-radius: 1.25rem; }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="crumb" href="https://shinyeonjun.github.io/portfolio/">← 신연준 포트폴리오</a>
+      <section class="hero">
+        <span class="eyebrow">개인 프로젝트</span>
+        <h1>Wedding Album Generator</h1>
+        <div class="meta">
+          <span>2025.06</span>
+          <span>신연준 포트폴리오 프로젝트 상세</span>
+        </div>
+        <p class="summary">결혼식 사진을 분석하고 앨범 페이지를 자동 생성하는 실험형 프로젝트입니다.</p>
+      </section>
+
+      <div class="grid">
+        <section class="panel">
+          <h2>내 역할</h2>
+          <p>사진 분석 카테고리 설계, 앨범 페이지 구성, Supabase 스토리지와 DB 구조 설계, 발표 자료 제작을 맡았습니다.</p>
+        </section>
+        <section class="panel">
+          <h2>핵심 포인트</h2>
+          <ul><li>사진 속성 분석</li><li>앨범 페이지 자동 생성</li><li>Supabase 스키마 설계</li></ul>
+        </section>
+        <section class="panel">
+          <h2>기술 스택</h2>
+          <ul class="stack-list"><li>Python</li><li>GPT-4o-mini</li><li>Supabase</li><li>PostgreSQL</li><li>HTML</li></ul>
+        </section>
+        <section class="panel">
+          <h2>관련 링크</h2>
+          <div class="links"><a class="link-chip" href="https://shinyeonjun.github.io/portfolio/projects/wedding/wedding-album-generator-presentation.pdf" target="_blank" rel="noreferrer">Presentation</a></div>
+        </section>
+      </div>
+
+      <a class="home-link" href="https://shinyeonjun.github.io/portfolio/#projects">메인 포트폴리오에서 프로젝트 보기</a>
+    </main>
+  </body>
+</html>

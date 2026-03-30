@@ -153,8 +153,8 @@ const growthHeroPillars = [
 
 const growthHeroFacts = [
     { label: 'Now', value: 'Meeting Overlay Assistant' },
-    { label: 'Focus', value: 'Data · API · LLM' },
-    { label: 'Track', value: 'Personal + Team Projects' },
+    { label: 'Focus', value: 'FastAPI · Data · LLM' },
+    { label: 'Track', value: '백엔드 + AI 프로젝트' },
 ] as const;
 
 type HeroProps = {
@@ -239,7 +239,7 @@ export default function Hero({ variant = 'classic' }: HeroProps) {
                             transition={{ duration: 0.5 }}
                         >
                             <h1 className="profile-name">신연준</h1>
-                            <p className="profile-role">Backend & Data Pipeline Developer</p>
+                            <p className="profile-role">백엔드 개발자 · 데이터 파이프라인 · AI Workflow</p>
                         </motion.div>
                     </div>
 

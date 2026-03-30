@@ -19,6 +19,13 @@ const entriesToCopy = [
   'vite.config.ts',
 ];
 
+async function copySeoProjectPages(targetRoot) {
+  await cp(path.join(projectRoot, 'public', 'projects'), path.join(targetRoot, 'dist', 'projects'), {
+    recursive: true,
+    force: true,
+  });
+}
+
 function run(command, args, cwd) {
   return new Promise((resolve, reject) => {
     const child =
@@ -45,6 +52,7 @@ function run(command, args, cwd) {
 
 async function buildInCurrentDirectory() {
   await run('npm', ['run', 'build:site'], projectRoot);
+  await copySeoProjectPages(projectRoot);
 }
 
 async function buildInAsciiTempDirectory() {
@@ -72,12 +80,15 @@ async function buildInAsciiTempDirectory() {
     await cp(path.join(tempProjectRoot, 'dist'), path.join(projectRoot, 'dist'), {
       recursive: true,
     });
+    await copySeoProjectPages(projectRoot);
   } finally {
     await rm(tempRoot, { recursive: true, force: true });
   }
 }
 
 try {
+  await run('node', ['scripts/generate-seo-pages.mjs'], projectRoot);
+
   if (needsAsciiWorkaround) {
     console.log('Windows 한글 경로를 감지해 임시 ASCII 경로에서 빌드를 실행합니다.');
     await buildInAsciiTempDirectory();

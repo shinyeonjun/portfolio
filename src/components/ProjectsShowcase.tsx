@@ -74,7 +74,9 @@ export default function ProjectsShowcase() {
             <div className="section-header growth-section-header project-showcase-header">
                 <p className="eyebrow">Projects</p>
                 <h2>Project Index</h2>
-                <p className="growth-intro">대표작을 먼저 보고, 아래에서 다른 프로젝트로 바로 이동합니다.</p>
+                <p className="growth-intro">
+                    백엔드, 데이터 파이프라인, FastAPI, AI Workflow 프로젝트를 대표작 중심으로 정리했습니다.
+                </p>
             </div>
 
             <div className="lab-layout lab-layout-modular project-showcase-layout">
