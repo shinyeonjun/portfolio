@@ -73,11 +73,6 @@ const certifications = [
         status: '1종 보통',
         kind: '자격 보유',
     },
-    {
-        title: '정보처리기사',
-        status: '필기 합격',
-        kind: '실기 예정',
-    },
 ] as const;
 
 const awards = [
