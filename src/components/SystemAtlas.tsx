@@ -24,8 +24,12 @@ type AtlasEntry = {
     decision: string;
     result: string;
     stack: string[];
+    artifacts: { name: string; src?: string }[];
+    visuals: { src: string; alt: string }[];
     preview: string;
     previewAlt: string;
+    cardPreview?: string;
+    cardPreviewAlt?: string;
     href: string;
     placeholder?: boolean;
     project?: Project;
@@ -46,6 +50,8 @@ const visualMapEntry: AtlasEntry = {
         'raw graph를 그대로 보여주는 대신, 확정 근거·후보·미확인을 나눠 focused view로 보여주는 방향을 선택했습니다.',
     result: '코드와 DB의 관계를 변경 영향 관점에서 빠르게 확인할 수 있는 Windows 우선 도구로 확장 중입니다.',
     stack: ['Tauri', 'React', 'Rust', '코드 분석', 'DB 메타데이터'],
+    artifacts: [],
+    visuals: [],
     preview: '',
     previewAlt: 'Backend Visual Map 이미지 준비 중',
     href: 'https://github.com/shinyeonjun/visual_map',
@@ -68,8 +74,15 @@ const atlasEntries: AtlasEntry[] = [
         decision: project.solution,
         result: project.result,
         stack: project.stack,
-        preview: project.visuals[0].src,
-        previewAlt: project.visuals[0].alt,
+        artifacts: project.artifacts,
+        visuals: project.visuals,
+        preview: project.artifacts.find((artifact) => artifact.src)?.src ?? project.visuals[0].src,
+        previewAlt:
+            project.artifacts.find((artifact) => artifact.src)?.name
+                ? `${project.title} ${project.artifacts.find((artifact) => artifact.src)?.name}`
+                : project.visuals[0].alt,
+        cardPreview: project.visuals[0].src,
+        cardPreviewAlt: project.visuals[0].alt,
         href: project.links[0]?.href ?? '#',
         project,
     })),
@@ -87,6 +100,9 @@ function getProjectDetailHref(entry: AtlasEntry) {
 
 export default function SystemAtlas() {
     const [selectedId, setSelectedId] = useState('visual-map');
+    const [featureTab, setFeatureTab] = useState<'ui' | 'design'>('ui');
+    const [activeVisualIndex, setActiveVisualIndex] = useState(0);
+    const [activeArtifactIndex, setActiveArtifactIndex] = useState(0);
     const [fullscreen, setFullscreen] = useState<AtlasEntry | null>(null);
 
     const activeEntry = useMemo(
@@ -96,7 +112,70 @@ export default function SystemAtlas() {
 
     const handleSelect = (entry: AtlasEntry) => {
         setSelectedId(entry.id);
+        setFeatureTab(entry.visuals.length > 0 ? 'ui' : 'design');
+        setActiveVisualIndex(0);
+        setActiveArtifactIndex(0);
         document.querySelector('#selected-system')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const featureItems = featureTab === 'ui' ? activeEntry.visuals : activeEntry.artifacts;
+    const activeFeatureIndex = featureTab === 'ui' ? activeVisualIndex : activeArtifactIndex;
+    const activeFeature = featureItems[activeFeatureIndex] ?? featureItems[0];
+    const activeFeatureLabel = featureTab === 'ui' ? activeEntry.visuals[activeVisualIndex]?.alt : activeEntry.artifacts[activeArtifactIndex]?.name;
+    const activePreview = activeFeature?.src ?? activeEntry.preview;
+    const activePreviewAlt = activeFeature?.src ? `${activeEntry.title} ${activeFeatureLabel}` : activeEntry.previewAlt;
+    const openFullscreen = () => {
+        if (!activePreview || activeEntry.placeholder) return;
+
+        openImageFullscreen(activeEntry, activePreview, activePreviewAlt, activeFeatureLabel ?? activeEntry.artifact);
+    };
+
+    const renderFeaturePicker = (
+        tab: 'ui' | 'design',
+        label: string,
+        items: { src: string; alt: string }[] | { name: string; src?: string }[],
+    ) => {
+        if (items.length === 0) return null;
+
+        const isUi = tab === 'ui';
+        const activeIndex = isUi ? activeVisualIndex : activeArtifactIndex;
+
+        return (
+            <div className="atlas-evidence-picker" aria-label={`${activeEntry.title} ${label}`}>
+                <div className="atlas-evidence-picker-head">
+                    <span>{label}</span>
+                    <span>{items.length}개 자료</span>
+                </div>
+                <div className="atlas-evidence-picker-list">
+                    {items.map((item, index) => {
+                        const itemLabel = 'alt' in item ? item.alt : item.name;
+
+                        return (
+                            <button
+                                className={`atlas-evidence-picker-item${isUi === (featureTab === 'ui') && index === activeIndex ? ' is-active' : ''}`}
+                                key={itemLabel}
+                                onClick={() => {
+                                    setFeatureTab(tab);
+                                    if (isUi) setActiveVisualIndex(index);
+                                    else setActiveArtifactIndex(index);
+                                }}
+                                type="button"
+                            >
+                                {item.src ? <img src={item.src} alt="" loading="lazy" /> : null}
+                                <span>
+                                    <small>{String(index + 1).padStart(2, '0')}</small>
+                                    <strong>{itemLabel}</strong>
+                                </span>
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
+
+    const openImageFullscreen = (entry: AtlasEntry, preview: string, previewAlt: string, label: string) => {
+        setFullscreen({ ...entry, artifact: label, preview, previewAlt });
     };
 
     return (
@@ -153,7 +232,7 @@ export default function SystemAtlas() {
 
                     <div className="atlas-intro-index" id="systems">
                         <div className="atlas-index-heading">
-                            <span>선택한 시스템</span>
+                            <span>프로젝트 목록</span>
                             <span>{atlasEntries.length.toString().padStart(2, '0')}개</span>
                         </div>
                         <div className="atlas-index-lines">
@@ -177,10 +256,10 @@ export default function SystemAtlas() {
                 <section className="atlas-section" id="selected-system">
                     <div className="atlas-section-head">
                         <div>
-                            <p className="atlas-eyebrow">Selected system</p>
-                            <h2>대표 설계 증거</h2>
+                            <p className="atlas-eyebrow">Selected project</p>
+                            <h2>프로젝트 설계</h2>
                         </div>
-                        <span className="atlas-section-note">프로젝트를 선택하면 이 화면이 바뀝니다.</span>
+                        <span className="atlas-section-note">프로젝트를 선택하면 대표 설계와 설명이 바뀝니다.</span>
                     </div>
 
                     <article className="atlas-feature">
@@ -238,11 +317,15 @@ export default function SystemAtlas() {
 
                         <div className="atlas-feature-visual">
                             <div className="atlas-visual-toolbar">
-                                <span>VISUAL EVIDENCE</span>
+                                <span>
+                                    {activeEntry.placeholder
+                                        ? 'VISUAL EVIDENCE'
+                                        : `${featureTab === 'ui' ? '프로젝트 UI' : '설계 자료'} ${String(featureItems.length).padStart(2, '0')}`}
+                                </span>
                                 {!activeEntry.placeholder ? (
                                     <button
                                         type="button"
-                                        onClick={() => setFullscreen(activeEntry)}
+                                        onClick={openFullscreen}
                                         aria-label={`${activeEntry.title} 이미지 전체 보기`}
                                     >
                                         <Maximize2 size={15} /> 전체 보기
@@ -258,16 +341,18 @@ export default function SystemAtlas() {
                                 <button
                                     className="atlas-feature-image-button"
                                     type="button"
-                                    onClick={() => setFullscreen(activeEntry)}
+                                    onClick={openFullscreen}
                                 >
-                                    <img src={activeEntry.preview} alt={activeEntry.previewAlt} />
+                                    <img src={activePreview} alt={activePreviewAlt} />
                                 </button>
                             )}
                             <p className="atlas-visual-caption">
                                 {activeEntry.placeholder
                                     ? '설계 화면 캡처는 추후 추가됩니다.'
-                                    : `${activeEntry.title}의 ${activeEntry.artifact}를 중심으로 구성한 설계 증거입니다.`}
+                                    : `${activeEntry.title}의 ${activeFeatureLabel ?? activeEntry.artifact}를 보여주는 자료입니다.`}
                             </p>
+                            {renderFeaturePicker('ui', 'PROJECT UI', activeEntry.visuals)}
+                            {renderFeaturePicker('design', 'DESIGN DOCUMENTS', activeEntry.artifacts)}
                         </div>
                     </article>
                 </section>
@@ -275,10 +360,10 @@ export default function SystemAtlas() {
                 <section className="atlas-section atlas-artifact-section" id="notes">
                     <div className="atlas-section-head">
                         <div>
-                            <p className="atlas-eyebrow">Project artifacts</p>
-                            <h2>프로젝트마다 남겨둔 설계 언어</h2>
+                            <p className="atlas-eyebrow">Projects</p>
+                            <h2>프로젝트 작업물</h2>
                         </div>
-                        <span className="atlas-section-note">화면보다 흐름과 근거를 먼저 보여줍니다.</span>
+                        <span className="atlas-section-note">카드를 선택하면 이 영역에서 UI와 설계 자료를 살펴볼 수 있습니다.</span>
                     </div>
 
                     <div className="atlas-artifact-strip">
@@ -290,13 +375,19 @@ export default function SystemAtlas() {
                                 type="button"
                             >
                                 <div className="atlas-artifact-card-head">
-                                    <span className="atlas-artifact-type" style={{ color: entry.accent }}>
-                                        {entry.artifact}
+                                    <strong className="atlas-artifact-title" style={{ color: entry.accent }}>
+                                        {entry.title}
+                                    </strong>
+                                    <span className="atlas-artifact-card-cta">
+                                        설계 보기 <ArrowUpRight size={15} />
                                     </span>
-                                    <ArrowUpRight size={15} />
                                 </div>
-                                <img src={entry.preview} alt={entry.previewAlt} loading="lazy" />
-                                <strong>{entry.title}</strong>
+                                <img
+                                    src={entry.cardPreview ?? entry.preview}
+                                    alt={entry.cardPreviewAlt ?? entry.previewAlt}
+                                    loading="lazy"
+                                />
+                                <span className="atlas-artifact-card-label">대표 증거 · {entry.artifact}</span>
                                 <p>{entry.summary}</p>
                             </button>
                         ))}
