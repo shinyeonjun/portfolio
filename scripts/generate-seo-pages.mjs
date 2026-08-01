@@ -11,7 +11,7 @@ const projects = [
   {
     slug: 'meeting',
     title: 'Meeting Overlay Assistant',
-    period: '2026.03 - 진행 중',
+    period: '2026.03 - 2026.06',
     category: '개인 프로젝트',
     description:
       '회의 플랫폼에 종속되지 않는 오버레이에서 partial/final 자막과 핵심 이벤트를 실시간으로 보조하고, 회의 종료 후에는 사내 DB 기반 워크스페이스에서 기록 검색과 후속 업무까지 이어가는 로컬 AI 회의 시스템입니다.',
