@@ -222,6 +222,10 @@ export default function SystemAtlas() {
                                 <span>관심 영역</span>
                                 <strong>데이터 · 실시간 · AI</strong>
                             </div>
+                            <div>
+                                <span>자격</span>
+                                <strong>정보처리기사 필기 합격 · 실기 예정</strong>
+                            </div>
                         </div>
                         <div className="atlas-profile-stack" aria-label="주요 기술">
                             {['Python', 'FastAPI', 'PostgreSQL', 'GCP', 'React'].map((item) => (
