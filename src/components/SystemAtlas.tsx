@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import {
     ArrowUpRight,
     Boxes,
+    Copy,
     ExternalLink,
     FileText,
     Github,
@@ -92,6 +93,7 @@ const atlasEntries: AtlasEntry[] = [
 ];
 
 const artifactEntries = atlasEntries.filter((entry) => entry.id !== 'visual-map').slice(0, 4);
+const contactEmail = 'sinyeonjun@gmail.com';
 
 function getProjectDetailHref(entry: AtlasEntry) {
     if (entry.project?.links[1]?.href) {
@@ -107,6 +109,7 @@ export default function SystemAtlas() {
     const [activeVisualIndex, setActiveVisualIndex] = useState(0);
     const [activeArtifactIndex, setActiveArtifactIndex] = useState(0);
     const [fullscreen, setFullscreen] = useState<AtlasEntry | null>(null);
+    const [emailCopied, setEmailCopied] = useState(false);
     const lightboxCloseRef = useRef<HTMLButtonElement>(null);
 
     const activeEntry = useMemo(
@@ -132,6 +135,18 @@ export default function SystemAtlas() {
         setActiveVisualIndex(0);
         setActiveArtifactIndex(0);
         document.querySelector('#selected-system')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const copyEmail = async () => {
+        if (!navigator.clipboard) return;
+
+        try {
+            await navigator.clipboard.writeText(contactEmail);
+            setEmailCopied(true);
+            window.setTimeout(() => setEmailCopied(false), 1600);
+        } catch {
+            setEmailCopied(false);
+        }
     };
 
     const featureItems = featureTab === 'ui' ? activeEntry.visuals : activeEntry.artifacts;
@@ -211,9 +226,9 @@ export default function SystemAtlas() {
                             GitHub <ArrowUpRight size={14} />
                         </a>
                     </nav>
-                    <a className="atlas-header-email" href="mailto:sinyeonjun@gmail.com">
-                        sinyeonjun@gmail.com <Mail size={14} />
-                    </a>
+                    <button className="atlas-header-email" type="button" onClick={copyEmail} aria-label="이메일 주소 복사">
+                        {emailCopied ? '복사됨' : contactEmail} <Copy size={14} />
+                    </button>
                 </div>
             </header>
 
@@ -474,8 +489,8 @@ export default function SystemAtlas() {
                     <a href="https://github.com/shinyeonjun" target="_blank" rel="noreferrer">
                         GitHub <ExternalLink size={14} />
                     </a>
-                    <a href="mailto:sinyeonjun@gmail.com">
-                        sinyeonjun@gmail.com <Mail size={14} />
+                    <a href={`mailto:${contactEmail}`}>
+                        {contactEmail} <Mail size={14} />
                     </a>
                 </div>
                 <span>© 2026</span>
