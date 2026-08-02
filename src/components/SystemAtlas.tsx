@@ -211,14 +211,9 @@ export default function SystemAtlas() {
                             GitHub <ArrowUpRight size={14} />
                         </a>
                     </nav>
-                    <div className="atlas-header-actions">
-                        <a className="atlas-header-link" href="mailto:sinyeonjun@gmail.com?subject=포트폴리오 문의">
-                            연락하기 <Mail size={14} />
-                        </a>
-                        <a className="atlas-header-link atlas-header-link-primary" href="mailto:sinyeonjun@gmail.com?subject=이력서 요청">
-                            이력서 요청 <FileText size={14} />
-                        </a>
-                    </div>
+                    <a className="atlas-header-email" href="mailto:sinyeonjun@gmail.com">
+                        sinyeonjun@gmail.com <Mail size={14} />
+                    </a>
                 </div>
             </header>
 
