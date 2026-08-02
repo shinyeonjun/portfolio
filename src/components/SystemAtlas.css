@@ -30,6 +30,8 @@
 
 .atlas-brand,
 .atlas-nav,
+.atlas-header-right,
+.atlas-header-actions,
 .atlas-footer-links,
 .atlas-feature-actions {
     display: flex;
@@ -54,6 +56,46 @@
 
 .atlas-nav {
     gap: clamp(1rem, 2.5vw, 2.4rem);
+}
+
+.atlas-header-right {
+    gap: clamp(1rem, 2.4vw, 2.2rem);
+}
+
+.atlas-header-actions {
+    gap: 0.45rem;
+}
+
+.atlas-header-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.15rem;
+    padding: 0.42rem 0.62rem;
+    border: 1px solid var(--atlas-rule);
+    border-radius: 0.22rem;
+    color: #3b4a57;
+    font-size: 0.72rem;
+    font-weight: 750;
+    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.atlas-header-link:hover {
+    transform: translateY(-1px);
+    border-color: #9caebb;
+    color: var(--atlas-blue);
+}
+
+.atlas-header-link-primary {
+    border-color: var(--atlas-blue);
+    color: #fff;
+    background: var(--atlas-blue);
+}
+
+.atlas-header-link-primary:hover {
+    border-color: #1769b3;
+    color: #fff;
+    background: #1769b3;
 }
 
 .atlas-nav a,
@@ -358,6 +400,30 @@
     font-size: 0.75rem;
     line-height: 1.7;
     word-break: keep-all;
+}
+
+.atlas-proof-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.9rem;
+    margin-top: 0.8rem;
+    padding: 0.85rem 1rem;
+    border-left: 2px solid var(--atlas-blue);
+    background: var(--atlas-soft);
+}
+
+.atlas-proof-note span {
+    color: var(--atlas-blue);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.atlas-proof-note p {
+    margin: 0;
+    color: #4d5b65;
+    font-size: 0.78rem;
+    line-height: 1.65;
 }
 
 .atlas-stack {
@@ -832,6 +898,10 @@
         min-height: 4.5rem;
     }
 
+    .atlas-header-right {
+        gap: 0.45rem;
+    }
+
     .atlas-brand {
         gap: 0;
     }
@@ -847,6 +917,16 @@
 
     .atlas-nav a {
         font-size: 0.72rem;
+    }
+
+    .atlas-header-actions {
+        gap: 0.3rem;
+    }
+
+    .atlas-header-link {
+        min-height: 2rem;
+        padding-inline: 0.46rem;
+        font-size: 0.66rem;
     }
 
     .atlas-intro {
@@ -904,6 +984,11 @@
 
     .atlas-evidence-grid > div {
         min-height: auto;
+    }
+
+    .atlas-proof-note {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
     }
 
     .atlas-artifact-strip {

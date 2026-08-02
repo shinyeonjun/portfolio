@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import {
     ArrowUpRight,
     Boxes,
@@ -23,6 +23,7 @@ type AtlasEntry = {
     role: string;
     decision: string;
     result: string;
+    evidence: string;
     stack: string[];
     artifacts: { name: string; src?: string }[];
     visuals: { src: string; alt: string }[];
@@ -49,6 +50,7 @@ const visualMapEntry: AtlasEntry = {
     decision:
         'raw graph를 그대로 보여주는 대신, 확정 근거·후보·미확인을 나눠 focused view로 보여주는 방향을 선택했습니다.',
     result: '코드와 DB의 관계를 변경 영향 관점에서 빠르게 확인할 수 있는 Windows 우선 도구로 확장 중입니다.',
+    evidence: 'API Flow · Table Usage · Column Impact 정보 구조로 코드와 DB 영향 범위를 나눠 검증하도록 설계했습니다.',
     stack: ['Tauri', 'React', 'Rust', '코드 분석', 'DB 메타데이터'],
     artifacts: [],
     visuals: [],
@@ -73,6 +75,7 @@ const atlasEntries: AtlasEntry[] = [
         role: project.role,
         decision: project.solution,
         result: project.result,
+        evidence: project.evidence,
         stack: project.stack,
         artifacts: project.artifacts,
         visuals: project.visuals,
@@ -104,11 +107,24 @@ export default function SystemAtlas() {
     const [activeVisualIndex, setActiveVisualIndex] = useState(0);
     const [activeArtifactIndex, setActiveArtifactIndex] = useState(0);
     const [fullscreen, setFullscreen] = useState<AtlasEntry | null>(null);
+    const lightboxCloseRef = useRef<HTMLButtonElement>(null);
 
     const activeEntry = useMemo(
         () => atlasEntries.find((entry) => entry.id === selectedId) ?? visualMapEntry,
         [selectedId],
     );
+
+    useEffect(() => {
+        if (!fullscreen) return undefined;
+
+        lightboxCloseRef.current?.focus();
+        const closeOnEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setFullscreen(null);
+        };
+
+        window.addEventListener('keydown', closeOnEscape);
+        return () => window.removeEventListener('keydown', closeOnEscape);
+    }, [fullscreen]);
 
     const handleSelect = (entry: AtlasEntry) => {
         setSelectedId(entry.id);
@@ -186,14 +202,24 @@ export default function SystemAtlas() {
                     <span>Python Backend Developer</span>
                 </a>
 
-                <nav className="atlas-nav" aria-label="주요 메뉴">
-                    <a href="#projects">프로젝트</a>
-                    <a href="#systems">시스템</a>
-                    <a href="#notes">기록</a>
-                    <a href="https://github.com/shinyeonjun" target="_blank" rel="noreferrer">
-                        GitHub <ArrowUpRight size={14} />
-                    </a>
-                </nav>
+                <div className="atlas-header-right">
+                    <nav className="atlas-nav" aria-label="주요 메뉴">
+                        <a href="#projects">프로젝트</a>
+                        <a href="#systems">시스템</a>
+                        <a href="#notes">작업물</a>
+                        <a href="https://github.com/shinyeonjun" target="_blank" rel="noreferrer">
+                            GitHub <ArrowUpRight size={14} />
+                        </a>
+                    </nav>
+                    <div className="atlas-header-actions">
+                        <a className="atlas-header-link" href="mailto:sinyeonjun@gmail.com?subject=포트폴리오 문의">
+                            연락하기 <Mail size={14} />
+                        </a>
+                        <a className="atlas-header-link atlas-header-link-primary" href="mailto:sinyeonjun@gmail.com?subject=이력서 요청">
+                            이력서 요청 <FileText size={14} />
+                        </a>
+                    </div>
+                </div>
             </header>
 
             <main>
@@ -294,6 +320,10 @@ export default function SystemAtlas() {
                                     <span>결과</span>
                                     <p>{activeEntry.result}</p>
                                 </div>
+                            </div>
+                            <div className="atlas-proof-note">
+                                <span>검증 근거</span>
+                                <p>{activeEntry.evidence}</p>
                             </div>
 
                             <div className="atlas-stack" aria-label="사용 기술">
@@ -458,7 +488,7 @@ export default function SystemAtlas() {
 
             {fullscreen ? (
                 <div className="atlas-lightbox" role="dialog" aria-modal="true" aria-label={`${fullscreen.title} 이미지`}>
-                    <button className="atlas-lightbox-close" type="button" onClick={() => setFullscreen(null)}>
+                    <button ref={lightboxCloseRef} className="atlas-lightbox-close" type="button" onClick={() => setFullscreen(null)}>
                         <X size={18} /> 닫기
                     </button>
                     <img src={fullscreen.preview} alt={fullscreen.previewAlt} />

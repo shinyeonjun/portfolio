@@ -38,6 +38,7 @@ export type Project = {
     problem: string;
     solution: string;
     result: string;
+    evidence: string;
     backendPoints: string[];
     highlights: string[];
     visuals: { src: string; alt: string }[];
@@ -62,6 +63,7 @@ export const projects: Project[] = [
             'YouTube 수집부터 ELT 파이프라인, 대시보드, RAG 기반 챗봇 응답 구조를 하나의 흐름으로 묶어 end-to-end 데이터 활용 구조를 설계했습니다.',
         result:
             '수집한 데이터를 차트 시각화와 챗봇 응답까지 연결하는 데이터 파이프라인 프로토타입을 구현했습니다.',
+        evidence: '수집 → 정제 → 적재 → 대시보드 → RAG 응답까지 전 구간을 연결한 설계 자료로 흐름을 검증했습니다.',
         backendPoints: ['ELT 파이프라인', 'Supabase 스키마', 'FastAPI 응답 구조', 'RAG 질의 흐름'],
         highlights: ['ELT 흐름 설계', '데이터 기반 챗봇', '차트 시각화'],
         visuals: [
@@ -94,6 +96,7 @@ export const projects: Project[] = [
             '플랫폼 독립 오버레이, 하이브리드 STT 전략, 사내 DB 기반 워크스페이스를 묶어 회의 중 보조와 회의 후 기록 활용을 하나의 흐름으로 연결했습니다.',
         result:
             '실시간 자막, 핵심 이벤트, 회의 종료 후 기록 검색까지 이어지는 로컬 AI 회의 시스템 구조를 구현했습니다.',
+        evidence: 'partial/final 자막, 핵심 이벤트, 회의록 저장·검색 흐름을 시스템 개요와 STT PoC 자료로 검증했습니다.',
         backendPoints: ['WebSocket 실시간 통신', 'pgvector 기록 검색', 'PostgreSQL 워크스페이스', 'STT 이벤트 파이프라인'],
         highlights: ['플랫폼 독립 오버레이', '하이브리드 STT 전략', '사내 DB 중심 기록 축적'],
         visuals: [{ src: capsOverlay, alt: '실시간 오버레이' }],
@@ -126,6 +129,7 @@ export const projects: Project[] = [
             'JSON 템플릿 고정, 현재 시간 컨텍스트 보정, Calendar·Gmail·ICS 연동 흐름으로 일정 추출과 등록 과정을 안정화했습니다.',
         result:
             '자연어 입력을 일정 추출과 등록 자동화로 이어가는 개인 일정 관리 흐름을 구현했습니다.',
+        evidence: '로그인 → 자연어 분석 → 일정 등록 흐름을 ERD와 출력 보정 자료로 함께 검증했습니다.',
         backendPoints: ['FastAPI 라우팅', '출력 validation', 'Calendar·Gmail 연동', '시간 컨텍스트 보정'],
         highlights: ['JSON 템플릿 고정', '현재 시간 보정', 'Calendar·메일 연동'],
         visuals: [
@@ -163,6 +167,7 @@ export const projects: Project[] = [
             '중앙 서버에서 HTTP·TCP·UDP 통신을 묶어 등록 승인, 상태 모니터링, 원격 배포, 공지 전송 흐름을 통합했습니다.',
         result:
             '에이전트 등록부터 배포 요청과 브로드캐스트 공지까지 한 화면에서 관리하는 팀 프로젝트 백엔드를 구현했습니다.',
+        evidence: '에이전트 등록·상태 확인·원격 배포·공지 전송 흐름을 C/S 아키텍처와 시퀀스로 검증했습니다.',
         backendPoints: ['HTTP·TCP·UDP 서버', '배포 요청 처리', 'PostgreSQL 상태 저장', '브로드캐스트 프로토콜'],
         highlights: ['에이전트 등록 및 상태 모니터링', '원격 배포 실행·실시간 상태', '브로드캐스트 공지 및 수신 추적'],
         visuals: [
@@ -200,6 +205,7 @@ export const projects: Project[] = [
             '사진 속성 분석 규칙과 섹션별 페이지 생성 흐름, Supabase 기반 저장 구조를 함께 설계해 앨범 생성 과정을 자동화했습니다.',
         result:
             '앨범 페이지 생성 흐름과 스토리지·DB 구조를 검증하는 실험형 프로토타입을 만들었습니다.',
+        evidence: '사진 분석 → 섹션 생성 → 스토리지·DB 저장 흐름을 UI와 스키마 자료로 검증했습니다.',
         backendPoints: ['Supabase 스토리지', 'PostgreSQL 스키마', 'GPT 분석 흐름', '페이지 생성 규칙'],
         highlights: ['사진 속성 분석', '앨범 페이지 자동 생성', 'Supabase 스키마 설계'],
         visuals: [
@@ -222,27 +228,3 @@ export const projects: Project[] = [
         isTeam: false,
     },
 ];
-
-const quickNavLabels: Record<string, string> = {
-    'de-pipeline': 'DE-pipeline',
-    caps: 'Meeting AI',
-    'ai-schedule': 'AI Schedule',
-    'control-dock': 'ControlDock',
-    'wedding-album': 'Wedding Album',
-};
-
-export const classicProjectItems = projects.map((project) => ({
-    id: project.id,
-    label: quickNavLabels[project.id] ?? project.title,
-}));
-
-const timelineProjectIds = ['ai-schedule', 'wedding-album', 'control-dock', 'de-pipeline', 'caps'] as const;
-
-export const timelineProjects = timelineProjectIds
-    .map((id) => projects.find((project) => project.id === id))
-    .filter((project): project is Project => project !== undefined);
-
-export const timelineProjectItems = timelineProjects.map((project) => ({
-    id: project.id,
-    label: quickNavLabels[project.id] ?? project.title,
-}));

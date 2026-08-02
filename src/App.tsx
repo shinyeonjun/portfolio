@@ -1,4 +1,3 @@
-import './App.css';
 import SystemAtlas from './components/SystemAtlas';
 
 export default function App() {
