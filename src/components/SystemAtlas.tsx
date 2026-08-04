@@ -239,7 +239,10 @@ export default function SystemAtlas() {
                         <h1>
                             백엔드
                             <br />
-                            <span>개발자</span>
+                            <span className="atlas-title-line">
+                                개발자
+                                <small>되고싶어요....</small>
+                            </span>
                         </h1>
                         <div className="atlas-profile-grid">
                             <div>

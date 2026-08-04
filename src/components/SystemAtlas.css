@@ -125,6 +125,21 @@
     color: var(--atlas-blue);
 }
 
+.atlas-title-line {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0.58rem;
+}
+
+.atlas-title-line small {
+    padding-bottom: 0.2em;
+    color: #a3adb5;
+    font-size: 0.12em;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+}
+
 .atlas-profile-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
