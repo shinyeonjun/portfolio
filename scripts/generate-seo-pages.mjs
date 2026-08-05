@@ -173,11 +173,11 @@ function renderProjectPage(project) {
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(summary)}" />
     <meta property="og:url" content="${canonical}" />
-    <meta property="og:image" content="${siteUrl}/og-cover.png" />
+    <meta property="og:image" content="${siteUrl}/og-cover-v2.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(summary)}" />
-    <meta name="twitter:image" content="${siteUrl}/og-cover.png" />
+    <meta name="twitter:image" content="${siteUrl}/og-cover-v2.png" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
