@@ -37,34 +37,37 @@ type AtlasEntry = {
     project?: Project;
 };
 
-const visualMapEntry: AtlasEntry = {
-    id: 'visual-map',
-    title: 'Backend Visual Map',
+const axStudioPreview = `${import.meta.env.BASE_URL}projects/ax-studio/ax-studio.png`;
+
+const axStudioEntry: AtlasEntry = {
+    id: 'ax-studio',
+    title: 'AX Studio',
     period: '최근 작업',
-    artifact: '코드 · DB 추적',
+    artifact: 'AI 업무 자동화',
     accent: '#287fce',
     summary:
-        '백엔드 코드와 관계형 데이터베이스 메타데이터의 관계를 근거와 함께 탐색하는 개발자 도구입니다.',
+        '자연어로 맡긴 반복 업무를 구체화하고 워크플로우로 만들어 실행하는 로컬 AI 자동화 앱입니다.',
     problem:
-        '큰 백엔드 저장소에서 API가 어떤 테이블과 컬럼에 영향을 주는지 추적하려면 코드와 스키마를 계속 오가야 했습니다.',
-    role: 'Tauri + React 기반 탐색 경험과 API Flow, Table Usage, Column Impact 중심의 정보 구조를 설계했습니다.',
+        '반복 업무를 자동화하려면 사용자의 모호한 요청을 실행 가능한 단계로 바꾸고 여러 자료와 서비스를 안전하게 연결해야 했습니다.',
+    role: 'Work Discovery, Workflow IR, 시각적 캔버스와 실행 런타임을 연결하고 Gmail·Slack·로컬 문서 커넥터를 구현했습니다.',
     decision:
-        'raw graph를 그대로 보여주는 대신, 확정 근거·후보·미확인을 나눠 focused view로 보여주는 방향을 선택했습니다.',
-    result: '코드와 DB의 관계를 변경 영향 관점에서 빠르게 확인할 수 있는 Windows 우선 도구로 확장 중입니다.',
-    evidence: 'API Flow · Table Usage · Column Impact 정보 구조로 코드와 DB 영향 범위를 나눠 검증하도록 설계했습니다.',
-    stack: ['Tauri', 'React', 'Rust', '코드 분석', 'DB 메타데이터'],
+        '데이터와 API 키는 로컬에 보관하고, 메일 발송처럼 외부에 영향을 주는 단계에는 사람의 승인을 거치도록 설계했습니다.',
+    result: '업무 설계부터 스케줄 실행, 승인, 결과와 활동 기록까지 이어지는 Windows 우선 v1을 개발하고 있습니다.',
+    evidence: 'core 단위 테스트와 통합 테스트, 제품 QA harness, 빌드·아키텍처·미사용 코드 검사를 함께 운영합니다.',
+    stack: ['TypeScript', 'Electron', 'React', 'SQLite', 'AI Workflow'],
     artifacts: [],
-    visuals: [],
-    preview: '',
-    previewAlt: 'Backend Visual Map 이미지 준비 중',
-    href: 'https://github.com/shinyeonjun/visual_map',
-    placeholder: true,
+    visuals: [{ src: axStudioPreview, alt: 'AX Studio 프로젝트 대표 이미지' }],
+    preview: axStudioPreview,
+    previewAlt: 'AX Studio 프로젝트 대표 이미지',
+    cardPreview: axStudioPreview,
+    cardPreviewAlt: 'AX Studio 프로젝트 대표 이미지',
+    href: 'https://github.com/shinyeonjun/AX_studio',
 };
 
 const accentPalette = ['#287fce', '#4fb8a5', '#e76f62', '#d7a348', '#9ac7a8'];
 
 const atlasEntries: AtlasEntry[] = [
-    visualMapEntry,
+    axStudioEntry,
     ...projects.map((project, index): AtlasEntry => ({
         id: project.id,
         title: project.title,
@@ -92,7 +95,7 @@ const atlasEntries: AtlasEntry[] = [
     })),
 ];
 
-const artifactEntries = atlasEntries.filter((entry) => entry.id !== 'visual-map').slice(0, 4);
+const artifactEntries = atlasEntries.slice(0, 4);
 const contactEmail = 'sinyeonjun@gmail.com';
 
 function getProjectDetailHref(entry: AtlasEntry) {
@@ -104,7 +107,7 @@ function getProjectDetailHref(entry: AtlasEntry) {
 }
 
 export default function SystemAtlas() {
-    const [selectedId, setSelectedId] = useState('visual-map');
+    const [selectedId, setSelectedId] = useState('ax-studio');
     const [featureTab, setFeatureTab] = useState<'ui' | 'design'>('ui');
     const [activeVisualIndex, setActiveVisualIndex] = useState(0);
     const [activeArtifactIndex, setActiveArtifactIndex] = useState(0);
@@ -113,7 +116,7 @@ export default function SystemAtlas() {
     const lightboxCloseRef = useRef<HTMLButtonElement>(null);
 
     const activeEntry = useMemo(
-        () => atlasEntries.find((entry) => entry.id === selectedId) ?? visualMapEntry,
+        () => atlasEntries.find((entry) => entry.id === selectedId) ?? axStudioEntry,
         [selectedId],
     );
 

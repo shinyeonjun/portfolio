@@ -17,13 +17,13 @@
 
 ## Current projects
 
+- AX Studio
 - Meeting Overlay Assistant
 - DE-pipeline
 - AI Schedule Web
 - ControlDock
-- Wedding Album Generator
 
-The GitHub profile also highlights newer developer-tool projects such as [Backend Visual Map](https://github.com/shinyeonjun/visual_map) and [Database Memory MCP](https://github.com/shinyeonjun/rdb-memory-mcp). Their product details live in the corresponding repositories while portfolio-site case studies are updated separately.
+The GitHub profile also highlights [AX Studio](https://github.com/shinyeonjun/AX_studio), a local AI workflow automation app, and [Database Memory MCP](https://github.com/shinyeonjun/rdb-memory-mcp). Their product details live in the corresponding repositories while portfolio-site case studies are updated separately.
 
 ## 실행
 
