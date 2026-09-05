@@ -1,9 +1,5 @@
-import SystemAtlas from './components/SystemAtlas';
+import PocketPortfolio from "./components/PocketPortfolio";
 
 export default function App() {
-    return (
-        <div className="atlas-app-shell">
-            <SystemAtlas />
-        </div>
-    );
+  return <PocketPortfolio />;
 }
